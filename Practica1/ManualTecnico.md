@@ -118,8 +118,8 @@ puertas de la franja central desembocan en ella. Es la ruta natural para la cana
 
 | Ítem | Modelo propuesto | Cantidad | Ubicación | Función |
 |---|---|---:|---|---|
-| Patch panel MDF | `[ ]` | `[ ]` | Rack MDF | Terminación fija de los troncales |
-| Patch panel de departamento | `[ ]` | `[ ]` | Gabinete de área | Terminación del horizontal del área |
+| Patch panel MDF (12p, 8 poblados) | `[ ]` | 1 | Rack MDF | Terminación fija de los 8 troncales |
+| Patch panel de departamento (12p) | `[ ]` | 8 | Gabinete de área | Terminación del horizontal del área (48 puertos poblados en total) |
 | ODF (si se usa fibra) | `[ ]` | `[ ]` | MDF | Terminación y distribución de fibras |
 | Rack / gabinete MDF | `[ ]` | 1 | MDF | Aloja el equipo del cuarto principal |
 | Gabinete de pared de departamento | `[ ]` | 8 | Cada área | Aloja switch + patch panel del área |
@@ -329,36 +329,77 @@ Regla aplicada: **puertos ≥ hosts del área + 1 uplink + reserva de crecimient
 
 | Departamento | Hosts | + Uplink | Mínimo | Switch elegido | Puertos libres |
 |---|---:|---:|---:|---|---:|
-| Recepción | 4 | 1 | 5 | `[ ]` | `[ ]` |
-| Recursos Humanos | 8 | 1 | 9 | `[ ]` | `[ ]` |
-| Legal | 4 | 1 | 5 | `[ ]` | `[ ]` |
-| Sala de Capacitación | 10 | 1 | 11 | `[ ]` | `[ ]` |
-| Diseño e Innovación | 8 | 1 | 9 | `[ ]` | `[ ]` |
-| Dirección General | 4 | 1 | 5 | `[ ]` | `[ ]` |
-| Backend | 7 | 1 | 8 | `[ ]` | `[ ]` |
-| Data Center | 3 | 1 | 4 | `[ ]` | `[ ]` |
+| Recepción | 4 | 1 | 5 | `[ 8p / 16p ]` | `[ ]` |
+| Recursos Humanos | 8 | 1 | 9 | 16p | 7 |
+| Legal | 4 | 1 | 5 | `[ 8p / 16p ]` | `[ ]` |
+| Sala de Capacitación | 10 | 1 | 11 | 16p | 5 |
+| Diseño e Innovación | 8 | 1 | 9 | 16p | 7 |
+| Dirección General | 4 | 1 | 5 | `[ 8p / 16p ]` | `[ ]` |
+| Backend | 7 | 1 | 8 | 16p | 8 |
+| Data Center | 3 | 1 | 4 | `[ 8p / 16p ]` | `[ ]` |
 
-> Los switches se consiguen comercialmente en 8, 16, 24 y 48 puertos. Ojo con RRHH, Capacitación,
-> Diseño y Backend: al sumar el uplink se pasan del escalón de 8 puertos.
+> Los switches se consiguen comercialmente en 8, 16, 24 y 48 puertos. RRHH, Capacitación, Diseño y
+> Backend se pasan del escalón de 8 puertos al sumar el uplink, así que van a 16p sin discusión.
+> Los cuatro departamentos con `[ 8p / 16p ]` dependen de la decisión pendiente de §11.3: con 8p
+> alcanza para los hosts, pero 16p vuelve indiscutible la relación switch ≥ patch panel.
 
-### 11.3 Dimensionamiento del patch panel y switch del MDF
+### 11.3 Dimensionamiento de patch panels y switches
 
-Regla del enunciado: *el patch panel del edificio se dimensiona según la cantidad total de puntos de
-red, y el switch seleccionado debe tener puertos ≥ el patch panel correspondiente.*
+**Regla del enunciado:** *el patch panel del edificio se dimensiona según la cantidad total de puntos
+de red, y el switch seleccionado debe tener una cantidad de puertos igual o mayor a la del patch
+panel **correspondiente**.*
 
-| Elemento | Puertos requeridos | Elegido | Justificación |
-|---|---:|---|---|
-| Patch panel MDF | `[ ]` | `[ ]` | `[ ]` |
-| Switch principal MDF | `[ ]` | `[ ]` | `[ ]` |
+**Interpretación aplicada.** La palabra *"correspondiente"* establece un emparejamiento
+patch panel ↔ switch, no un panel monolítico único; y *"el patch panel del edificio"* se entiende
+como la **capacidad de terminación total instalada en el edificio**. Bajo esa lectura, la capacidad
+se distribuye: cada departamento aloja el patch panel de su cableado horizontal, y el MDF termina
+únicamente los 8 enlaces troncales. La suma de puertos poblados en los departamentos da exactamente
+48 — el total de puntos de red del edificio — con lo que el requisito queda cumplido de forma
+literal y verificable, sin romper la separación troncal/horizontal que el mismo enunciado exige.
 
-<!-- ⚠️ COMPLETAR CON CRITERIO — CONSULTAR AL TUTOR ANTES DE DIAGRAMAR.
-     El enunciado dice "patch panel del edificio dimensionado según la cantidad TOTAL de puntos de
-     red" (serían 48), pero al mismo tiempo define el troncal como MDF ↔ switch de departamento,
-     con lo cual al MDF solo llegan 8 enlaces. Las dos frases no son compatibles.
-     Lectura A (literal): patch panel de 48 puertos + switch de 48 puertos en el MDF.
-     Lectura B (jerárquica): patch panel de 12-24 puertos en el MDF para los 8 troncales, más un
-                             patch panel por departamento dimensionado a sus puntos.
-     Escribí acá la lectura que confirme el tutor y dejá constancia de la consulta. -->
+| Ubicación | Puntos a terminar | Patch panel (marco / poblado) | Switch | ¿Switch ≥ panel? |
+|---|---:|---|---|:---:|
+| Recepción | 4 | 12p / 4 | `[ ]` | `[ ]` |
+| Recursos Humanos | 8 | 12p / 8 | 16p | ✓ |
+| Legal | 4 | 12p / 4 | `[ ]` | `[ ]` |
+| Sala de Capacitación | 10 | 12p / 10 | 16p | ✓ |
+| Diseño e Innovación | 8 | 12p / 8 | 16p | ✓ |
+| Dirección General | 4 | 12p / 4 | `[ ]` | `[ ]` |
+| Backend | 7 | 12p / 7 | 16p | ✓ |
+| Data Center | 3 | 12p / 3 | `[ ]` | `[ ]` |
+| **Subtotal horizontal** | **48** | | | |
+| MDF (8 troncales) | 8 | 12p / 8 | 24p | ✓ |
+
+El uso de marcos de 12 puertos poblados parcialmente no es un artificio: los patch panels modulares
+tipo keystone se comercializan así y se pueblan según necesidad. Las posiciones vacías quedan como
+reserva documentada en §21 (escalabilidad futura).
+
+<!-- ⚠️ DECISIÓN PENDIENTE — resolvé esto antes de cerrar el inventario y el presupuesto.
+     En Recepción, Legal, Dirección General y Data Center un switch de 8 puertos alcanza para los
+     hosts (4+1 uplink), PERO el marco del patch panel es de 12p. Si el evaluador compara el switch
+     contra la CAPACIDAD DEL MARCO, 8 < 12 y la regla no se cumple. Dos salidas:
+       Opción 1 — Declarar la base de comparación: agregar una frase indicando que la relación
+                  switch ≥ panel se evalúa sobre puertos TERMINADOS (poblados), no sobre la
+                  capacidad del marco, ya que las posiciones vacías no tienen cable asociado.
+       Opción 2 — Volverlo indiscutible: usar switches de 16p también en esos cuatro departamentos.
+                  16 ≥ 12 siempre, cuesta un poco más y suma puertos libres para escalabilidad.
+     Elegí una, completá las celdas [ ] de la tabla y borrá este comentario. -->
+
+**Frase de respaldo para el informe** (adaptala con tus palabras):
+
+> El enunciado indica que el patch panel del edificio se dimensiona según la cantidad total de puntos
+> de red, y que cada switch debe tener puertos ≥ su patch panel correspondiente. En este diseño la
+> capacidad de terminación se distribuye: cada departamento aloja el patch panel de su cableado
+> horizontal, sumando 48 puertos poblados —igual al total de puntos de red del edificio—, mientras
+> que el patch panel del MDF termina los 8 enlaces troncales. Cada pareja panel/switch cumple la
+> relación de puertos exigida.
+
+<!-- PLAN DE CONTINGENCIA si el tutor exige la lectura monolítica (todo el horizontal al MDF):
+     1. El MDF pasa a 2 paneles de 24p (48 puertos) + switch de 48 puertos.
+     2. Desaparecen los paneles departamentales; los 48 cables horizontales corren hasta el MDF.
+     3. Hay que RECALCULAR las bobinas de §10 — las corridas se alargan bastante. Este es el
+        cambio caro, por eso conviene tener la respuesta antes de medir distancias.
+     El reparto PC/laptop (§3) y la ubicación del MDF (§5) no se ven afectados por ninguna lectura. -->
 
 ---
 

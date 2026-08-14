@@ -1,18 +1,10 @@
-# Manual Técnico — Práctica 1: QuetzalDev S.A.
+# Manual Técnico — Práctica 1: QuetzalDev S.A
 
-**Universidad de San Carlos de Guatemala** · Facultad de Ingeniería
-**Curso:** Redes de Computadoras 1 — Segundo Semestre 2026
-**Estudiante:** Santiago Barrera
-**Carné:** 201905884
-**Plano asignado:** Plano 3 (carnés con terminación 4-5)
-**Fecha:** <!-- COMPLETAR -->
-
----
-
-> **NOTA DE TRABAJO — BORRAR ANTES DE ENTREGAR**
-> Los datos marcados **(fijo)** vienen del enunciado o del plano y no se discuten.
-> Todo lo marcado `<!-- COMPLETAR -->` o `[…]` es decisión tuya y debe llevar justificación propia.
-> La rúbrica penaliza justificaciones repetidas: no copies la misma frase en las 8 filas de una tabla.
+**Universidad de San Carlos de Guatemala** · Facultad de Ingeniería\
+**Curso:** Redes de Computadoras 1 — Segundo Semestre 2026\
+**Estudiante:** Santiago Barrera\
+**Carné:** 201905884\
+**Plano asignado:** Plano 3 (carnés con terminación 4-5)\
 
 ---
 
@@ -46,36 +38,107 @@
 
 ## 1. Introducción y alcance
 
-<!-- COMPLETAR: 2-3 párrafos.
-     Qué se diseña: la infraestructura de Capa 1 (física) del edificio de QuetzalDev S.A.
-     Qué NO incluye: direccionamiento IP, VLANs, configuración de equipo, simulación.
-     Mencioná que el edificio es de un solo nivel, por lo que se usa un único MDF sin IDFs. -->
+QuetzalDev S.A., empresa de desarrollo de software, inauguró un edificio corporativo de un solo
+nivel que concentrará a sus equipos de ingeniería, diseño y administración. Antes de adquirir e
+instalar cualquier equipo de red, la empresa requiere una planificación formal de su infraestructura
+física. El diseño de esa infraestructura, elaborado sobre el plano arquitectónico base asignado
+(Plano 3).
+
+El alcance del diseño se limita a la **Capa 1 del modelo OSI**. En concreto, el documento define y
+justifica: la distribución de los 48 puntos de red entre los ocho departamentos y el tipo de toma en
+cada uno; la ubicación del cuarto de telecomunicaciones (MDF); la topología física por área; el tipo
+y categoría del medio de transmisión en cada segmento; la separación entre cableado troncal y
+cableado horizontal; la estimación de distancias sobre el plano y el cálculo de bobinas; el
+dimensionamiento del equipo activo y pasivo, del rack y del respaldo de energía; la aplicación de los
+estándares T568A/T568B con la disposición de pines correspondiente; la canalización propuesta; el
+esquema de etiquetado y su contraste con el estándar TIA/EIA-606; y el presupuesto estimado del
+proyecto.
 
 ---
 
 ## 2. Datos base del edificio
 
-**Dimensiones generales (fijo):** 28 m × 21 m, un solo nivel.
+### 2.1 Dimensiones y zonificación
 
-| Zona | Ubicación en el plano | Dimensiones | Fondo |
-|---|---|---|---|
-| Departamento de Recepción | Franja superior, extremo izquierdo | 8 m × 9 m | 9 m |
-| Departamento de Recursos Humanos | Franja superior | 6 m × 9 m | 9 m |
-| Departamento Legal | Franja superior | 6 m × 9 m | 9 m |
-| Sala de Capacitación | Franja superior, extremo derecho | 8 m × 9 m | 9 m |
-| Baño | Dentro de Sala de Capacitación | 2 m × 2 m | — |
-| Vestíbulo de Ingreso | Franja central, extremo izquierdo | 6 m × 7 m | 7 m |
-| Departamento de Diseño e Innovación | Franja central | 6 m × 7 m | 7 m |
-| Dirección General | Franja central | 6 m × 7 m | 7 m |
-| Departamento de Backend | Franja central | 6 m × 7 m | 7 m |
-| Data Center | Franja central, extremo derecho | 4 m × 7 m | 7 m |
-| Área Abierta / Zona de Circulación General | Franja inferior, todo el ancho | 28 m × 5 m | 5 m |
+**Dimensiones generales:** 28 m × 21 m en un solo nivel, para una superficie total de 588 m².
+El plano base trae todas las cotas rotuladas, por lo que las distancias de este documento se
+calculan directamente sobre esas medidas y no requieren deducir una escala gráfica.
 
-**Observación de diseño (fijo):** el Área Abierta inferior recorre los 28 m del edificio y todas las
-puertas de la franja central desembocan en ella. Es la ruta natural para la canalización principal.
+El edificio se organiza en tres franjas horizontales de fondo constante:
 
-> El plano trae las medidas rotuladas, así que **no hace falta deducir la escala** — todas las
-> distancias se calculan directamente sobre las cotas indicadas.
+| Zona | Franja | Dimensiones | Área |
+| --- | --- | --- | ---: |
+| Departamento de Recepción | Superior, extremo oeste | 8 m × 9 m | 72 m² |
+| Departamento de Recursos Humanos | Superior | 6 m × 9 m | 54 m² |
+| Departamento Legal | Superior | 6 m × 9 m | 54 m² |
+| Sala de Capacitación | Superior, extremo este | 8 m × 9 m | 72 m² |
+| Baño | Dentro de Sala de Capacitación, esquina sureste | 2 m × 2 m | 4 m² |
+| Vestíbulo de Ingreso | Central, extremo oeste | 6 m × 7 m | 42 m² |
+| Departamento de Diseño e Innovación | Central | 6 m × 7 m | 42 m² |
+| Dirección General | Central | 6 m × 7 m | 42 m² |
+| Departamento de Backend | Central | 6 m × 7 m | 42 m² |
+| Data Center | Central, extremo este | 4 m × 7 m | 28 m² |
+| Área Abierta / Zona de Circulación General | Inferior, todo el ancho | 28 m × 5 m | 140 m² |
+
+**Verificación de cierre de cotas:** la franja superior suma 8 + 6 + 6 + 8 = 28 m; la franja central
+suma 6 + 6 + 6 + 6 + 4 = 28 m; y los fondos suman 9 + 7 + 5 = 21 m. Las tres franjas cubren el
+perímetro completo sin holguras ni traslapes, lo que confirma que no hay áreas técnicas ni ductos no
+rotulados que deban considerarse en el diseño.
+
+### 2.2 Sistema de referencia adoptado
+
+Para poder ubicar el MDF, los puntos de red y las rutas de canalización de forma inequívoca, se
+adopta un sistema de coordenadas en metros con **origen (0, 0) en la esquina suroeste** del edificio,
+eje X positivo hacia el este (0 a 28 m) y eje Y positivo hacia el norte (0 a 21 m). Bajo esa
+convención, cada zona ocupa el siguiente rectángulo:
+
+| Zona | X (m) | Y (m) |
+| --- | :---: | :---: |
+| Área Abierta / Circulación | 0 – 28 | 0 – 5 |
+| Vestíbulo de Ingreso | 0 – 6 | 5 – 12 |
+| Diseño e Innovación | 6 – 12 | 5 – 12 |
+| Dirección General | 12 – 18 | 5 – 12 |
+| Backend | 18 – 24 | 5 – 12 |
+| Data Center | 24 – 28 | 5 – 12 |
+| Recepción | 0 – 8 | 12 – 21 |
+| Recursos Humanos | 8 – 14 | 12 – 21 |
+| Legal | 14 – 20 | 12 – 21 |
+| Sala de Capacitación | 20 – 28 | 12 – 21 |
+| Baño | 26 – 28 | 12 – 14 |
+
+Todas las coordenadas citadas en las secciones 5, 7 y 10 se expresan bajo este sistema.
+
+### 2.3 Circulación y accesos
+
+La lectura del plano arroja tres hechos que condicionan directamente el trazado del cableado:
+
+1. **El Área Abierta es la espina dorsal del edificio.** Recorre los 28 m de ancho en la franja
+   inferior y recibe las puertas de los cinco ambientes de la franja central (Vestíbulo, Diseño e
+   Innovación, Dirección General, Backend y Data Center). Es la única zona que toca a todos los
+   ambientes de una franja completa, y por lo tanto la ruta natural de la canalización principal.
+2. **La franja superior no colinda con el Área Abierta.** Los cuatro ambientes de arriba
+   (Recepción, RRHH, Legal y Sala de Capacitación) están separados del corredor por la franja
+   central. Sus puertas se abren sobre las paredes divisorias laterales, encadenando el paso
+   Recepción → RRHH → Legal → Sala de Capacitación, con acceso desde el Vestíbulo. En
+   consecuencia, el cableado hacia esos cuatro departamentos no puede derivarse directamente del
+   troncal del corredor y exige una ruta propia, resuelta en la sección 14.
+3. **El acceso al edificio se produce por el Vestíbulo**, en el extremo oeste de la franja central.
+   Esto vuelve al extremo oeste la zona de mayor tránsito de personas y de visitantes, un factor de
+   seguridad física a considerar al ubicar el cuarto de telecomunicaciones (sección 5).
+
+### 2.4 Zonas sin puntos de red
+
+De las once zonas rotuladas, **ocho reciben servicio de red** y coinciden con los ocho departamentos
+del enunciado. Las tres restantes quedan fuera del alcance del cableado horizontal:
+
+| Zona | Motivo |
+| --- | --- |
+| Vestíbulo de Ingreso | No tiene equipos asignados en el enunciado; es área de paso y espera. |
+| Baño | Ambiente sanitario; no admite tomas de datos por normativa ni por uso. |
+| Área Abierta / Circulación | No tiene equipos asignados; se usa como ruta de canalización, no como área de trabajo. |
+
+> Esta delimitación se hace explícita porque afecta el conteo: los 48 puntos de red de la sección 3
+> se reparten entre ocho zonas, no entre las once que muestra el plano.
 
 ---
 
@@ -84,7 +147,7 @@ puertas de la franja central desembocan en ella. Es la ruta natural para la cana
 **Totales del enunciado (fijo):** 30 PCs de escritorio + 12 laptops = 42 equipos de usuario, más 6 servidores.
 
 | Departamento | Equipos usuario (fijo) | PCs escritorio | Laptops | Servidores (fijo) | Puntos de red |
-|---|---:|---:|---:|---:|---:|
+| --- | ---: | ---: | ---: | ---: | ---: |
 | Recepción | 3 | `[ ]` | `[ ]` | 1 | 4 |
 | Recursos Humanos | 8 | `[ ]` | `[ ]` | 0 | 8 |
 | Legal | 4 | `[ ]` | `[ ]` | 0 | 4 |
@@ -109,7 +172,7 @@ puertas de la franja central desembocan en ella. Es la ruta natural para la cana
 ### 4.1 Equipo activo
 
 | Ítem | Modelo propuesto | Cantidad | Ubicación | Función |
-|---|---|---:|---|---|
+| --- | --- | ---: | --- | --- |
 | Switch principal | `[ ]` | 1 | MDF | Núcleo de la estrella extendida; concentra los 8 troncales |
 | Switch de departamento | `[ ]` | 8 | Un gabinete por área | Concentra el cableado horizontal de su departamento |
 | UPS | `[ ]` | `[ ]` | MDF | Respaldo eléctrico del equipo activo |
@@ -117,7 +180,7 @@ puertas de la franja central desembocan en ella. Es la ruta natural para la cana
 ### 4.2 Equipo pasivo
 
 | Ítem | Modelo propuesto | Cantidad | Ubicación | Función |
-|---|---|---:|---|---|
+| --- | --- | ---: | --- | --- |
 | Patch panel MDF (12p, 8 poblados) | `[ ]` | 1 | Rack MDF | Terminación fija de los 8 troncales |
 | Patch panel de departamento (12p) | `[ ]` | 8 | Gabinete de área | Terminación del horizontal del área (48 puertos poblados en total) |
 | ODF (si se usa fibra) | `[ ]` | `[ ]` | MDF | Terminación y distribución de fibras |
@@ -160,7 +223,7 @@ que distribuye hacia los switches de cada departamento.
      No repitas la misma frase ocho veces. -->
 
 | Departamento | Topología | N.º hosts | Criticidad | Justificación (hosts + criticidad + costo/escalabilidad/tolerancia) |
-|---|---|---:|---|---|
+| --- | --- | ---: | --- | --- |
 | Recepción | `[ ]` | 4 | `[ ]` | `[ ]` |
 | Recursos Humanos | `[ ]` | 8 | `[ ]` | `[ ]` |
 | Legal | `[ ]` | 4 | `[ ]` | `[ ]` |
@@ -173,7 +236,7 @@ que distribuye hacia los switches de cada departamento.
 **Topologías evaluadas y descartadas:**
 
 | Topología | Por qué se descartó |
-|---|---|
+| --- | --- |
 | Bus | `[ ]` |
 | Anillo | `[ ]` |
 | Malla completa | `[ ]` |
@@ -185,7 +248,7 @@ que distribuye hacia los switches de cada departamento.
 **Total de puntos de red: 48** (42 equipos de usuario + 6 servidores).
 
 | Departamento | N.º de tomas | Tipo (unitaria/doble/triple/N) | Puertos totales | Dispositivos conectados | Puertos de reserva |
-|---|---:|---|---:|---|---:|
+| --- | ---: | --- | ---: | --- | ---: |
 | Recepción | `[ ]` | `[ ]` | `[ ]` | 3 equipos + 1 servidor | `[ ]` |
 | Recursos Humanos | `[ ]` | `[ ]` | `[ ]` | 8 equipos | `[ ]` |
 | Legal | `[ ]` | `[ ]` | `[ ]` | 4 equipos | `[ ]` |
@@ -207,7 +270,7 @@ que distribuye hacia los switches de cada departamento.
 ## 8. Medios de transmisión por segmento
 
 | Segmento | Medio | Categoría / tipo | Distancia estimada | Ancho de banda requerido | Justificación |
-|---|---|---|---:|---|---|
+| --- | --- | --- | ---: | --- | --- |
 | Horizontal: switch de depto → hosts | `[ ]` | `[ ]` | `[ ]` m | `[ ]` | `[ ]` |
 | Troncal: MDF → Recepción | `[ ]` | `[ ]` | `[ ]` m | `[ ]` | `[ ]` |
 | Troncal: MDF → Recursos Humanos | `[ ]` | `[ ]` | `[ ]` m | `[ ]` | `[ ]` |
@@ -221,7 +284,7 @@ que distribuye hacia los switches de cada departamento.
 **Tabla de referencia de categorías (para respaldar tu elección):**
 
 | Categoría | Ancho de banda | Velocidad | Distancia máx. | Uso típico |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | Cat 5e | 100 MHz | 1 Gbps | 100 m | Mínimo aceptable, en retirada |
 | Cat 6 | 250 MHz | 1 Gbps (10 Gbps hasta ~55 m) | 100 m | Horizontal de oficina |
 | Cat 6A | 500 MHz | 10 Gbps | 100 m | Troncales de cobre, backbone corto |
@@ -240,7 +303,7 @@ sólido, más hasta 10 m de patch cords en ambos extremos = **100 m de canal má
 ## 9. Cableado troncal vs. cableado horizontal
 
 | Aspecto | Troncal (backbone) | Horizontal |
-|---|---|---|
+| --- | --- | --- |
 | Recorrido | MDF ↔ switch de departamento | Switch de departamento ↔ host |
 | Cantidad en este diseño | 8 enlaces | 48 enlaces |
 | Medio | `[ ]` | `[ ]` |
@@ -255,7 +318,7 @@ sólido, más hasta 10 m de patch cords en ambos extremos = **100 m de canal má
 **Enlaces troncales del diseño:**
 
 | # | Etiqueta | Origen | Destino | Medio | Distancia |
-|---:|---|---|---|---|---:|
+| ---: | --- | --- | --- | --- | ---: |
 | 1 | `MDF-Recepcion` | Switch principal (MDF) | Switch Recepción | `[ ]` | `[ ]` m |
 | 2 | `MDF-RecursosHumanos` | Switch principal (MDF) | Switch RRHH | `[ ]` | `[ ]` m |
 | 3 | `MDF-Legal` | Switch principal (MDF) | Switch Legal | `[ ]` | `[ ]` m |
@@ -279,7 +342,7 @@ sólido, más hasta 10 m de patch cords en ambos extremos = **100 m de canal má
 ### 10.2 Cableado horizontal
 
 | Etiqueta | Departamento | Distancia ruta (m) | Subida/bajada (m) | Subtotal (m) |
-|---|---|---:|---:|---:|
+| --- | --- | ---: | ---: | ---: |
 | `Recepcion-PR01` | Recepción | `[ ]` | `[ ]` | `[ ]` |
 | <!-- COMPLETAR: una fila por cada uno de los 48 puntos --> | | | | |
 | **Subtotal horizontal** | | | | `[ ]` |
@@ -287,7 +350,7 @@ sólido, más hasta 10 m de patch cords en ambos extremos = **100 m de canal má
 ### 10.3 Cableado troncal
 
 | Etiqueta | Distancia ruta (m) | Subida/bajada (m) | Subtotal (m) |
-|---|---:|---:|---:|
+| --- | ---: | ---: | ---: |
 | `MDF-Recepcion` | `[ ]` | `[ ]` | `[ ]` |
 | <!-- COMPLETAR: las 8 troncales --> | | | |
 | **Subtotal troncal** | | | `[ ]` |
@@ -314,7 +377,7 @@ bobinas = ⌈ metros_totales / 305 ⌉ = ⌈ [ ] / 305 ⌉ = [ ] bobinas
 ### 11.1 Función de cada elemento en el flujo de conexión
 
 | Elemento | Función que cumple |
-|---|---|
+| --- | --- |
 | Switch principal (MDF) | `[ ]` |
 | Switch de departamento | `[ ]` |
 | Patch panel | `[ ]` |
@@ -328,7 +391,7 @@ bobinas = ⌈ metros_totales / 305 ⌉ = ⌈ [ ] / 305 ⌉ = [ ] bobinas
 Regla aplicada: **puertos ≥ hosts del área + 1 uplink + reserva de crecimiento.**
 
 | Departamento | Hosts | + Uplink | Mínimo | Switch elegido | Puertos libres |
-|---|---:|---:|---:|---|---:|
+| --- | ---: | ---: | ---: | --- | ---: |
 | Recepción | 4 | 1 | 5 | `[ 8p / 16p ]` | `[ ]` |
 | Recursos Humanos | 8 | 1 | 9 | 16p | 7 |
 | Legal | 4 | 1 | 5 | `[ 8p / 16p ]` | `[ ]` |
@@ -358,7 +421,7 @@ se distribuye: cada departamento aloja el patch panel de su cableado horizontal,
 literal y verificable, sin romper la separación troncal/horizontal que el mismo enunciado exige.
 
 | Ubicación | Puntos a terminar | Patch panel (marco / poblado) | Switch | ¿Switch ≥ panel? |
-|---|---:|---|---|:---:|
+| --- | ---: | --- | --- | :---: |
 | Recepción | 4 | 12p / 4 | `[ ]` | `[ ]` |
 | Recursos Humanos | 8 | 12p / 8 | 16p | ✓ |
 | Legal | 4 | 12p / 4 | `[ ]` | `[ ]` |
@@ -420,7 +483,7 @@ El cableado horizontal se poncha con el **mismo estándar en ambos extremos**: e
 ### 12.2 Tabla de enlaces
 
 | Grupo de enlaces | Cantidad | Extremo A | Extremo B | Tipo de cable | Justificación técnica |
-|---|---:|---|---|---|---|
+| --- | ---: | --- | --- | --- | --- |
 | Switch de depto ↔ hosts | 48 | `[ ]` | `[ ]` | Straight-through | `[ ]` |
 | Switch MDF ↔ switch de depto | 8 | Switch | Switch | Crossover | `[ ]` |
 
@@ -438,7 +501,7 @@ El cableado horizontal se poncha con el **mismo estándar en ambos extremos**: e
 Vista del conector RJ45 con los contactos hacia arriba y la pestaña hacia abajo; el pin 1 queda a la izquierda.
 
 | Pin | T568A | T568B | Función (10/100BASE-T) |
-|---:|---|---|---|
+| ---: | --- | --- | --- |
 | 1 | Blanco/Verde | Blanco/Naranja | TX+ |
 | 2 | Verde | Naranja | TX− |
 | 3 | Blanco/Naranja | Blanco/Verde | RX+ |
@@ -456,7 +519,7 @@ La única diferencia entre ambos: los pares **verde y naranja están intercambia
 **Extremos:** `[ ]` ↔ `[ ]`
 
 | Pin | Extremo A (`[ ]`) | Extremo B (`[ ]`) |
-|---:|---|---|
+| ---: | --- | --- |
 | 1 | `[ ]` | `[ ]` |
 | 2 | `[ ]` | `[ ]` |
 | 3 | `[ ]` | `[ ]` |
@@ -472,7 +535,7 @@ La única diferencia entre ambos: los pares **verde y naranja están intercambia
 **Extremos:** Switch principal ↔ Switch de departamento
 
 | Pin | Extremo A (`[ ]`) | Extremo B (`[ ]`) |
-|---:|---|---|
+| ---: | --- | --- |
 | 1 | `[ ]` | `[ ]` |
 | 2 | `[ ]` | `[ ]` |
 | 3 | `[ ]` | `[ ]` |
@@ -492,7 +555,7 @@ La única diferencia entre ambos: los pares **verde y naranja están intercambia
 **Tipo seleccionado para bajadas a tomas:** `[ ]`
 
 | Tipo | Descripción | Ventajas | Desventajas |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Escalerilla metálica abierta | Bandeja tipo escalera suspendida | Barata, ventilada, fácil ampliar, inspección visual | Polvo, sin protección mecánica, estética |
 | Escalerilla / ducto cerrado | Bandeja con tapa | Protección mecánica y de polvo | Más cara, menos ventilación |
 | Canaleta plástica | Canal PVC sobre pared | Estética, barata | Capacidad limitada |
@@ -513,7 +576,7 @@ del radio mínimo de curvatura del UTP. -->
 ### Cálculo de unidades de rack
 
 | Elemento | Cantidad | U c/u | U total |
-|---|---:|---:|---:|
+| --- | ---: | ---: | ---: |
 | Switch principal | 1 | `[ ]` | `[ ]` |
 | Patch panel(s) | `[ ]` | `[ ]` | `[ ]` |
 | ODF (si aplica) | `[ ]` | `[ ]` | `[ ]` |
@@ -538,7 +601,7 @@ switches de departamento.
 ### 16.1 Estimación de consumo
 
 | Equipo | Cantidad | W unitario | W total | Fuente del dato |
-|---|---:|---:|---:|---|
+| --- | ---: | ---: | ---: | --- |
 | Switch principal | 1 | `[ ]` | `[ ]` | `[ datasheet ]` |
 | Switch de departamento | 8 | `[ ]` | `[ ]` | `[ datasheet ]` |
 | **TOTAL** | | | `[ ]` W | |
@@ -565,13 +628,14 @@ switch 48 puertos ≈ 40-70 W.
 ## 17. Etiquetado de cables
 
 **Formato obligatorio del enunciado:**
+
 - Cableado horizontal: `[Área/Departamento]-PR[##]` → ej. `Recepcion-PR01`, `Legal-PR03`
 - Cableado troncal: `MDF-[Área/Departamento]` → ej. `MDF-Recepcion`, `MDF-Backend`
 
 ### 17.1 Cableado troncal
 
 | Etiqueta | Origen | Destino | Medio |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `MDF-Recepcion` | Switch principal | Switch Recepción | `[ ]` |
 | `MDF-RecursosHumanos` | Switch principal | Switch RRHH | `[ ]` |
 | `MDF-Legal` | Switch principal | Switch Legal | `[ ]` |
@@ -584,7 +648,7 @@ switch 48 puertos ≈ 40-70 W.
 ### 17.2 Cableado horizontal
 
 | Etiqueta | Departamento | Puerto switch | Toma | Dispositivo |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | `Recepcion-PR01` | Recepción | `[ ]` | `[ ]` | `[ ]` |
 | <!-- COMPLETAR: las 48 filas --> | | | | |
 
@@ -596,7 +660,7 @@ El estándar **ANSI/TIA/EIA-606** (actualmente TIA-606-C) norma la **administrac
 infraestructura de telecomunicaciones: cómo se identifica, etiqueta y documenta cada elemento.
 
 | Aspecto | Esquema usado en esta práctica | Lo que exige TIA/EIA-606 |
-|---|---|---|
+| --- | --- | --- |
 | Alcance de los identificadores | `[ ]` | `[ ]` |
 | Codificación por colores | `[ ]` | `[ ]` |
 | Registros y documentación | `[ ]` | `[ ]` |
@@ -648,7 +712,7 @@ infraestructura de telecomunicaciones: cómo se identifica, etiqueta y documenta
 ## 20. Presupuesto estimado
 
 | # | Ítem | Descripción / modelo | Cantidad | Precio unitario (Q) | Subtotal (Q) |
-|---:|---|---|---:|---:|---:|
+| ---: | --- | --- | ---: | ---: | ---: |
 | 1 | Bobina UTP Cat `[ ]` (305 m) | `[ ]` | `[ ]` | `[ ]` | `[ ]` |
 | 2 | Bobina UTP Cat 6A / fibra troncal | `[ ]` | `[ ]` | `[ ]` | `[ ]` |
 | 3 | Jacks RJ45 | `[ ]` | `[ ]` | `[ ]` | `[ ]` |
@@ -710,8 +774,8 @@ tiendas locales (Intelaf, MAX, etc.). Citá la fuente de cada rubro. -->
 1. ANSI/TIA-568 — *Commercial Building Telecommunications Cabling Standard*.
 2. ANSI/TIA-606-C — *Administration Standard for Telecommunications Infrastructure*.
 3. Odom, Wendell. 2019. *CCNA 200-301 Official Cert Guide*, Vol. 1. Indianápolis: Cisco Press. ISBN-10 0138229635.
-4. Cisco Networking Academy. 2024. *Cursos de redes y certificaciones*. https://www.netacad.com/
-5. Siemon. *Catálogo de productos 2022*. https://www.dartel-interactivo.cl/assets/catalogos_pdf/Catalogo-Siemon-2022.pdf
-6. Panduit. *Infraestructura de redes — Catálogo 2025*. https://www.panduit.com/content/dam/panduit/es/website/support/documents/infraestructura-de-redes-corp-catalogo-cpcb295-sa-rolatam-01-2025.pdf
+4. Cisco Networking Academy. 2024. *Cursos de redes y certificaciones*. <https://www.netacad.com/>
+5. Siemon. *Catálogo de productos 2022*. <https://www.dartel-interactivo.cl/assets/catalogos_pdf/Catalogo-Siemon-2022.pdf>
+6. Panduit. *Infraestructura de redes — Catálogo 2025*. <https://www.panduit.com/content/dam/panduit/es/website/support/documents/infraestructura-de-redes-corp-catalogo-cpcb295-sa-rolatam-01-2025.pdf>
 7. Notas de clase, Semanas 2 y 3 — UEDI, Redes de Computadoras 1.
 8. <!-- COMPLETAR: fuentes de precios y datasheets de los modelos elegidos -->

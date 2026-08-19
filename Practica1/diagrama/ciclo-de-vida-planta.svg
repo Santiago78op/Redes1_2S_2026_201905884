@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 226" width="960" height="226">
+  <title>Vida util de la planta pasiva frente a la activa - QuetzalDev</title>
+  <desc>En 24 anos el cableado permanece en servicio mientras el equipo activo se renueva cuatro veces, cada seis anos.</desc>
+  <style>
+  text{font-family:Consolas,"Courier New",monospace;fill:#14202C}
+  .h{font-size:15px;font-weight:700;letter-spacing:.02em}
+  .l{font-size:13px;fill:#4A5C6E} .s{font-size:11px;fill:#8497A8}
+  .v{font-size:14px;font-weight:700} .c{font-size:11px;fill:#8497A8;letter-spacing:.12em}
+  .a{fill:#0E8F7E} .b{fill:#1668B8} .o{fill:#9AA9B6} .f{fill:#C0392B}
+  .ta{fill:#0E8F7E} .tb{fill:#1668B8} .to{fill:#9AA9B6} .tf{fill:#C0392B;font-weight:700}
+  .tr{fill:#E4EAF0} .ax{stroke:#8497A8;stroke-width:1;fill:none}
+  .gl{stroke:#C7D2DC;stroke-width:1;fill:none} .rl{stroke:#14202C;stroke-width:1.5;fill:none}
+  .no{fill:#FFFFFF;stroke:#0E8F7E;stroke-width:2.4} .nh{fill:#0E8F7E;stroke:#0E8F7E;stroke-width:2.4}
+  .nf{fill:#FFFFFF;stroke:#C0392B;stroke-width:2.8} .nd{fill:#E4EAF0;stroke:#9AA9B6;stroke-width:2}
+  .noff{fill:#FFFFFF;stroke:#9AA9B6;stroke-width:2}
+  .lo{stroke:#0E8F7E;stroke-width:2;fill:none} .loff{stroke:#9AA9B6;stroke-width:1.6;fill:none}
+  .lf{stroke:#C0392B;stroke-width:2.4;fill:none;stroke-dasharray:5 3}
+  .ld{stroke:#9AA9B6;stroke-width:1.6;fill:none;stroke-dasharray:4 3}
+</style>
+  <rect x="0" y="0" width="960" height="226" fill="#FFFFFF"/>
+  <text class="l" x="70" y="52" text-anchor="end">Planta pasiva</text>
+  <rect class="b" x="80" y="36" width="858" height="26" rx="3"/>
+  <text class="v" x="509" y="54" text-anchor="middle" fill="#FFFFFF">CABLEADO Cat 6 / Cat 6A — 15 a 25 años</text>
+  <text class="l" x="70" y="112" text-anchor="end">Equipo activo</text>
+  <rect class="a" x="80" y="94" width="213" height="26" rx="3"/>
+  <text class="s" x="186" y="112" text-anchor="middle" fill="#FFFFFF">1.ª generación</text>
+  <rect class="a" x="295" y="94" width="213" height="26" rx="3"/>
+  <text class="s" x="401" y="112" text-anchor="middle" fill="#FFFFFF">2.ª generación</text>
+  <rect class="a" x="510" y="94" width="213" height="26" rx="3"/>
+  <text class="s" x="616" y="112" text-anchor="middle" fill="#FFFFFF">3.ª generación</text>
+  <rect class="a" x="725" y="94" width="213" height="26" rx="3"/>
+  <text class="s" x="831" y="112" text-anchor="middle" fill="#FFFFFF">4.ª generación</text>
+  <line class="ax" x1="80" y1="140" x2="938" y2="140"/>
+  <line class="ax" x1="80" y1="140" x2="80" y2="146"/>
+  <text class="s" x="80" y="162" text-anchor="middle">año 0</text>
+  <line class="ax" x1="294.5" y1="140" x2="294.5" y2="146"/>
+  <text class="s" x="294.5" y="162" text-anchor="middle">6</text>
+  <line class="ax" x1="509" y1="140" x2="509" y2="146"/>
+  <text class="s" x="509" y="162" text-anchor="middle">12</text>
+  <line class="ax" x1="723.5" y1="140" x2="723.5" y2="146"/>
+  <text class="s" x="723.5" y="162" text-anchor="middle">18</text>
+  <line class="ax" x1="938" y1="140" x2="938" y2="146"/>
+  <text class="s" x="938" y="162" text-anchor="middle">24</text>
+  <text class="s" x="80" y="196" text-anchor="start">El mismo cable ve pasar cuatro generaciones de electrónica. Por eso se compra la electrónica</text>
+  <text class="s" x="80" y="212" text-anchor="start">que hace falta hoy y el cable que hará falta en quince años: migrar será cambiar switches, no abrir paredes.</text>
+</svg>

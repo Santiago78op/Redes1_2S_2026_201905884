@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 410" width="640" height="410">
+  <title>Corte de un enlace horizontal - QuetzalDev</title>
+  <desc>El cable sube 0.80 m del gabinete a la canalizacion (2.80 m), recorre la ruta en planta y baja 2.40 m hasta la toma (0.40 m). Total vertical 3.20 m por enlace.</desc>
+  <style>
+  text{font-family:Consolas,"Courier New",monospace;fill:#14202C}
+  .h{font-size:15px;font-weight:700;letter-spacing:.02em}
+  .l{font-size:13px;fill:#4A5C6E} .s{font-size:11px;fill:#8497A8}
+  .v{font-size:14px;font-weight:700} .c{font-size:11px;fill:#8497A8;letter-spacing:.12em}
+  .a{fill:#0E8F7E} .b{fill:#1668B8} .o{fill:#9AA9B6} .f{fill:#C0392B}
+  .ta{fill:#0E8F7E} .tb{fill:#1668B8} .to{fill:#9AA9B6} .tf{fill:#C0392B;font-weight:700}
+  .tr{fill:#E4EAF0} .ax{stroke:#8497A8;stroke-width:1;fill:none}
+  .gl{stroke:#C7D2DC;stroke-width:1;fill:none} .rl{stroke:#14202C;stroke-width:1.5;fill:none}
+  .no{fill:#FFFFFF;stroke:#0E8F7E;stroke-width:2.4} .nh{fill:#0E8F7E;stroke:#0E8F7E;stroke-width:2.4}
+  .nf{fill:#FFFFFF;stroke:#C0392B;stroke-width:2.8} .nd{fill:#E4EAF0;stroke:#9AA9B6;stroke-width:2}
+  .noff{fill:#FFFFFF;stroke:#9AA9B6;stroke-width:2}
+  .lo{stroke:#0E8F7E;stroke-width:2;fill:none} .loff{stroke:#9AA9B6;stroke-width:1.6;fill:none}
+  .lf{stroke:#C0392B;stroke-width:2.4;fill:none;stroke-dasharray:5 3}
+  .ld{stroke:#9AA9B6;stroke-width:1.6;fill:none;stroke-dasharray:4 3}
+</style>
+  <rect x="0" y="0" width="640" height="410" fill="#FFFFFF"/>
+  <line class="rl" x1="40" y1="300" x2="610" y2="300"/>
+  <line x1="40" y1="60" x2="610" y2="60" stroke="#8497A8" stroke-width="1" stroke-dasharray="5 4"/>
+  <text class="s" x="40" y="318" text-anchor="start">NIVEL DE PISO TERMINADO</text>
+  <text class="s" x="40" y="52" text-anchor="start">CIELO RASO · 3.00 m</text>
+  <line x1="100" y1="76" x2="560" y2="76" stroke="#C08214" stroke-width="12" stroke-linecap="round" opacity="0.4"/>
+  <text class="s" x="250" y="100" text-anchor="start">CANALIZACIÓN · 2.80 m</text>
+  <rect x="80" y="140" width="40" height="64" rx="2" fill="#FFFFFF" stroke="#1668B8" stroke-width="2"/>
+  <text class="l" x="100" y="224" text-anchor="middle">gabinete</text>
+  <text class="s" x="100" y="240" text-anchor="middle">2.00 m</text>
+  <rect x="550" y="261" width="18" height="14" rx="1.5" fill="#0E8F7E"/>
+  <text class="l" x="559" y="294" text-anchor="middle">toma</text>
+  <text class="s" x="559" y="310" text-anchor="middle">0.40 m</text>
+  <polyline points="100,140 100,76 560,76 560,268" fill="none" stroke="#0E8F7E" stroke-width="2.6" stroke-linejoin="round"/>
+  <g stroke="#8497A8" stroke-width="1"><line x1="316" y1="66" x2="324" y2="88"/><line x1="332" y1="66" x2="340" y2="88"/>
+  <line x1="62" y1="76" x2="62" y2="140"/><line x1="56" y1="76" x2="68" y2="76"/><line x1="56" y1="140" x2="68" y2="140"/>
+  <line x1="590" y1="76" x2="590" y2="268"/><line x1="584" y1="76" x2="596" y2="76"/><line x1="584" y1="268" x2="596" y2="268"/>
+  <line x1="100" y1="40" x2="560" y2="40"/><line x1="100" y1="34" x2="100" y2="46"/><line x1="560" y1="34" x2="560" y2="46"/></g>
+  <text class="v" x="52" y="112" text-anchor="end">0.80 m</text>
+  <text class="v" x="600" y="176" text-anchor="start">2.40 m</text>
+  <text class="l" x="330" y="32" text-anchor="middle">ruta en planta — variable, 1.0 a 11.5 m</text>
+  <rect class="tr" x="40" y="336" width="300" height="32" rx="3"/>
+  <text class="v" x="56" y="358" text-anchor="start">0.80 + 2.40 = 3.20 m</text>
+  <text class="s" x="206" y="358" text-anchor="start">por enlace horizontal</text>
+  <text class="s" x="40" y="392" text-anchor="start">El troncal une gabinete con gabinete, ambos a 2.00 m: 0.80 + 0.80 ≈ 2.0 m por enlace.</text>
+</svg>

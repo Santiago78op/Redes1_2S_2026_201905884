@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 262" width="960" height="262">
+  <title>Capacidad del medio frente al uso real - QuetzalDev</title>
+  <desc>Cat 6 alcanza 100 m y se usan 14.7; Cat 6A alcanza 100 m y se usan 31; la fibra OM3 alcanza 300 m y se usarian los mismos 31. Escala comun.</desc>
+  <style>
+  text{font-family:Consolas,"Courier New",monospace;fill:#14202C}
+  .h{font-size:15px;font-weight:700;letter-spacing:.02em}
+  .l{font-size:13px;fill:#4A5C6E} .s{font-size:11px;fill:#8497A8}
+  .v{font-size:14px;font-weight:700} .c{font-size:11px;fill:#8497A8;letter-spacing:.12em}
+  .a{fill:#0E8F7E} .b{fill:#1668B8} .o{fill:#9AA9B6} .f{fill:#C0392B}
+  .ta{fill:#0E8F7E} .tb{fill:#1668B8} .to{fill:#9AA9B6} .tf{fill:#C0392B;font-weight:700}
+  .tr{fill:#E4EAF0} .ax{stroke:#8497A8;stroke-width:1;fill:none}
+  .gl{stroke:#C7D2DC;stroke-width:1;fill:none} .rl{stroke:#14202C;stroke-width:1.5;fill:none}
+  .no{fill:#FFFFFF;stroke:#0E8F7E;stroke-width:2.4} .nh{fill:#0E8F7E;stroke:#0E8F7E;stroke-width:2.4}
+  .nf{fill:#FFFFFF;stroke:#C0392B;stroke-width:2.8} .nd{fill:#E4EAF0;stroke:#9AA9B6;stroke-width:2}
+  .noff{fill:#FFFFFF;stroke:#9AA9B6;stroke-width:2}
+  .lo{stroke:#0E8F7E;stroke-width:2;fill:none} .loff{stroke:#9AA9B6;stroke-width:1.6;fill:none}
+  .lf{stroke:#C0392B;stroke-width:2.4;fill:none;stroke-dasharray:5 3}
+  .ld{stroke:#9AA9B6;stroke-width:1.6;fill:none;stroke-dasharray:4 3}
+</style>
+  <rect x="0" y="0" width="960" height="262" fill="#FFFFFF"/>
+  <text class="l" x="70" y="52" text-anchor="end">Cat 6</text>
+  <rect class="tr" x="80" y="36" width="286.66999999999996" height="22" rx="3"/>
+  <rect class="a" x="80" y="36" width="42.14048999999999" height="22" rx="3"/>
+  <text class="v" x="134.14049" y="52" text-anchor="start">14.7 m</text>
+  <text class="s" x="192.14049" y="52" text-anchor="start">de 100 m disponibles · 15 %</text>
+  <text class="l" x="70" y="104" text-anchor="end">Cat 6A</text>
+  <rect class="tr" x="80" y="88" width="286.66999999999996" height="22" rx="3"/>
+  <rect class="b" x="80" y="88" width="88.8677" height="22" rx="3"/>
+  <text class="v" x="180.8677" y="104" text-anchor="start">31.0 m</text>
+  <text class="s" x="238.8677" y="104" text-anchor="start">de 100 m disponibles · 31 %</text>
+  <text class="l" x="70" y="156" text-anchor="end">Fibra OM3</text>
+  <rect x="80" y="140" width="860.0" height="22" rx="3" fill="none" stroke="#9AA9B6" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <rect class="o" x="80" y="140" width="88.8677" height="22" rx="3"/>
+  <text class="v" x="180.8677" y="156" text-anchor="start">31.0 m</text>
+  <text class="s" x="238.8677" y="156" text-anchor="start">de 300 m disponibles · 10 % — descartada (§8.3)</text>
+  <line x1="168.9" y1="28" x2="168.9" y2="172" stroke="#14202C" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text class="s" x="174" y="24" text-anchor="start">enlace más largo del edificio</text>
+  <line class="ax" x1="80" y1="186" x2="940" y2="186"/>
+  <line class="ax" x1="80" y1="186" x2="80" y2="192"/>
+  <text class="s" x="80" y="206" text-anchor="middle">0</text>
+  <line class="ax" x1="366.66999999999996" y1="186" x2="366.66999999999996" y2="192"/>
+  <text class="s" x="366.66999999999996" y="206" text-anchor="middle">100</text>
+  <line class="ax" x1="653.3399999999999" y1="186" x2="653.3399999999999" y2="192"/>
+  <text class="s" x="653.3399999999999" y="206" text-anchor="middle">200</text>
+  <line class="ax" x1="940.01" y1="186" x2="940.01" y2="192"/>
+  <text class="s" x="940.01" y="206" text-anchor="middle">300 m</text>
+  <text class="s" x="80" y="232" text-anchor="start">En 28 m ninguna opción se acerca a su límite: la distancia NO discrimina entre medios.</text>
+  <text class="s" x="80" y="248" text-anchor="start">Deciden el ancho de banda agregado y la escalabilidad de la planta.</text>
+</svg>

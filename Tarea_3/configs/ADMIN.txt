@@ -1,0 +1,37 @@
+! =====================================================
+! ADMIN  -  Switch de acceso  -  VTP CLIENT
+! Modelo: Cisco 2960-24TT
+! PC1 -> VLAN 10 (ADMIN)   |   PC2 -> VLAN 20 (MERCA)
+! =====================================================
+enable
+configure terminal
+hostname ADMIN
+!
+! --- 1) Trunk hacia Switch0 (PRIMERO: sin trunk no hay VTP) ---
+interface FastEthernet0/24
+ description TRUNK a Switch0
+ switchport mode trunk
+ no shutdown
+exit
+!
+! --- 2) VTP: mismo dominio, modo cliente ---
+vtp domain REDES1
+vtp mode client
+!
+! --- 3) Puertos de acceso ---
+!     (requiere que las VLANs ya hayan llegado por VTP)
+interface FastEthernet0/1
+ description PC1 - VLAN ADMIN
+ switchport mode access
+ switchport access vlan 10
+ no shutdown
+exit
+interface FastEthernet0/2
+ description PC2 - VLAN MERCA
+ switchport mode access
+ switchport access vlan 20
+ no shutdown
+exit
+!
+end
+write memory

@@ -1,0 +1,36 @@
+! =====================================================
+! MERCA  -  Switch de acceso  -  VTP CLIENT
+! Modelo: Cisco 2960-24TT
+! PC3 -> VLAN 20 (MERCA)   |   PC4 -> VLAN 30 (VENTAS)
+! =====================================================
+enable
+configure terminal
+hostname MERCA
+!
+! --- 1) Trunk hacia Switch0 ---
+interface FastEthernet0/24
+ description TRUNK a Switch0
+ switchport mode trunk
+ no shutdown
+exit
+!
+! --- 2) VTP: mismo dominio, modo cliente ---
+vtp domain REDES1
+vtp mode client
+!
+! --- 3) Puertos de acceso ---
+interface FastEthernet0/1
+ description PC3 - VLAN MERCA
+ switchport mode access
+ switchport access vlan 20
+ no shutdown
+exit
+interface FastEthernet0/2
+ description PC4 - VLAN VENTAS
+ switchport mode access
+ switchport access vlan 30
+ no shutdown
+exit
+!
+end
+write memory

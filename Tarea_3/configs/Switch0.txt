@@ -1,0 +1,43 @@
+! =====================================================
+! Switch0  -  Switch CENTRAL  -  VTP SERVER
+! Modelo: Cisco 2960-24TT
+! =====================================================
+enable
+configure terminal
+hostname Switch0
+!
+! --- 1) Trunks hacia los switches de acceso ---
+interface FastEthernet0/1
+ description TRUNK a ADMIN
+ switchport mode trunk
+ no shutdown
+exit
+interface FastEthernet0/2
+ description TRUNK a MERCA
+ switchport mode trunk
+ no shutdown
+exit
+interface FastEthernet0/3
+ description TRUNK a VENTAS
+ switchport mode trunk
+ no shutdown
+exit
+!
+! --- 2) VTP: dominio y modo servidor ---
+vtp domain REDES1
+vtp version 2
+vtp mode server
+!
+! --- 3) Creacion de las VLANs (solo aqui: es el server) ---
+vlan 10
+ name ADMIN
+exit
+vlan 20
+ name MERCA
+exit
+vlan 30
+ name VENTAS
+exit
+!
+end
+write memory

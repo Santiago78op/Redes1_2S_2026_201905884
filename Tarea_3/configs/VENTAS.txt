@@ -1,0 +1,50 @@
+! =====================================================
+! VENTAS  -  Switch de acceso  -  VTP TRANSPARENT
+! Modelo: Cisco 2960-24TT
+! PC5 -> VLAN 30 (VENTAS)  |   PC6 -> VLAN 10 (ADMIN)
+!
+! OJO: en modo transparente el switch NO aprende VLANs
+! por VTP. Hay que crearlas LOCALMENTE, a mano.
+! =====================================================
+enable
+configure terminal
+hostname VENTAS
+!
+! --- 1) Trunk hacia Switch0 ---
+interface FastEthernet0/24
+ description TRUNK a Switch0
+ switchport mode trunk
+ no shutdown
+exit
+!
+! --- 2) VTP: mismo dominio, modo transparente ---
+vtp domain REDES1
+vtp mode transparent
+!
+! --- 3) VLANs LOCALES (no llegan por VTP) ---
+vlan 10
+ name ADMIN
+exit
+vlan 20
+ name MERCA
+exit
+vlan 30
+ name VENTAS
+exit
+!
+! --- 4) Puertos de acceso ---
+interface FastEthernet0/1
+ description PC5 - VLAN VENTAS
+ switchport mode access
+ switchport access vlan 30
+ no shutdown
+exit
+interface FastEthernet0/2
+ description PC6 - VLAN ADMIN
+ switchport mode access
+ switchport access vlan 10
+ no shutdown
+exit
+!
+end
+write memory

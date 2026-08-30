@@ -1,0 +1,37 @@
+! ==========================================================
+! Switch0  -  RAIZ del Spanning Tree   (carne 201905884)
+! Modelo: 2960-24TT   |   MAC (Bridge ID): 000D.BD3E.13D4
+! Gi0/1 -> Switch1    |   Gi0/2 -> Switch2
+! ==========================================================
+enable
+configure terminal
+!
+! ---------- VLANs ----------
+vlan 10
+ name Ventas
+ exit
+vlan 20
+ name Compras
+ exit
+!
+! ---------- Troncales ----------
+interface GigabitEthernet0/1
+ switchport mode trunk
+ exit
+interface GigabitEthernet0/2
+ switchport mode trunk
+ exit
+!
+! ---------- STP FASE 1: PVST, forzar raiz ----------
+spanning-tree mode pvst
+spanning-tree vlan 10 priority 4096
+spanning-tree vlan 20 priority 4096
+!
+end
+write memory
+!
+! ---------- STP FASE 2: cambiar a Rapid PVST ----------
+! configure terminal
+!  spanning-tree mode rapid-pvst
+! end
+! write memory

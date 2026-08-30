@@ -1,0 +1,48 @@
+! ==========================================================
+! Switch2  -  acceso Ventas/Compras    (carne 201905884)
+! Modelo: 2960-24TT   |   MAC (Bridge ID): 0001.4298.2D34
+! Gi0/1 -> Switch0 (ROOT PORT)
+! Gi0/2 -> Switch1 (DESIGNATED -> FORWARDING, tiene el BID mas bajo)
+! ==========================================================
+enable
+configure terminal
+!
+! ---------- VLANs ----------
+vlan 10
+ name Ventas
+ exit
+vlan 20
+ name Compras
+ exit
+!
+! ---------- Puertos de acceso ----------
+interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ exit
+interface FastEthernet0/2
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ exit
+!
+! ---------- Troncales ----------
+interface GigabitEthernet0/1
+ switchport mode trunk
+ exit
+interface GigabitEthernet0/2
+ switchport mode trunk
+ exit
+!
+! ---------- STP FASE 1 ----------
+spanning-tree mode pvst
+!
+end
+write memory
+!
+! ---------- STP FASE 2: cambiar a Rapid PVST ----------
+! configure terminal
+!  spanning-tree mode rapid-pvst
+! end
+! write memory

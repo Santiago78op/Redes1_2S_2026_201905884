@@ -1,0 +1,12 @@
+! ==========================================================
+! FASE 2 - Aplicar en LOS TRES switches (Switch0/1/2)
+! ==========================================================
+enable
+configure terminal
+spanning-tree mode rapid-pvst
+end
+write memory
+!
+! Verificacion:
+!   show spanning-tree summary        -> "Switch is in rapid-pvst mode"
+!   show spanning-tree vlan 10

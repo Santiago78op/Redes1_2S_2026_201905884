@@ -1,3 +1,18 @@
+# ---------------------------------------------------------------
+# .gitignore — capa VERSIONADA: viaja al remoto y aplica a todos
+# ---------------------------------------------------------------
+
+# Enunciado del curso: lo publica el catedratico, no es entregable
+# del equipo. Se conserva en disco, pero no se sube al repositorio.
+Proyecto 1/doc/0972_Proyecto_1_2S2026.pdf
+Proyecto 1/doc/0972_Proyecto_1_2S2026.md
+
+# Temporales de suite de oficina (Word/Excel) y basura del explorador
+~$*
+*.tmp
+Thumbs.db
+desktop.ini
+
 # macOS
 .DS_Store
 .DS_Store?

@@ -60,10 +60,12 @@ solo necesita la teoría de los pasos 4 y 5.
 
 ## Cómo usarlo en cualquier máquina
 
+No hay pasos manuales: tanto el comando como el contexto (`Proyecto 1/CLAUDE.md` y esta carpeta)
+están versionados.
+
 ```bash
 git clone <repo> && cd <repo>
-echo "@wiki/CONTEXTO-CLAUDE.md" > "Proyecto 1/CLAUDE.md"   # stub local, no versionado
-claude                                                      # y dentro: /paso
+claude          # y adentro:  /paso
 ```
 
 `/paso` sin argumentos continúa donde marca [[AVANCE]]. También acepta `/paso 4` (ir a un paso

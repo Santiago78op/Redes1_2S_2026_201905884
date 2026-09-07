@@ -2,6 +2,8 @@
 
 Bóveda Obsidian con el conocimiento de trabajo del proyecto: contexto para Claude Code, análisis del enunciado, decisiones de diseño y conceptos de Capa 2. **No es un entregable**; el Manual Técnico es `../README.md`.
 
+20 notas, versionadas: el cerebro viaja con el `git clone` y es el mismo en todas las máquinas.
+
 | Archivo | Para qué |
 |---|---|
 | `AVANCE.md` | **Estado del progreso**: paso actual, decisiones con su justificación, dudas abiertas, bitácora de sesiones. Lo lee y actualiza `/paso`. |
@@ -14,6 +16,13 @@ Bóveda Obsidian con el conocimiento de trabajo del proyecto: contexto para Clau
 | `Glosario.md` · `log.md` | Términos en una línea · bitácora de cambios del cerebro. |
 
 ## Usarla en otra PC
-0. Escribir `/paso` en Claude Code para retomar la clase donde quedó (el comando viaja en `.claude/commands/`).
-1. Crear `Proyecto 1/CLAUDE.md` con una sola línea: `@wiki/CONTEXTO-CLAUDE.md`.
-2. Si hay diamon: en `brains.json`, mundo `personal`, agregar `"redes": "<ruta-del-repo>/Proyecto 1/wiki"` y reiniciar la sesión.
+
+No hay pasos manuales: `Proyecto 1/CLAUDE.md` y `.claude/commands/paso.md` están versionados.
+
+```bash
+git clone <repo> && cd <repo>
+claude          # y adentro:  /paso
+```
+
+Opcional, si esa máquina tiene diamon: en `brains.json`, mundo `personal`, agregar
+`"redes": "<ruta-del-repo>/Proyecto 1/wiki"` y reiniciar la sesión para poder usar `brain_search`.

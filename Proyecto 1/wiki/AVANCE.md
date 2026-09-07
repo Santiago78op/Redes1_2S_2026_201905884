@@ -61,11 +61,15 @@ Detalle completo de las diez ambigüedades detectadas: [[Ambigüedades y riesgos
 
 ### 2026-09-07 — Montaje
 - Se analizó el enunciado (`analisis-enunciado.md`) y se detectó que el PDF está incompleto.
-- Se creó el cerebro del proyecto en `Proyecto 1/wiki/` (16 notas) y se contrastó la teoría de Capa 2
-  con los cuatro enlaces oficiales del §5 del enunciado.
+- Se creó el cerebro del proyecto en `Proyecto 1/wiki/` (20 notas, versionadas) y se contrastó la
+  teoría de Capa 2 con los cuatro enlaces oficiales del §5 del enunciado, corrigiendo dos puntos: una
+  VLAN nativa desalineada **puede producir bucles de STP** (no es solo un aviso de CDP) y PVST no es
+  «el modo por defecto», sino el que se selecciona con `spanning-tree mode pvst`.
 - Se creó la estructura de entregables: plantilla del Manual en dos marcos (§1–9 teórico, §10–29
   práctico), `capturas/` con cuatro subcarpetas e índice, `configs/` y `diagrama/`.
 - Se definió el modo de trabajo paso a paso: [[PROTOCOLO-CATEDRA]] + comando `/paso`.
+- Se hizo portable el contexto: `Proyecto 1/CLAUDE.md` y `.claude/commands/paso.md` quedaron
+  **versionados**, así que en otra máquina basta clonar y escribir `/paso`, sin copiar archivos.
 - **Nada implementado aún en Packet Tracer.**
 
 <!-- Agregar una entrada por sesión: qué se explicó, qué se implementó, qué quedó pendiente. -->

@@ -1,6 +1,6 @@
 # Proyecto 1 — "SmartCity Tech Park" · Contexto para Claude Code
 
-> Archivo de contexto **portable y versionado**: viaja con el repo dentro de `Proyecto 1/wiki/`. El `Proyecto 1/CLAUDE.md` local (excluido de git) es solo un stub de una línea, `@wiki/CONTEXTO-CLAUDE.md`, que importa este archivo para que Claude Code lo cargue automáticamente. Contiene todo lo que Claude necesita saber para continuar el proyecto sin releer el enunciado.
+> Archivo de contexto **portable y versionado**: viaja con el repo dentro de `Proyecto 1/wiki/`. Lo importa `Proyecto 1/CLAUDE.md` —también versionado— con la línea `@wiki/CONTEXTO-CLAUDE.md`, así que Claude Code lo carga solo al abrir la carpeta, en cualquier máquina y sin instalar nada. Contiene todo lo que Claude necesita saber para continuar el proyecto sin releer el enunciado.
 
 ## Quién y qué
 - **Curso:** Redes de Computadoras 1, USAC, Facultad de Ingeniería, 2S-2026. Ponderación **22 pts**, 35 h estimadas.
@@ -63,12 +63,12 @@ Se invoca con el slash command **`/paso`** (`.claude/commands/paso.md`, versiona
   - En la Práctica 1 esto se materializó en dos documentos: `../Practica1/ManualTecnico.md` (23 secciones) e `../Practica1/InformeDesarrollo.md` (proceso, criterios, retos, conclusiones). Reutilizar su encabezado institucional, índice numerado, tablas y sección de referencias.
 - Todo comando ejecutado se copia al README de inmediato, por dispositivo.
 - Toda decisión de diseño se anota con su justificación en el momento (la rúbrica califica la justificación).
-- Conocimiento ampliado (conceptos, comandos con valores sustituidos, ambigüedades, plan): cerebro diamon `redes` en `C:\mcp\brains\personal\redes` (solo existe en la PC principal).
+- Conocimiento ampliado (conceptos con citas oficiales, comandos con los valores ya sustituidos, ambigüedades del enunciado, calendario): **esta misma carpeta `wiki/`**, que es una bóveda Obsidian de 20 notas versionada en el repo y registrada como cerebro diamon `redes` en el `brains.json` de la PC principal. Índice: `wiki/00 - 🌐 Cerebro Redes (MOC).md`.
 
 ## Estructura de la carpeta (creada el 2026-09-07)
 ```
 Proyecto 1/
-├── CLAUDE.md                    ← stub local: @wiki/CONTEXTO-CLAUDE.md (no versionado)
+├── CLAUDE.md                    ← importa wiki/CONTEXTO-CLAUDE.md (versionado: viaja al clonar)
 ├── README.md                    ← Manual Técnico (PLANTILLA: Parte I Marco Teórico §1–9, Parte II Marco Práctico §10–29)
 ├── Proyecto1_201905884.pkt      ← topología (entregable; se genera en Packet Tracer)
 ├── capturas/
@@ -86,9 +86,21 @@ Proyecto 1/
 ```
 Las guías de redacción de la plantilla van en comentarios HTML `<!-- -->`; se borran al cerrar cada sección.
 
-## Instalar el contexto en otra PC (2 pasos)
-1. Clonar el repo y crear el stub: en `Proyecto 1/` un archivo `CLAUDE.md` con la única línea `@wiki/CONTEXTO-CLAUDE.md`.
-2. (Opcional, si esa PC tiene diamon) agregar en `brains.json`, mundo `personal`: `"redes": "<ruta-del-repo>/Proyecto 1/wiki"` y reiniciar la sesión.
+## Retomar el proyecto en otra PC
 
-El comando `/paso` **no** requiere instalación: al estar en `.claude/commands/` del repo, aparece
-solo al abrir Claude Code en la carpeta clonada.
+Sin pasos manuales: el contexto (`Proyecto 1/CLAUDE.md` + `wiki/`) y el comando
+(`.claude/commands/paso.md`) están versionados.
+
+```bash
+git clone https://github.com/Santiago78op/Redes1_2S_2026_201905884.git
+cd Redes1_2S_2026_201905884
+claude          # y adentro:  /paso
+```
+
+Dos aclaraciones sobre lo que **no** viaja, para no buscarlo: la memoria de Claude vive en
+`~/.claude/projects/…/memory/` de cada máquina, y el output style «Catedrático» también es local. Por
+eso todo lo que importa está acá, en el repo, y el comando `/paso` trae sus propias reglas de
+redacción.
+
+Opcional, si esa máquina tiene diamon: agregar en `brains.json`, mundo `personal`,
+`"redes": "<ruta-del-repo>/Proyecto 1/wiki"` y reiniciar la sesión.

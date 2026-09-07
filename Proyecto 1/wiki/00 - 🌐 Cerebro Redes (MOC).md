@@ -10,14 +10,18 @@ cssclasses: []
 > Base de conocimiento del curso **Redes de Computadoras 1** (USAC, Facultad de Ingeniería, 2S-2026). Guarda el contexto de cada proyecto del curso (qué pide el enunciado, qué parámetros me tocan por carné, qué decidí y por qué) y los conceptos de red necesarios para defenderlos. Claude Code se apoya en estas notas para trabajar el proyecto en cualquier máquina.
 >
 > Estudiante: **Santiago Barrera — carné 201905884**. Repositorio: `Redes1_2S_2026_201905884`.
+>
+> **20 notas.** Esta carpeta (`Proyecto 1/wiki/`) está **versionada**: viaja con el `git clone`, así que el cerebro es el mismo en todas las máquinas. También está registrada como cerebro diamon `redes` en `C:\mcp\brains.json` de la PC principal.
 
 ---
 
 ## 🗺️ Mapa del conocimiento
 
 ### 00 · Cómo trabajamos
-- [[AVANCE]] — **empezá por acá**: en qué paso vamos, decisiones tomadas, dudas abiertas
-- [[PROTOCOLO-CATEDRA]] — el método paso a paso (teoría → preguntas → práctica → registro) y la secuencia de los 11 pasos
+- [[AVANCE]] — **empezá por acá**: en qué paso vamos, decisiones tomadas con su justificación, dudas abiertas
+- [[PROTOCOLO-CATEDRA]] — el método de clase guiada (teoría → preguntas → práctica → registro) y la secuencia de los 11 pasos
+- [[CONTEXTO-CLAUDE]] — el resumen que Claude Code carga solo al abrir la carpeta
+- [[analisis-enunciado]] — análisis completo y autocontenido del PDF oficial, sección por sección
 
 ### 01 · Proyecto 1 — SmartCity Tech Park (Capa 1 y Capa 2)
 - [[Proyecto 1 - SmartCity Tech Park]] — resumen del enunciado, fechas, rúbrica y estado actual
@@ -25,7 +29,7 @@ cssclasses: []
 - [[Requerimientos por área]] — qué exige cada uno de los 4 edificios y cómo pienso resolverlo
 - [[Entregables y checklist]] — lo que debe contener el `README.md` y el `.pkt`, con casillas
 - [[Ambigüedades y riesgos del enunciado]] — lo que el PDF no dice o dice mal, y qué decidí
-- [[Plan de trabajo Proyecto 1]] — metodología propia en 6 fases (el PDF trae la sección vacía)
+- [[Plan de trabajo Proyecto 1]] — el **calendario**: 8 fases con fecha meta (el PDF trae la sección de metodología vacía). La secuencia didáctica va en [[PROTOCOLO-CATEDRA]]
 
 ### 02 · Conceptos de Capa 2 (los que se evalúan)
 - [[Dominios de colisión y broadcast]] — cómo contarlos por switch, hub y VLAN
@@ -37,6 +41,8 @@ cssclasses: []
 
 ### Referencia
 - [[Glosario]] — términos del curso en una línea
+- [[log]] — bitácora del cerebro (append-only)
+- [[README]] — qué es cada archivo de esta carpeta y cómo usarla en otra máquina
 
 ---
 

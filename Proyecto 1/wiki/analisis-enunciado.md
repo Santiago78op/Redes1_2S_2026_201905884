@@ -265,6 +265,9 @@ copy running-config startup-config
 
 ## 13. Dónde está el resto del material
 
-- `Proyecto 1/CLAUDE.md`: versión corta de este análisis que Claude Code carga automáticamente.
-- Cerebro diamon `redes` (`C:\mcp\brains\personal\redes`, **solo en la PC principal**): las mismas ideas repartidas en 16 notas enlazadas, con conceptos ampliados (dominios, VLAN/802.1Q, VTP, STP/PVST, EtherChannel/LACP) y glosario.
-- Estilo del Manual a imitar: `../Practica1/ManualTecnico.md`.
+- `wiki/AVANCE.md`: **el estado del progreso** — paso actual, decisiones tomadas con su justificación, dudas abiertas. Es lo primero que hay que leer al retomar el proyecto.
+- `wiki/PROTOCOLO-CATEDRA.md`: el método de clase guiada y la secuencia de los 11 pasos; se invoca con el comando `/paso` (`.claude/commands/paso.md`, versionado).
+- `wiki/CONTEXTO-CLAUDE.md`: versión corta de este análisis; la importa `Proyecto 1/CLAUDE.md` —también versionado— así que Claude Code la carga sola al abrir la carpeta, en cualquier máquina.
+- Esta misma carpeta `wiki/` es una bóveda Obsidian (cerebro diamon `redes`, registrado en `C:\mcp\brains.json` de la PC principal): **20 notas** enlazadas, con la teoría de Capa 2 ampliada y contrastada contra la documentación oficial del §5. Empezar por `00 - 🌐 Cerebro Redes (MOC).md`.
+- Entregables en construcción: `../README.md` (Manual Técnico), `../capturas/`, `../configs/`, `../diagrama/`.
+- Estilo del Manual a imitar: `../../Practica1/ManualTecnico.md` e `../../Practica1/InformeDesarrollo.md`.

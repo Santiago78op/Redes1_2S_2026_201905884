@@ -9,6 +9,9 @@ El enunciado promete una metodología en §6 pero la sección viene **vacía**, 
 
 Hoy es 2026-09-07; la elaboración cierra el **17/09/2026** → 10 días.
 
+> [!note] Esta nota es el **calendario**, no la secuencia de clases
+> Hay dos vistas del mismo trabajo y conviene no confundirlas. Acá van las **fases con fecha meta**, para saber si vamos a tiempo. La **secuencia didáctica** —qué teoría se explica junto a qué implementación— está en [[PROTOCOLO-CATEDRA]], con 11 pasos, y el progreso real en [[AVANCE]]. La correspondencia está al final de esta nota.
+
 ## Fases
 | Fase | Qué | Por qué en este orden | Meta |
 |---|---|---|---|
@@ -32,6 +35,19 @@ Hoy es 2026-09-07; la elaboración cierra el **17/09/2026** → 10 días.
 flowchart LR
     F0[0 Dudas] --> F1[1 Diseño] --> F2[2 Capa 1 PT] --> F3[3 VTP + VLANs] --> F4[4 STP + EtherChannel] --> F5[5 Pruebas] --> F6[6 Manual] --> F7[7 Lab + entrega]
 ```
+
+## Correspondencia con los 11 pasos de [[PROTOCOLO-CATEDRA]]
+
+| Fase (calendario) | Pasos de clase |
+|---|---|
+| 0 · Dudas | previo; no es un paso de clase |
+| 1 · Diseño en papel | 1 · Dominios · 2 · Medios |
+| 2 · Capa 1 en Packet Tracer | 3 · Topología |
+| 3 · VTP + VLANs | 4 · VLANs y trunks · 5 · VTP |
+| 4 · Redundancia | 6 · STP · 7 · EtherChannel |
+| 5 · Pruebas | 8 · Seguridad y Legacy · 9 · Verificación |
+| 6 · Manual | 10 · Redacción |
+| 7 · Lab + entrega | 11 · Parte física |
 
 Volver a [[Proyecto 1 - SmartCity Tech Park]].
 

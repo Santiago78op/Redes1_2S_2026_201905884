@@ -20,3 +20,6 @@ Se consultaron los 4 enlaces oficiales de §5 (VLAN Trunks, VTP 10558, STP 2960,
 
 ## [2026-09-07] ingest | Modo clase guiada paso a paso
 Se creo el slash command de proyecto `/paso` (`.claude/commands/paso.md`, versionado), el `PROTOCOLO-CATEDRA.md` (metodo de 4 etapas + secuencia de 11 pasos) y `AVANCE.md` (estado del progreso, fuente de verdad). Hallazgo: `.claude/` estaba entero en `.git/info/exclude`, lo que habria impedido que el comando viajara al remoto; se estrecho a `.claude/settings.local.json`.
+
+## [2026-09-07] lint | Refresco del cerebro y contexto sin pasos manuales
+Se reviso el cerebro completo (20 notas). El MOC lista ahora `CONTEXTO-CLAUDE`, `analisis-enunciado`, `log` y `README`, y declara el conteo. Se reconcilio la doble vista del trabajo: `Plan de trabajo` es el calendario (8 fases con fecha) y `PROTOCOLO-CATEDRA` la secuencia didactica (11 pasos), con tabla de correspondencia entre ambas. Se corrigieron las referencias obsoletas a `C:/mcp/brains/personal/redes` y al conteo de 16 notas en `analisis-enunciado` §13 y en `AVANCE`. El Glosario sumo DTP, Bridge ID, port-channel, PortFast, storm-control y port-security. Cambio de fondo: el patron `CLAUDE.md` del `.git/info/exclude` se anclo a la raiz (`/CLAUDE.md`), asi `Proyecto 1/CLAUDE.md` quedo versionado y en otra maquina ya no hay que crearlo a mano: clonar y `/paso`.

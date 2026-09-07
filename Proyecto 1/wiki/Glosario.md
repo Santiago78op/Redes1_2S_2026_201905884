@@ -21,5 +21,11 @@ aliases: [términos, definiciones, vocabulario]
 | LACP / PAgP | Protocolos de negociación de EtherChannel: LACP es estándar IEEE, PAgP es propietario Cisco. | [[EtherChannel LACP]] |
 | Legacy | Equipo o protocolo heredado que no se puede reemplazar de inmediato (el hub de la Planta). | [[Requerimientos por área]] |
 | MOTD | *Message of the day*: banner que muestra el switch al iniciar sesión. | [[Comandos Cisco IOS del proyecto]] |
+| DTP | Protocolo Cisco que negocia si un enlace se vuelve trunk; dos puertos en `dynamic auto` nunca lo forman. | [[VLAN y enlaces troncales 802.1Q]] |
+| Bridge ID | Prioridad (4 bits) + ID de sistema extendido (12 bits, igual al VLAN ID) + MAC; decide quién es Root. | [[STP y PVST]] |
+| Port-channel | Interfaz lógica que representa un EtherChannel; ahí se configura el trunk y los puertos físicos lo heredan. | [[EtherChannel LACP]] |
+| PortFast | Salta los estados de STP en un puerto hacia un dispositivo final; nunca hacia otro switch. | [[STP y PVST]] |
+| storm-control | Limita el porcentaje de broadcast que un puerto admite antes de descartarlo. | [[Dominios de colisión y broadcast]] |
+| port-security | Restringe cuántas y cuáles direcciones MAC puede aprender un puerto. | [[Dominios de colisión y broadcast]] |
 
 Volver al [[00 - 🌐 Cerebro Redes (MOC)|MOC]].

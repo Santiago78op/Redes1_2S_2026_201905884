@@ -13,9 +13,14 @@ Protocolo **propietario de Cisco** que sincroniza la base de datos de VLANs (IDs
 | **Server** | Sí | Sí | Sí | Core del Centro de Datos (administración centralizada) |
 | **Client** | No | Sí | Sí | Distribución y acceso de I+D, Corporativo, Planta |
 | **Transparent** | Sí, pero solo localmente | **No** adopta | Sí (v2) | Switch de Áreas Comunes: aísla la administración de VLANs del resto del campus |
+| *Off* | Solo localmente | No | **No** reenvía | Igual que Transparent, pero ni siquiera propaga anuncios |
+
+Textualmente: *"los switches VTP transparentes no participan en VTP"* y no se sincronizan con los anuncios, aunque *"si reenvian los anuncios VTP por sus puertos troncales en VTP version 2"*. Esa distincion —no adopta, pero reenvia— es justo lo que necesita el switch de Áreas Comunes: se aisla de la administracion sin romper la propagacion hacia el resto del campus.
 
 ## El número de revisión (la trampa clásica)
-Cada cambio en el Server incrementa el **configuration revision number**. Cuando dos switches del mismo dominio se conectan, **gana el de revisión más alta**, aunque sea un Client. Un switch reciclado con revisión 30 puede **borrar** las VLANs del campus con revisión 5. Mitigación: antes de conectar un switch, ponerlo en Transparent y luego en Client (eso resetea la revisión a 0), y usar **contraseña** de dominio — la nuestra es `proyecto12S2026`.
+*"Cada vez que se hace un cambio de VLAN en un dispositivo VTP, la revision de configuracion se incrementa en uno."* Un switch **ignora** los anuncios cuya revision sea menor o igual a la propia; si la recibida es mayor, adopta esa base de datos. Consecuencia: **gana la revision mas alta**, aunque venga de un Client. Un switch reciclado con revision 30 puede **borrar** las VLANs de un campus que va en revision 5.
+
+La advertencia de Cisco es literal: *"recuerde la revision de configuracion y como reiniciarla cada vez que inserte un switch nuevo en su red, para no tumbar la red entera"*. Se reinicia **cambiando el nombre de dominio y restaurandolo** (o pasando por Transparent), y se protege con la **contraseña** de dominio — la nuestra es `proyecto12S2026`.
 
 ## Requisitos para que funcione
 1. Mismo **dominio** (`Smart_8`) — sensible a mayúsculas.
@@ -28,4 +33,4 @@ Cada cambio en el Server incrementa el **configuration revision number**. Cuando
 
 Comandos en [[Comandos Cisco IOS del proyecto]]; decisión sobre Transparent en [[Ambigüedades y riesgos del enunciado]]; las VLANs que propaga en [[Parámetros por carné 201905884]].
 
-> 📚 Fuente: Cisco, *Understanding VLAN Trunk Protocol (VTP)*, doc 10558 — enlace en el enunciado §5.
+> 📚 Fuente: Cisco, [*Understanding VLAN Trunk Protocol (VTP)*](https://www.cisco.com/c/en/us/support/docs/lan-switching/vtp/10558-21.html), doc 10558, consultado el 2026-09-07 — enlace del enunciado §5.

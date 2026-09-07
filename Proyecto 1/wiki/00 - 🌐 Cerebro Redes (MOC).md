@@ -15,6 +15,10 @@ cssclasses: []
 
 ## 🗺️ Mapa del conocimiento
 
+### 00 · Cómo trabajamos
+- [[AVANCE]] — **empezá por acá**: en qué paso vamos, decisiones tomadas, dudas abiertas
+- [[PROTOCOLO-CATEDRA]] — el método paso a paso (teoría → preguntas → práctica → registro) y la secuencia de los 11 pasos
+
 ### 01 · Proyecto 1 — SmartCity Tech Park (Capa 1 y Capa 2)
 - [[Proyecto 1 - SmartCity Tech Park]] — resumen del enunciado, fechas, rúbrica y estado actual
 - [[Parámetros por carné 201905884]] — VLANs, dominio VTP, nativa, LACP/PVST, banner: todo ya sustituido
@@ -37,6 +41,7 @@ cssclasses: []
 ---
 
 ## 🧭 Cómo usar este cerebro
+0. Escribí `/paso` en Claude Code: lee [[AVANCE]] y da la clase del paso que toca.
 1. Empezá por [[Proyecto 1 - SmartCity Tech Park]] para saber en qué estamos.
 2. Antes de configurar algo, verificá el valor en [[Parámetros por carné 201905884]]: una VLAN mal numerada penaliza del -50 % al -100 %.
 3. Toda decisión de diseño se anota en [[Requerimientos por área]] con su justificación, porque la rúbrica exige justificarla en el Manual Técnico.

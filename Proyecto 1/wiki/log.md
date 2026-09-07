@@ -11,3 +11,12 @@ El cerebro se movió de `C:/mcp/brains/personal/redes` a `Proyecto 1/wiki/` (ver
 
 ## [2026-09-07] ingest | Convención Marco Teórico / Marco Práctico
 El Manual se redacta en dos marcos, como la Práctica 1: teoría (notas de `02 - Conceptos Capa 2/`) y práctica (implementación con evidencia). Registrado en `CONTEXTO-CLAUDE.md` y `Entregables y checklist`.
+
+## [2026-09-07] ingest | Estructura de entregables
+Se crearon `README.md` (plantilla del Manual en dos marcos, 29 secciones), `capturas/` (4 subcarpetas + EVIDENCIAS.md), `configs/` y `diagrama/` con sus README. El árbol quedó en `CONTEXTO-CLAUDE.md`.
+
+## [2026-09-07] ingest | Teoria contrastada con la documentacion Cisco del enunciado
+Se consultaron los 4 enlaces oficiales de §5 (VLAN Trunks, VTP 10558, STP 2960, EtherChannel 2960) y se enriquecieron las notas con citas y numeros verificados: costos STP por velocidad, prioridad 32768 / extended system ID, temporizadores 2/15/20 s y ~50 s de convergencia, priority multiplo de 4096 y root primary = 24576, tabla DTP, limite de 8 puertos y 6 canales, balanceo por flujo. Dos correcciones: la nativa desalineada **puede provocar bucles** (no solo un aviso de CDP), y PVST no es 'el modo por defecto' sino el que se selecciona con `spanning-tree mode pvst`.
+
+## [2026-09-07] ingest | Modo clase guiada paso a paso
+Se creo el slash command de proyecto `/paso` (`.claude/commands/paso.md`, versionado), el `PROTOCOLO-CATEDRA.md` (metodo de 4 etapas + secuencia de 11 pasos) y `AVANCE.md` (estado del progreso, fuente de verdad). Hallazgo: `.claude/` estaba entero en `.git/info/exclude`, lo que habria impedido que el comando viajara al remoto; se estrecho a `.claude/settings.local.json`.

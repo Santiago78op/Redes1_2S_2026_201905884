@@ -42,6 +42,19 @@ Carpeta exactamente **"Proyecto 1"** en el mismo repo de la práctica · entrega
 - Cerradas: ninguna todavía, solo los parámetros por carné.
 - Propuestas por justificar: EtherChannel para servidores e I+D; anillo de 3 switches en I+D; triángulo distribuidor–Ala A–Ala B; Áreas Comunes en VTP Transparent; Root Bridge = Core para VLANs 14/34/44/54 y por decidir para la 24; fibra entre edificios, UTP dentro.
 
+## Modo de trabajo: clase guiada paso a paso
+
+El proyecto se trabaja **enseñando la teoría y aplicándola en el mismo paso**, no de corrido. El
+método y la secuencia de los 11 pasos están en `wiki/PROTOCOLO-CATEDRA.md`; el estado actual (paso en
+curso, decisiones tomadas con su justificación, dudas abiertas) en **`wiki/AVANCE.md`**, que es la
+fuente de verdad del progreso.
+
+Se invoca con el slash command **`/paso`** (`.claude/commands/paso.md`, versionado: viaja con el
+`git clone`). Cada paso tiene cuatro etapas obligatorias en orden: **teoría con cita oficial →
+2-3 preguntas de comprensión que el estudiante debe responder → implementación → registro en
+`AVANCE.md` y en la sección del Manual**. Al retomar el proyecto en cualquier máquina: leer
+`AVANCE.md` y escribir `/paso`.
+
 ## Cómo trabajar conmigo en este proyecto
 - Los commits y pushes los hace el usuario; Claude no commitea.
 - **El proyecto se trabaja en dos marcos, como en la Práctica 1:**
@@ -52,24 +65,30 @@ Carpeta exactamente **"Proyecto 1"** en el mismo repo de la práctica · entrega
 - Toda decisión de diseño se anota con su justificación en el momento (la rúbrica califica la justificación).
 - Conocimiento ampliado (conceptos, comandos con valores sustituidos, ambigüedades, plan): cerebro diamon `redes` en `C:\mcp\brains\personal\redes` (solo existe en la PC principal).
 
-## Estructura prevista de la carpeta
+## Estructura de la carpeta (creada el 2026-09-07)
 ```
 Proyecto 1/
 ├── CLAUDE.md                    ← stub local: @wiki/CONTEXTO-CLAUDE.md (no versionado)
-├── README.md                    ← Manual Técnico (entregable)
-├── Proyecto1_201905884.pkt      ← topología (entregable)
+├── README.md                    ← Manual Técnico (PLANTILLA: Parte I Marco Teórico §1–9, Parte II Marco Práctico §10–29)
+├── Proyecto1_201905884.pkt      ← topología (entregable; se genera en Packet Tracer)
+├── capturas/
+│   ├── EVIDENCIAS.md            ← índice de capturas con convención NN-<dispositivo>-<comando>.png
+│   ├── topologia/  areas/  evidencias/  laboratorio/
+├── configs/                     ← running-config por switch (<hostname>.txt); README con cabecera obligatoria
+├── diagrama/                    ← figuras SVG propias (README con índice)
 ├── doc/                         ← enunciado PDF/MD (ignorados en git)
 ├── wiki/                        ← cerebro del proyecto (versionado, viaja con el push)
-│   ├── CONTEXTO-CLAUDE.md       ← este archivo
-│   ├── analisis-enunciado.md    ← análisis completo del enunciado
-│   ├── 00 - 🌐 Cerebro Redes (MOC).md
-│   ├── 01 - Proyecto 1 SmartCity/  y  02 - Conceptos Capa 2/
-│   └── Glosario.md · log.md
-├── cerebro/                     ← notas personales locales, si hacen falta (no versionado)
-├── capturas/                    ← evidencias PNG para el README
-└── configs/                     ← running-config exportada por switch
+│   ├── AVANCE.md                ← estado del progreso: LEER PRIMERO
+│   ├── PROTOCOLO-CATEDRA.md     ← método paso a paso y secuencia de los 11 pasos
+└── cerebro/                     ← notas personales locales, si hacen falta (no versionado)
+
+.claude/commands/paso.md         ← (raíz del repo) el slash command /paso, versionado
 ```
+Las guías de redacción de la plantilla van en comentarios HTML `<!-- -->`; se borran al cerrar cada sección.
 
 ## Instalar el contexto en otra PC (2 pasos)
 1. Clonar el repo y crear el stub: en `Proyecto 1/` un archivo `CLAUDE.md` con la única línea `@wiki/CONTEXTO-CLAUDE.md`.
 2. (Opcional, si esa PC tiene diamon) agregar en `brains.json`, mundo `personal`: `"redes": "<ruta-del-repo>/Proyecto 1/wiki"` y reiniciar la sesión.
+
+El comando `/paso` **no** requiere instalación: al estar en `.claude/commands/` del repo, aparece
+solo al abrir Claude Code en la carpeta clonada.

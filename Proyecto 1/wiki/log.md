@@ -8,3 +8,6 @@ Se comprobó página por página: índice corrido una página; §8.2/§8.3 solo 
 
 ## [2026-09-07] lint | Mudanza al repo
 El cerebro se movió de `C:/mcp/brains/personal/redes` a `Proyecto 1/wiki/` (versionado; `brains.json` re-apuntado). Se sumaron `CONTEXTO-CLAUDE.md` (importado por el stub `CLAUDE.md`) y `analisis-enunciado.md`.
+
+## [2026-09-07] ingest | Convención Marco Teórico / Marco Práctico
+El Manual se redacta en dos marcos, como la Práctica 1: teoría (notas de `02 - Conceptos Capa 2/`) y práctica (implementación con evidencia). Registrado en `CONTEXTO-CLAUDE.md` y `Entregables y checklist`.

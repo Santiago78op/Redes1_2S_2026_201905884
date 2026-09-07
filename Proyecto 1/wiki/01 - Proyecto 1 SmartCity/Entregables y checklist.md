@@ -14,7 +14,7 @@ Dos archivos dentro de `Proyecto 1/` en el repo, más la parte física en labora
 - [ ] 100 % de conectividad **intra-VLAN** y aislamiento **inter-VLAN** (objetivo SMART del enunciado).
 
 ## B. `README.md` — Manual Técnico (Markdown)
-Cada ítem es una sección; la rúbrica los lista uno por uno:
+Se organiza en **dos marcos, como en la Práctica 1**: **Marco Teórico** (conceptos que sustentan las decisiones: [[Dominios de colisión y broadcast]], [[VLAN y enlaces troncales 802.1Q]], [[VTP]], [[STP y PVST]], [[EtherChannel LACP]], medios y seguridad básica) y **Marco Práctico** (la implementación con evidencia). Los ítems que exige la rúbrica van en el Marco Práctico, cada uno citando la teoría que lo respalda:
 - [ ] Capturas de la **topología completa** y de **cada área**.
 - [ ] **Tabla de dominios de colisión**: cuántos genera cada switch (= puertos activos) y cuál es el dominio compartido del hub Legacy. → [[Dominios de colisión y broadcast]]
 - [ ] **Tabla de dominios de broadcast**: uno por VLAN activa.

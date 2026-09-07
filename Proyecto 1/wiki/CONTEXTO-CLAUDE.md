@@ -44,7 +44,10 @@ Carpeta exactamente **"Proyecto 1"** en el mismo repo de la práctica · entrega
 
 ## Cómo trabajar conmigo en este proyecto
 - Los commits y pushes los hace el usuario; Claude no commitea.
-- Estilo del Manual: seguir el de `../Practica1/ManualTecnico.md` (encabezado institucional, índice numerado, tablas, referencias).
+- **El proyecto se trabaja en dos marcos, como en la Práctica 1:**
+  - **Marco Teórico**: los conceptos que sustentan cada decisión (dominios de colisión/broadcast, VLAN/802.1Q, VTP, STP/PVST, EtherChannel/LACP, medios de transmisión, seguridad básica), redactados con definiciones, comparaciones y referencias, antes de configurar nada. Fuente: notas de `wiki/02 - Conceptos Capa 2/`.
+  - **Marco Práctico**: la implementación (topología, tablas de VLANs/puertos/dominios, comandos por dispositivo, capturas de `show`, justificaciones de Root Bridge/EtherChannel/medios, presupuesto). Cada decisión práctica cita la sección teórica que la respalda.
+  - En la Práctica 1 esto se materializó en dos documentos: `../Practica1/ManualTecnico.md` (23 secciones) e `../Practica1/InformeDesarrollo.md` (proceso, criterios, retos, conclusiones). Reutilizar su encabezado institucional, índice numerado, tablas y sección de referencias.
 - Todo comando ejecutado se copia al README de inmediato, por dispositivo.
 - Toda decisión de diseño se anota con su justificación en el momento (la rúbrica califica la justificación).
 - Conocimiento ampliado (conceptos, comandos con valores sustituidos, ambigüedades, plan): cerebro diamon `redes` en `C:\mcp\brains\personal\redes` (solo existe en la PC principal).

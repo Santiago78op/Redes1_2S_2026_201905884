@@ -1,0 +1,81 @@
+! ==========================================================
+! SW-DIST-CORP  -  Distribucion Corporativo / Root VLAN 14 y 54   (carne 201905884)
+! Modelo: Switch-PT-Empty   |   MAC (Bridge ID): 0010.1103.B9BE
+! VTP (no figura en running-config; de 'show vtp status'): modo Client,
+!   dominio Smart_8, version 2, revision 29
+! Enlaces (segun las 'description' de la propia configuracion):
+!   Gi0/1   -> SW-CORE fibra OM3 120 m
+!   Gi1/1   -> SW-ALA-A UTP Cat6
+!   Gi2/1   -> SW-ALA-B UTP Cat6
+!   Gi3/1   -> SW-COMUNES SOLO VLAN 54 aislamiento de visitantes
+! Volcado REAL de 'show running-config' tomado del simulador el 2026-09-16,
+! sobre Proyecto1_201905884.pkt. El script de origen esta en scripts/SW-DIST-CORP.txt
+! ==========================================================
+Building configuration...
+
+Current configuration : 1255 bytes
+!
+version 12.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW-DIST-CORP
+!
+!
+!
+ptp clock transparent domain 0 profile default
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+spanning-tree vlan 14,54 priority 24576
+!
+interface GigabitEthernet0/1
+ description -> SW-CORE fibra OM3 120 m
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,14,54,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet1/1
+ description -> SW-ALA-A UTP Cat6
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,14,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet2/1
+ description -> SW-ALA-B UTP Cat6
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,14,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet3/1
+ description -> SW-COMUNES SOLO VLAN 54 aislamiento de visitantes
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,54,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+banner motd ^CAcceso Restringido - TechPark_201905884^C
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end

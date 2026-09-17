@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" width="960" height="500" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 9 — Cuatro enlaces físicos agrupados en un port-channel</title>
+  <desc>Sin EtherChannel, Spanning Tree bloquea tres de los cuatro enlaces paralelos y desperdicia su capacidad. Con EtherChannel los cuatro se presentan a STP como un único enlace lógico, de modo que ninguno se bloquea y la caída de un miembro no dispara reconvergencia.</desc>
+
+  <style>
+    .t   { font-size: 20px; fill: #212529; }
+    .sw  { fill: #f8f9fa; stroke: #343a40; stroke-width: 2.2; }
+    .swt { font-size: 14px; font-weight: bold; fill: #343a40; }
+    .h   { font-size: 16px; font-weight: bold; }
+    .sub { font-size: 12.5px; fill: #868e96; }
+    .red { font-size: 13px; font-weight: bold; fill: #c92a2a; }
+    .grn { font-size: 13px; font-weight: bold; fill: #2f9e44; }
+  </style>
+
+  <text x="480" y="30" class="t" text-anchor="middle">Cuatro cables, dos resultados distintos</text>
+  <line x1="480" y1="52" x2="480" y2="470" stroke="#dee2e6" stroke-width="1.5" stroke-dasharray="7 6"/>
+
+  <!-- ================= IZQUIERDA: SIN ETHERCHANNEL ================= -->
+  <text x="240" y="80" class="h" fill="#c92a2a" text-anchor="middle">Sin EtherChannel</text>
+  <text x="240" y="100" class="sub" text-anchor="middle">STP ve cuatro caminos paralelos</text>
+
+  <rect x="120" y="126" width="240" height="48" rx="8" class="sw"/>
+  <text x="240" y="156" class="swt" text-anchor="middle">SW-A</text>
+  <rect x="120" y="326" width="240" height="48" rx="8" class="sw"/>
+  <text x="240" y="356" class="swt" text-anchor="middle">SW-B</text>
+
+  <g stroke-width="3" stroke-linecap="round">
+    <line x1="162" y1="174" x2="162" y2="326" stroke="#2f9e44"/>
+    <line x1="214" y1="174" x2="214" y2="326" stroke="#e03131" stroke-dasharray="9 6"/>
+    <line x1="266" y1="174" x2="266" y2="326" stroke="#e03131" stroke-dasharray="9 6"/>
+    <line x1="318" y1="174" x2="318" y2="326" stroke="#e03131" stroke-dasharray="9 6"/>
+  </g>
+
+  <g>
+    <rect x="205" y="240" width="18" height="14" rx="3" fill="#e03131"/>
+    <path d="M208,240 V237 a5.5,5.5 0 0 1 11,0 V240" fill="none" stroke="#e03131" stroke-width="2.2"/>
+    <rect x="257" y="240" width="18" height="14" rx="3" fill="#e03131"/>
+    <path d="M260,240 V237 a5.5,5.5 0 0 1 11,0 V240" fill="none" stroke="#e03131" stroke-width="2.2"/>
+    <rect x="309" y="240" width="18" height="14" rx="3" fill="#e03131"/>
+    <path d="M312,240 V237 a5.5,5.5 0 0 1 11,0 V240" fill="none" stroke="#e03131" stroke-width="2.2"/>
+  </g>
+
+  <text x="118" y="250" class="grn" text-anchor="end">1 Gbps</text>
+  <text x="118" y="266" class="sub" text-anchor="end">activo</text>
+
+  <text x="240" y="406" class="red" text-anchor="middle">1 Gbps útiles</text>
+  <text x="240" y="428" class="red" text-anchor="middle" font-size="15">3 Gbps desperdiciados</text>
+  <text x="240" y="452" class="sub" text-anchor="middle">STP hace su trabajo: quita el bucle.</text>
+  <text x="240" y="470" class="sub" text-anchor="middle">Pero aquí no queríamos un camino alterno, queríamos capacidad.</text>
+
+  <!-- ================= DERECHA: CON ETHERCHANNEL ================= -->
+  <text x="720" y="80" class="h" fill="#2f9e44" text-anchor="middle">Con EtherChannel (LACP)</text>
+  <text x="720" y="100" class="sub" text-anchor="middle">STP ve un solo enlace lógico</text>
+
+  <rect x="600" y="126" width="240" height="48" rx="8" class="sw"/>
+  <text x="720" y="156" class="swt" text-anchor="middle">SW-A</text>
+  <rect x="600" y="326" width="240" height="48" rx="8" class="sw"/>
+  <text x="720" y="356" class="swt" text-anchor="middle">SW-B</text>
+
+  <!-- capsula -->
+  <rect x="618" y="186" width="204" height="128" rx="34" fill="#2f9e44" fill-opacity="0.10" stroke="#2f9e44" stroke-width="2.6" stroke-dasharray="10 6"/>
+  <rect x="664" y="236" width="112" height="28" rx="14" fill="#2f9e44"/>
+  <text x="720" y="255" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">Po1</text>
+
+  <g stroke="#2f9e44" stroke-width="3" stroke-linecap="round">
+    <line x1="642" y1="174" x2="642" y2="326"/>
+    <line x1="694" y1="174" x2="694" y2="326"/>
+    <line x1="746" y1="174" x2="746" y2="326"/>
+    <line x1="798" y1="174" x2="798" y2="326"/>
+  </g>
+
+  <text x="720" y="406" class="grn" text-anchor="middle" font-size="15">4 Gbps de capacidad agregada</text>
+  <text x="720" y="428" class="grn" text-anchor="middle">Si cae un miembro, quedan 3 — sin reconvergencia</text>
+  <text x="720" y="452" class="sub" text-anchor="middle">`channel-group 1 mode active` en <tspan font-weight="bold">ambos</tspan> extremos.</text>
+  <text x="720" y="470" class="sub" text-anchor="middle">Matiz honesto: una sola conversación no supera la velocidad de un miembro.</text>
+</svg>

@@ -1,0 +1,55 @@
+! ==========================================================
+! SW-COMUNES  -  Acceso visitantes / VTP Transparent   (carne 201905884)
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! El volcado real de 'show running-config' va en configs/SW-COMUNES.txt
+! ==========================================================
+enable
+configure terminal
+ hostname SW-COMUNES
+ no ip domain-lookup
+ spanning-tree mode pvst
+!
+! ---- VTP Transparent: aislamiento de ADMINISTRACION de VLANs (§5.2) ----
+ vtp mode transparent
+ vtp domain Smart_8
+ vtp version 2
+!
+! ---- En Transparent las VLANs se crean a mano: solo las que este switch necesita ----
+ vlan 54
+  name VISITANTES
+ vlan 94
+  name NATIVA
+ vlan 999
+  name SIN-USO
+ exit
+!
+ interface GigabitEthernet0/1
+  description -> SW-DIST-CORP · solo VLAN 54 permitida
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,54,94
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface FastEthernet0/1
+  description -> AP-VISITANTES
+  switchport mode access
+  switchport access vlan 54
+  spanning-tree portfast
+  no shutdown
+ exit
+ interface FastEthernet0/2
+  description -> PC-VIS-1 (cableada)
+  switchport mode access
+  switchport access vlan 54
+  spanning-tree portfast
+  spanning-tree bpduguard enable   ! un BPDU en un puerto de equipo final lo apaga (§22)
+  no shutdown
+ exit
+ interface range FastEthernet0/3-24
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+end
+write memory

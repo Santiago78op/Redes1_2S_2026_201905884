@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" width="1200" height="660" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 18 — Los cinco dominios de broadcast del campus sobre la misma planta física</title>
+  <desc>La misma topología del campus, con cinco siluetas de color que marcan el alcance de cada VLAN. Cada VLAN es un dominio de broadcast independiente aunque cruce switches y edificios; la VLAN nativa 94 existe en todos los trunks pero no tiene ningún puerto de acceso.</desc>
+
+  <style>
+    .t   { font-size: 21px; fill: #212529; }
+    .sw  { fill: #fff; stroke: #ced4da; stroke-width: 2; }
+    .swt { font-size: 11.5px; font-weight: bold; fill: #adb5bd; }
+    .lnk { stroke: #dee2e6; stroke-width: 3; fill: none; stroke-linecap: round; }
+    .an  { font-size: 12px; fill: #ced4da; }
+    .sub { font-size: 12.5px; fill: #868e96; }
+  </style>
+
+  <text x="600" y="32" class="t" text-anchor="middle">Un dominio de broadcast por VLAN, sobre la misma planta física</text>
+  <text x="600" y="56" class="sub" text-anchor="middle">La topología va en gris: lo único que cambia entre un dominio y otro es la <tspan font-weight="bold">pertenencia lógica</tspan> de cada puerto.</text>
+
+  <!-- ===== SILUETAS DE VLAN (debajo de la topología) ===== -->
+  <!-- 44 SERVIDORES -->
+  <path d="M120,300 C120,250 180,238 250,246 L520,120 C560,108 600,132 600,166 C600,196 560,214 520,206 L250,318 C180,330 120,340 120,300 Z"
+        fill="#343a40" fill-opacity="0.13" stroke="#343a40" stroke-width="2.4" stroke-dasharray="10 6"/>
+  <!-- 24 INVESTIGACION -->
+  <path d="M330,470 C300,420 320,330 390,300 L560,170 C596,152 632,180 624,212 C618,238 590,246 566,238 L430,336 C400,420 430,500 380,500 C352,500 344,494 330,470 Z"
+        fill="#0c8599" fill-opacity="0.14" stroke="#0c8599" stroke-width="2.4" stroke-dasharray="10 6"/>
+  <!-- 14 GERENCIA -->
+  <path d="M660,300 C660,260 700,250 760,256 L900,256 C950,252 960,300 930,320 C900,340 700,352 670,336 C656,328 660,318 660,300 Z"
+        fill="#7048e8" fill-opacity="0.14" stroke="#7048e8" stroke-width="2.4" stroke-dasharray="10 6"/>
+  <!-- 54 VISITANTES -->
+  <ellipse cx="1000" cy="330" rx="94" ry="66" fill="#d6336c" fill-opacity="0.13" stroke="#d6336c" stroke-width="2.4" stroke-dasharray="10 6"/>
+  <!-- 34 PRODUCCION -->
+  <path d="M700,170 C760,140 1020,140 1090,180 C1130,204 1130,300 1090,318 C1040,340 1010,300 1030,250 C1046,212 900,196 740,200 C706,200 682,182 700,170 Z"
+        fill="#f08c00" fill-opacity="0.15" stroke="#f08c00" stroke-width="2.4" stroke-dasharray="10 6"/>
+
+  <!-- ===== TOPOLOGÍA EN GRIS ===== -->
+  <g class="lnk">
+    <path d="M540,150 C400,190 260,200 200,252"/>
+    <path d="M572,150 C540,190 500,200 470,252"/>
+    <path d="M636,150 C700,190 750,200 800,252"/>
+    <path d="M668,150 C860,190 1000,190 1060,252"/>
+    <path d="M430,278 L390,330"/>
+    <path d="M510,278 L550,330"/>
+    <path d="M390,372 L450,420"/>
+    <path d="M550,372 L510,420"/>
+    <path d="M390,352 L550,352"/>
+    <path d="M760,278 L720,330"/>
+    <path d="M800,278 L800,330"/>
+    <path d="M840,278 L1000,320"/>
+    <path d="M720,372 L790,400"/>
+    <path d="M1060,278 L1060,330"/>
+  </g>
+
+  <g class="sw">
+    <rect x="530" y="108" width="140" height="42" rx="7"/>
+    <rect x="140" y="252" width="120" height="38" rx="6"/>
+    <rect x="410" y="252" width="126" height="38" rx="6"/>
+    <rect x="740" y="252" width="126" height="38" rx="6"/>
+    <rect x="1004" y="252" width="116" height="38" rx="6"/>
+    <rect x="336" y="330" width="106" height="38" rx="6"/>
+    <rect x="502" y="330" width="106" height="38" rx="6"/>
+    <rect x="420" y="420" width="106" height="38" rx="6"/>
+    <rect x="666" y="330" width="106" height="38" rx="6"/>
+    <rect x="746" y="400" width="106" height="38" rx="6"/>
+    <rect x="948" y="310" width="106" height="38" rx="6"/>
+  </g>
+  <g class="swt" text-anchor="middle">
+    <text x="600" y="134">SW-CORE</text>
+    <text x="200" y="276">SW-SRV</text>
+    <text x="473" y="276">SW-DIST-ID</text>
+    <text x="803" y="276">SW-DIST-CORP</text>
+    <text x="1062" y="276">SW-PLANTA</text>
+    <text x="389" y="354">SW-ID-1</text>
+    <text x="555" y="354">SW-ID-3</text>
+    <text x="473" y="444">SW-ID-2</text>
+    <text x="719" y="354">SW-ALA-A</text>
+    <text x="799" y="424">SW-ALA-B</text>
+    <text x="1001" y="334">SW-COMUNES</text>
+  </g>
+
+  <!-- ===== ETIQUETAS DE DOMINIO ===== -->
+  <g font-size="12.5" font-weight="bold" fill="#fff">
+    <rect x="96"  y="196" width="140" height="22" rx="11" fill="#343a40"/><text x="166" y="212" text-anchor="middle">44 SERVIDORES</text>
+    <rect x="296" y="508" width="164" height="22" rx="11" fill="#0c8599"/><text x="378" y="524" text-anchor="middle">24 INVESTIGACION</text>
+    <rect x="806" y="196" width="150" height="22" rx="11" fill="#f08c00"/><text x="881" y="212" text-anchor="middle">34 PRODUCCION</text>
+    <rect x="688" y="464" width="140" height="22" rx="11" fill="#7048e8"/><text x="758" y="480" text-anchor="middle">14 GERENCIA</text>
+    <rect x="936" y="410" width="140" height="22" rx="11" fill="#d6336c"/><text x="1006" y="426" text-anchor="middle">54 VISITANTES</text>
+  </g>
+
+  <!-- ===== LECTURA ===== -->
+  <rect x="60" y="548" width="1080" height="96" rx="12" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1.5"/>
+  <text x="600" y="574" class="sub" text-anchor="middle" font-size="13.5" fill="#343a40" font-weight="bold">Lo que hay que leer en esta figura</text>
+  <text x="600" y="598" class="sub" text-anchor="middle">Las siluetas <tspan font-weight="bold">cruzan switches y edificios</tspan>: la 14 abarca las dos alas, la 24 los tres switches del anillo. Eso las hace <tspan font-weight="bold">un</tspan> dominio, no varios.</text>
+  <text x="600" y="618" class="sub" text-anchor="middle">Ninguna silueta se solapa: ése es el aislamiento. El SW-COMUNES sólo queda dentro de la 54, y el segmento del hub sólo dentro de la 34.</text>
+  <text x="600" y="638" class="sub" text-anchor="middle" fill="#c92a2a">Falta una sexta, invisible a propósito: la <tspan font-weight="bold">VLAN 94</tspan>, que existe en los 13 trunks pero no tiene un solo puerto de acceso.</text>
+</svg>

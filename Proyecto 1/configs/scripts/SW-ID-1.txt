@@ -1,0 +1,58 @@
+! ==========================================================
+! SW-ID-1  -  Acceso I+D (anillo) / raiz secundaria VLAN 24   (carne 201905884)
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! El volcado real de 'show running-config' va en configs/SW-ID-1.txt
+! ==========================================================
+enable
+configure terminal
+ hostname SW-ID-1
+ no ip domain-lookup
+ spanning-tree mode pvst
+ spanning-tree vlan 24 priority 28672          ! hace determinista el bloqueo del anillo (§18)
+!
+ vtp mode transparent
+ vtp mode client
+ vtp domain Smart_8
+ vtp password proyecto12S2026
+ vtp version 2
+!
+ interface GigabitEthernet0/1
+  description -> SW-DIST-ID (uplink)
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,24,94
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface GigabitEthernet0/2
+  description -> SW-ID-2 (anillo)
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,24,94
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface FastEthernet0/24
+  description -> SW-ID-3 (cierre del anillo, 100 Mbps, costo STP 19)
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,24,94
+  switchport nonegotiate
+  no shutdown
+ exit
+!
+ interface range FastEthernet0/1-3
+  description PC de investigacion
+  switchport mode access
+  switchport access vlan 24
+  spanning-tree portfast
+  spanning-tree bpduguard enable   ! un BPDU en un puerto de equipo final lo apaga (§22)
+  no shutdown
+ exit
+ interface range FastEthernet0/4-23
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+end
+write memory

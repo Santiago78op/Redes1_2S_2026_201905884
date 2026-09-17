@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" width="900" height="480" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 4 — Puerto de acceso y puerto troncal</title>
+  <desc>Los puertos de acceso entregan una sola VLAN sin etiqueta a los equipos finales; el enlace troncal transporta varias VLANs etiquetadas por un solo cable, más la VLAN nativa sin etiquetar.</desc>
+
+  <defs>
+    <marker id="fl" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7,3.2 L0,6.4 z" fill="#343a40"/>
+    </marker>
+  </defs>
+
+  <style>
+    .t   { font-size: 20px; fill: #212529; }
+    .sw  { fill: #f8f9fa; stroke: #343a40; stroke-width: 2.2; }
+    .swt { font-size: 15px; font-weight: bold; fill: #343a40; }
+    .lbl { font-size: 12px; fill: #495057; }
+    .sub { font-size: 13px; fill: #868e96; }
+    .hd  { font-size: 15px; font-weight: bold; }
+  </style>
+
+  <text x="450" y="32" class="t" text-anchor="middle">Un cable por VLAN hacia los equipos; un solo cable para todas entre switches</text>
+
+  <!-- rotulos de zona -->
+  <text x="176" y="72" class="hd" fill="#2f9e44" text-anchor="middle">PUERTOS DE ACCESO</text>
+  <text x="176" y="92" class="sub" text-anchor="middle">una VLAN · sin etiqueta</text>
+  <text x="450" y="72" class="hd" fill="#1971c2" text-anchor="middle">ENLACE TRONCAL (TRUNK)</text>
+  <text x="450" y="92" class="sub" text-anchor="middle">varias VLANs · etiquetadas 802.1Q</text>
+  <text x="726" y="72" class="hd" fill="#2f9e44" text-anchor="middle">PUERTOS DE ACCESO</text>
+  <text x="726" y="92" class="sub" text-anchor="middle">una VLAN · sin etiqueta</text>
+
+  <!-- tramas que viajan por el trunk -->
+  <g>
+    <rect x="293" y="168" width="74" height="30" rx="4" fill="#fff" stroke="#343a40" stroke-width="1.6"/>
+    <rect x="293" y="168" width="30" height="30" rx="4" fill="#7048e8"/>
+    <text x="308" y="188" font-size="10" fill="#fff" text-anchor="middle">14</text>
+    <text x="345" y="188" font-size="10" fill="#495057" text-anchor="middle">datos</text>
+
+    <rect x="373" y="168" width="74" height="30" rx="4" fill="#fff" stroke="#343a40" stroke-width="1.6"/>
+    <rect x="373" y="168" width="30" height="30" rx="4" fill="#0c8599"/>
+    <text x="388" y="188" font-size="10" fill="#fff" text-anchor="middle">24</text>
+    <text x="425" y="188" font-size="10" fill="#495057" text-anchor="middle">datos</text>
+
+    <rect x="453" y="168" width="74" height="30" rx="4" fill="#fff" stroke="#343a40" stroke-width="1.6"/>
+    <rect x="453" y="168" width="30" height="30" rx="4" fill="#f08c00"/>
+    <text x="468" y="188" font-size="10" fill="#fff" text-anchor="middle">34</text>
+    <text x="505" y="188" font-size="10" fill="#495057" text-anchor="middle">datos</text>
+
+    <rect x="533" y="168" width="74" height="30" rx="4" fill="#fff" stroke="#adb5bd" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <text x="570" y="188" font-size="10" fill="#868e96" text-anchor="middle">datos</text>
+  </g>
+  <text x="450" y="158" class="lbl" text-anchor="middle">cada trama lleva su etiqueta…</text>
+  <text x="570" y="212" class="lbl" fill="#868e96" text-anchor="middle">…salvo la nativa</text>
+  <text x="570" y="228" class="lbl" fill="#868e96" text-anchor="middle" font-weight="bold">VLAN 94: sin tag</text>
+
+  <!-- switches -->
+  <rect x="70" y="248" width="212" height="54" rx="8" class="sw"/>
+  <text x="176" y="281" class="swt" text-anchor="middle">SW-A</text>
+  <rect x="618" y="248" width="212" height="54" rx="8" class="sw"/>
+  <text x="724" y="281" class="swt" text-anchor="middle">SW-B</text>
+
+  <!-- trunk -->
+  <line x1="282" y1="275" x2="618" y2="275" stroke="#343a40" stroke-width="5" stroke-linecap="round" marker-end="url(#fl)"/>
+  <text x="450" y="296" class="lbl" text-anchor="middle" font-weight="bold">un solo cable</text>
+
+  <!-- bajadas access -->
+  <g stroke-width="2.4" stroke-linecap="round">
+    <line x1="106" y1="302" x2="106" y2="352" stroke="#7048e8"/>
+    <line x1="176" y1="302" x2="176" y2="352" stroke="#0c8599"/>
+    <line x1="246" y1="302" x2="246" y2="352" stroke="#f08c00"/>
+    <line x1="654" y1="302" x2="654" y2="352" stroke="#7048e8"/>
+    <line x1="724" y1="302" x2="724" y2="352" stroke="#0c8599"/>
+    <line x1="794" y1="302" x2="794" y2="352" stroke="#f08c00"/>
+  </g>
+
+  <g stroke="#343a40" stroke-width="2">
+    <rect x="74"  y="352" width="64" height="40" rx="6" fill="#7048e8" fill-opacity="0.22"/>
+    <rect x="144" y="352" width="64" height="40" rx="6" fill="#0c8599" fill-opacity="0.22"/>
+    <rect x="214" y="352" width="64" height="40" rx="6" fill="#f08c00" fill-opacity="0.24"/>
+    <rect x="622" y="352" width="64" height="40" rx="6" fill="#7048e8" fill-opacity="0.22"/>
+    <rect x="692" y="352" width="64" height="40" rx="6" fill="#0c8599" fill-opacity="0.22"/>
+    <rect x="762" y="352" width="64" height="40" rx="6" fill="#f08c00" fill-opacity="0.24"/>
+  </g>
+  <g class="lbl" text-anchor="middle" font-size="11">
+    <text x="106" y="376">PC</text> <text x="176" y="376">PC</text> <text x="246" y="376">PC</text>
+    <text x="654" y="376">PC</text> <text x="724" y="376">PC</text> <text x="794" y="376">PC</text>
+    <text x="106" y="410" fill="#7048e8" font-weight="bold">VLAN 14</text>
+    <text x="176" y="410" fill="#0c8599" font-weight="bold">VLAN 24</text>
+    <text x="246" y="410" fill="#f08c00" font-weight="bold">VLAN 34</text>
+    <text x="654" y="410" fill="#7048e8" font-weight="bold">VLAN 14</text>
+    <text x="724" y="410" fill="#0c8599" font-weight="bold">VLAN 24</text>
+    <text x="794" y="410" fill="#f08c00" font-weight="bold">VLAN 34</text>
+  </g>
+
+  <text x="450" y="446" class="sub" text-anchor="middle">La PC no sabe en qué VLAN está: envía Ethernet corriente. La pertenencia es una propiedad del <tspan font-weight="bold">puerto del switch</tspan>.</text>
+  <text x="450" y="468" class="sub" text-anchor="middle">El switch pone la etiqueta al entrar al trunk y la quita al salir hacia el puerto de acceso.</text>
+</svg>

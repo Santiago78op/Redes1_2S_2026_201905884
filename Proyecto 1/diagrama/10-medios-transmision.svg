@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 600" width="980" height="600" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 10 — Alcance y ancho de banda de cobre y fibra frente a las distancias del campus</title>
+  <desc>Eje logarítmico de distancia con el alcance de UTP Cat 6 y 6A, fibra multimodo OM3 y OM4 y monomodo OS2. Encima, los cinco enlaces del campus con su distancia asumida: los que superan los 100 metros quedan fuera del alcance del cobre, y el enlace a la Planta va en fibra por interferencia electromagnética aunque mida 90 metros.</desc>
+
+  <style>
+    .t   { font-size: 21px; fill: #212529; }
+    .ax  { stroke: #adb5bd; stroke-width: 2; }
+    .tk  { font-size: 12px; fill: #868e96; }
+    .bn  { font-size: 13.5px; fill: #212529; }
+    .bv  { font-size: 11.5px; fill: #fff; font-weight: bold; }
+    .cl  { font-size: 12px; fill: #343a40; }
+    .red { fill: #c92a2a; font-weight: bold; }
+  </style>
+
+  <text x="490" y="32" class="t" text-anchor="middle">Qué medio admite cada enlace del campus</text>
+  <text x="490" y="56" font-size="13" fill="#868e96" text-anchor="middle">Eje de distancia en escala logarítmica. El límite de 100 m del cobre es normativo (ANSI/TIA-568), no una recomendación.</text>
+
+  <!-- límite 100 m -->
+  <line x1="373" y1="84" x2="373" y2="470" stroke="#e03131" stroke-width="2.6" stroke-dasharray="9 6"/>
+  <rect x="290" y="84" width="166" height="24" rx="12" fill="#e03131"/>
+  <text x="373" y="101" font-size="12" fill="#fff" text-anchor="middle">límite del cobre: 100 m</text>
+
+  <!-- ===== enlaces del campus ===== -->
+  <g class="cl" text-anchor="middle">
+    <!-- 10 m -->
+    <line x1="120" y1="118" x2="120" y2="470" stroke="#ced4da" stroke-width="1.4" stroke-dasharray="4 5"/>
+    <circle cx="120" cy="150" r="6" fill="#1971c2"/>
+    <text x="120" y="136" fill="#1971c2">10 m</text>
+    <text x="120" y="172">CORE ↔ SRV</text>
+    <text x="120" y="188" font-size="11" fill="#868e96">Po1 · mismo rack</text>
+
+    <!-- 60 m -->
+    <line x1="317" y1="118" x2="317" y2="470" stroke="#ced4da" stroke-width="1.4" stroke-dasharray="4 5"/>
+    <circle cx="317" cy="150" r="6" fill="#1971c2"/>
+    <text x="317" y="136" fill="#1971c2">60 m</text>
+    <text x="317" y="172">Ala A ↔ Ala B</text>
+    <text x="317" y="188" font-size="11" fill="#868e96">enlace de respaldo</text>
+
+    <!-- 90 m EMI -->
+    <line x1="362" y1="238" x2="362" y2="470" stroke="#e8590c" stroke-width="1.6" stroke-dasharray="4 5"/>
+    <circle cx="362" cy="270" r="6" fill="#e8590c"/>
+    <text x="405" y="258" fill="#e8590c" text-anchor="start">90 m ⚡ CORE ↔ PLANTA</text>
+    <text x="405" y="276" font-size="11" fill="#e8590c" text-anchor="start">cabe en cobre, pero va en FIBRA:</text>
+    <text x="405" y="292" font-size="11" fill="#e8590c" text-anchor="start">motores y variadores inducen ruido en el UTP</text>
+
+    <!-- 120 m -->
+    <line x1="393" y1="118" x2="393" y2="470" stroke="#ced4da" stroke-width="1.4" stroke-dasharray="4 5"/>
+    <circle cx="393" cy="150" r="6" fill="#e8590c"/>
+    <text x="440" y="140" fill="#e8590c" text-anchor="start">120 m · CORE ↔ CORPORATIVO</text>
+
+    <!-- 180 m -->
+    <line x1="438" y1="118" x2="438" y2="470" stroke="#ced4da" stroke-width="1.4" stroke-dasharray="4 5"/>
+    <circle cx="438" cy="196" r="6" fill="#e8590c"/>
+    <text x="485" y="186" fill="#e8590c" text-anchor="start">180 m · CORE ↔ I+D (Po2, mayor ancho de banda)</text>
+    <text x="485" y="204" font-size="11" fill="#e8590c" text-anchor="start">fuera del alcance del cobre: no es preferencia, es imposibilidad</text>
+  </g>
+
+  <!-- ===== barras ===== -->
+  <g>
+    <!-- Cat 6 -->
+    <text x="112" y="333" class="bn" text-anchor="end">UTP Cat 6</text>
+    <rect x="120" y="318" width="253" height="24" rx="5" fill="#4dabf7"/>
+    <text x="246" y="335" class="bv" text-anchor="middle">1 Gbps · hasta 100 m</text>
+
+    <!-- Cat 6A -->
+    <text x="112" y="367" class="bn" text-anchor="end">UTP Cat 6A</text>
+    <rect x="120" y="352" width="253" height="24" rx="5" fill="#1971c2"/>
+    <text x="246" y="369" class="bv" text-anchor="middle">10 Gbps · hasta 100 m</text>
+
+    <!-- OM3 -->
+    <text x="112" y="401" class="bn" text-anchor="end">Fibra MM OM3</text>
+    <rect x="120" y="386" width="374" height="24" rx="5" fill="#ffa94d"/>
+    <text x="307" y="403" class="bv" text-anchor="middle">10 Gbps · hasta 300 m</text>
+
+    <!-- OM4 -->
+    <text x="112" y="435" class="bn" text-anchor="end">Fibra MM OM4</text>
+    <rect x="120" y="420" width="441" height="24" rx="5" fill="#e8590c"/>
+    <text x="340" y="437" class="bv" text-anchor="middle">10–40 Gbps · hasta 550 m</text>
+
+    <!-- OS2 -->
+    <text x="112" y="469" class="bn" text-anchor="end">Fibra SM OS2</text>
+    <rect x="120" y="454" width="760" height="24" rx="5" fill="#a15c07"/>
+    <text x="500" y="471" class="bv" text-anchor="middle">10–100 Gbps · 10 km y más</text>
+  </g>
+
+  <!-- eje -->
+  <line x1="120" y1="492" x2="900" y2="492" class="ax"/>
+  <g class="tk" text-anchor="middle">
+    <line x1="120" y1="492" x2="120" y2="500" class="ax"/><text x="120" y="516">10 m</text>
+    <line x1="373" y1="492" x2="373" y2="500" class="ax"/><text x="373" y="516">100 m</text>
+    <line x1="494" y1="492" x2="494" y2="500" class="ax"/><text x="494" y="516">300 m</text>
+    <line x1="561" y1="492" x2="561" y2="500" class="ax"/><text x="561" y="516">550 m</text>
+    <line x1="627" y1="492" x2="627" y2="500" class="ax"/><text x="627" y="516">1 km</text>
+    <line x1="880" y1="492" x2="880" y2="500" class="ax"/><text x="880" y="516">10 km</text>
+  </g>
+  <text x="900" y="486" class="tk" text-anchor="end" font-size="11">distancia (escala log)</text>
+
+  <!-- pie: criterios -->
+  <rect x="120" y="534" width="760" height="52" rx="10" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1.5"/>
+  <text x="140" y="554" font-size="12.5" fill="#343a40">Orden de descarte: ① distancia (eliminatorio) → ② ancho de banda requerido → ③ inmunidad electromagnética → ④ costo.</text>
+  <text x="140" y="574" font-size="12.5" fill="#343a40">A la izquierda de la línea roja hay elección; a la derecha, no. El enlace a la Planta es el único que se decide por el criterio ③.</text>
+</svg>

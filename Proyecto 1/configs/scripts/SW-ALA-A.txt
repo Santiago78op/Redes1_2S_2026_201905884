@@ -1,0 +1,49 @@
+! ==========================================================
+! SW-ALA-A  -  Acceso Ala A / raiz secundaria VLAN 14   (carne 201905884)
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! El volcado real de 'show running-config' va en configs/SW-ALA-A.txt
+! ==========================================================
+enable
+configure terminal
+ hostname SW-ALA-A
+ no ip domain-lookup
+ spanning-tree mode pvst
+ spanning-tree vlan 14 priority 28672          ! desempata el enlace Ala A <-> Ala B a favor de A (§18)
+!
+ vtp mode transparent
+ vtp mode client
+ vtp domain Smart_8
+ vtp password proyecto12S2026
+ vtp version 2
+!
+ interface GigabitEthernet0/1
+  description -> SW-DIST-CORP (uplink)
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,14,94
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface GigabitEthernet0/2
+  description -> SW-ALA-B · enlace directo de respaldo · 60 m
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,14,94
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface range FastEthernet0/1-3
+  description PC de gerencia
+  switchport mode access
+  switchport access vlan 14
+  spanning-tree portfast
+  spanning-tree bpduguard enable   ! un BPDU en un puerto de equipo final lo apaga (§22)
+  no shutdown
+ exit
+ interface range FastEthernet0/4-24
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+end
+write memory

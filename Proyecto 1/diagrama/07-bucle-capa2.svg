@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 580" width="900" height="580" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 7 — Tormenta de broadcast en un triángulo de switches sin STP</title>
+  <desc>Con un camino redundante y sin Spanning Tree, una sola trama de difusión circula indefinidamente porque Ethernet no tiene campo TTL. Cada vuelta duplica las copias y produce tormenta de broadcast, inestabilidad de la tabla MAC y tramas duplicadas.</desc>
+
+  <defs>
+    <marker id="r" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7,3.2 L0,6.4 z" fill="#e03131"/>
+    </marker>
+  </defs>
+
+  <style>
+    .t   { font-size: 20px; fill: #212529; }
+    .sw  { fill: #f8f9fa; stroke: #343a40; stroke-width: 2.2; }
+    .swt { font-size: 15px; font-weight: bold; fill: #343a40; }
+    .lnk { stroke: #343a40; stroke-width: 4; stroke-linecap: round; }
+    .arr { fill: none; stroke: #e03131; stroke-width: 2.6; marker-end: url(#r); }
+    .red { font-size: 13px; font-weight: bold; fill: #c92a2a; }
+    .sub { font-size: 13px; fill: #868e96; }
+  </style>
+
+  <text x="450" y="32" class="t" text-anchor="middle">Un camino redundante sin STP: la trama nunca muere</text>
+
+  <!-- TRIANGULO -->
+  <line x1="450" y1="170" x2="255" y2="330" class="lnk"/>
+  <line x1="450" y1="170" x2="645" y2="330" class="lnk"/>
+  <line x1="290" y1="378" x2="610" y2="378" class="lnk"/>
+
+  <rect x="385" y="118" width="130" height="52" rx="8" class="sw"/>
+  <text x="450" y="150" class="swt" text-anchor="middle">SW-1</text>
+  <rect x="160" y="326" width="130" height="52" rx="8" class="sw"/>
+  <text x="225" y="358" class="swt" text-anchor="middle">SW-2</text>
+  <rect x="610" y="326" width="130" height="52" rx="8" class="sw"/>
+  <text x="675" y="358" class="swt" text-anchor="middle">SW-3</text>
+
+  <!-- flechas girando en ambos sentidos -->
+  <path d="M424,182 C370,215 320,262 268,306" class="arr"/>
+  <path d="M300,392 C390,416 510,416 598,392" class="arr"/>
+  <path d="M652,312 C610,266 555,214 480,180" class="arr"/>
+
+  <path d="M494,196 C548,230 596,272 640,312" class="arr" stroke-dasharray="7 5"/>
+  <path d="M600,404 C510,428 390,428 302,404" class="arr" stroke-dasharray="7 5"/>
+  <path d="M240,306 C286,258 340,214 410,190" class="arr" stroke-dasharray="7 5"/>
+
+  <g class="red" text-anchor="middle">
+    <text x="310" y="238">copia 1</text>
+    <text x="450" y="436">copia 2</text>
+    <text x="616" y="232">copia 4</text>
+    <text x="640" y="276" font-size="12">copia 8…</text>
+  </g>
+
+  <!-- PC emisora -->
+  <rect x="86" y="446" width="90" height="46" rx="6" fill="#f08c00" fill-opacity="0.24" stroke="#343a40" stroke-width="2"/>
+  <text x="131" y="474" font-size="12" fill="#495057" text-anchor="middle">PC</text>
+  <line x1="176" y1="452" x2="212" y2="378" stroke="#1971c2" stroke-width="2.4" stroke-linecap="round"/>
+  <rect x="60" y="502" width="146" height="22" rx="5" fill="#e03131"/>
+  <text x="133" y="518" font-size="11" fill="#fff" text-anchor="middle">un solo FF:FF:FF:FF:FF:FF</text>
+
+  <!-- causa raiz -->
+  <rect x="300" y="470" width="300" height="46" rx="10" fill="#fff5f5" stroke="#e03131" stroke-width="2.4"/>
+  <text x="450" y="490" class="red" text-anchor="middle" font-size="14">Ethernet no tiene TTL</text>
+  <text x="450" y="508" class="sub" text-anchor="middle" font-size="11.5" fill="#c92a2a">nada decrementa ni descarta la trama</text>
+
+  <!-- tres efectos -->
+  <g>
+    <rect x="620" y="440" width="256" height="34" rx="7" fill="#fff5f5" stroke="#ffc9c9" stroke-width="1.6"/>
+    <text x="748" y="462" class="red" text-anchor="middle" font-size="12">① Tormenta: crecimiento exponencial</text>
+    <rect x="620" y="480" width="256" height="34" rx="7" fill="#fff5f5" stroke="#ffc9c9" stroke-width="1.6"/>
+    <text x="748" y="502" class="red" text-anchor="middle" font-size="12">② Tabla MAC inestable (flapping)</text>
+    <rect x="620" y="520" width="256" height="34" rx="7" fill="#fff5f5" stroke="#ffc9c9" stroke-width="1.6"/>
+    <text x="748" y="542" class="red" text-anchor="middle" font-size="12">③ Tramas duplicadas en el destino</text>
+  </g>
+
+  <text x="300" y="546" class="sub" text-anchor="middle">Resultado: la red no se degrada, se cae.</text>
+  <text x="300" y="566" class="sub" text-anchor="middle">Ni siquiera se puede entrar a los switches por la red.</text>
+</svg>

@@ -1,0 +1,293 @@
+# Especificación de topología — Proyecto 1 "SmartCity Tech Park"
+# Especificación de Proyecto1_201905884.pkt. Deriva de README.md §11.1, §13, §14, §18, §19 y §20.
+#
+# Contrastada contra el simulador. Las interfaces de los chasis modulares son las que Packet Tracer
+# crea: un módulo en el slot N produce el puerto <Tipo>N/1, con los slots numerados desde 0.
+#
+# Modelo de los 4 chasis modulares: Switch-PT-Empty (NO Switch-PT: ese llega con los 6 slots ya
+# ocupados por cobre y rechaza cualquier módulo). Tiene 6 slots = 6 puertos como máximo, y los
+# módulos sólo entran con el chasis APAGADO.
+# Módulos usados en el .pkt: PT-SWITCH-NM-1CGE (cobre Gig) · PT-SWITCH-NM-1CFE (cobre Fast).
+# El diseño prevé PT-SWITCH-NM-1FGE (fibra Gig) en los enlaces de fibra; ver S8.
+
+meta:
+  carne: "201905884"
+  archivo_pkt: "Proyecto1_201905884.pkt"
+  packet_tracer_min: "8.0"
+  vlan_nativa: 94
+  stp_mode: "pvst"              # carné par
+  etherchannel_protocol: "lacp" # carné par
+  banner_motd: "Acceso Restringido - TechPark_201905884"
+  vtp:
+    dominio: "Smart_8"
+    password: "proyecto12S2026"
+    version: 2
+
+vlans:
+  - {id: 14,  nombre: "GERENCIA",      area: "Edificio Corporativo",   color: "#7048e8"}
+  - {id: 24,  nombre: "INVESTIGACION", area: "Centro de I+D",          color: "#0c8599"}
+  - {id: 34,  nombre: "PRODUCCION",    area: "Planta de Produccion",   color: "#f08c00"}
+  - {id: 44,  nombre: "SERVIDORES",    area: "Centro de Datos",        color: "#343a40"}
+  - {id: 54,  nombre: "VISITANTES",    area: "Areas Comunes",          color: "#d6336c"}
+  - {id: 94,  nombre: "NATIVA",        area: "todos los trunks",       color: "#adb5bd", sin_puertos_access: true}
+  - {id: 999, nombre: "SIN-USO",       area: "puertos apagados",       color: "#ced4da", sin_puertos_access: true}
+
+switches:
+  - hostname: SW-CORE
+    modelo_pt: "Switch-PT-Empty (modular)"
+    area: "Centro de Datos"
+    rol: "core"
+    vtp_mode: server
+    banner: true
+    stp: {primary: [34, 44], secondary: [14, 24, 54]}
+
+  - hostname: SW-SRV
+    modelo_pt: "2960-24TT"
+    area: "Centro de Datos"
+    rol: "acceso"
+    vtp_mode: client
+    banner: false
+
+  - hostname: SW-DIST-ID
+    modelo_pt: "Switch-PT-Empty (modular)"
+    area: "Centro de I+D"
+    rol: "distribucion"
+    vtp_mode: client
+    banner: true
+    stp: {primary: [24]}
+
+  - hostname: SW-ID-1
+    modelo_pt: "2960-24TT"
+    area: "Centro de I+D"
+    rol: "acceso"
+    vtp_mode: client
+    banner: false
+    stp: {priority: {24: 28672}}   # hace determinista el bloqueo del anillo
+
+  - hostname: SW-ID-2
+    modelo_pt: "2960-24TT"
+    area: "Centro de I+D"
+    rol: "acceso"
+    vtp_mode: client
+    banner: false
+
+  - hostname: SW-ID-3
+    modelo_pt: "2960-24TT"
+    area: "Centro de I+D"
+    rol: "acceso"
+    vtp_mode: client
+    banner: false
+
+  - hostname: SW-DIST-CORP
+    modelo_pt: "Switch-PT-Empty (modular)"
+    area: "Edificio Corporativo"
+    rol: "distribucion"
+    vtp_mode: client
+    banner: true
+    stp: {primary: [14, 54]}
+
+  - hostname: SW-ALA-A
+    modelo_pt: "2960-24TT"
+    area: "Edificio Corporativo"
+    rol: "acceso"
+    vtp_mode: client
+    banner: false
+    stp: {priority: {14: 28672}}   # desempata el enlace Ala A <-> Ala B
+
+  - hostname: SW-ALA-B
+    modelo_pt: "2960-24TT"
+    area: "Edificio Corporativo"
+    rol: "acceso"
+    vtp_mode: client
+    banner: false
+
+  - hostname: SW-COMUNES
+    modelo_pt: "2960-24TT"
+    area: "Edificio Corporativo (Areas Comunes)"
+    rol: "acceso"
+    vtp_mode: transparent          # aislamiento de administracion de VLANs
+    banner: false
+    vlans_locales: [54, 94, 999]   # en Transparent se crean a mano
+
+  - hostname: SW-PLANTA
+    modelo_pt: "Switch-PT-Empty (modular)"
+    area: "Planta de Produccion"
+    rol: "acceso"
+    vtp_mode: client
+    banner: false
+
+# ---------------------------------------------------------------------------
+# ENLACES ENTRE SWITCHES — 15 fisicos, 13 troncales logicos
+# medio: utp-cat6 | fibra-om3 | fibra-om4      velocidad: 1G | 100M
+# ---------------------------------------------------------------------------
+# medio: el del DISEÑO. cable_pt: el cable real del .pkt. Los enlaces de fibra van en cobre ("cross")
+# porque en Packet Tracer ningún enlace de fibra levanta (restricción S8, README §20.1).
+enlaces_switch:
+  - {a: [SW-CORE, Gi0/1],  b: [SW-SRV, Gi0/1],       medio: utp-cat6,  cable_pt: cross, velocidad: 1G,   distancia_m: 10,  canal: Po1, allowed: [1,44,94], hecho: true}
+  - {a: [SW-CORE, Gi1/1],  b: [SW-SRV, Gi0/2],       medio: utp-cat6,  cable_pt: cross, velocidad: 1G,   distancia_m: 10,  canal: Po1, allowed: [1,44,94], hecho: true}
+  - {a: [SW-CORE, Gi2/1],  b: [SW-DIST-ID, Gi0/1],   medio: fibra-om4, cable_pt: cross, velocidad: 1G,   distancia_m: 180, canal: Po2, allowed: [1,24,94], hecho: true}
+  - {a: [SW-CORE, Gi3/1],  b: [SW-DIST-ID, Gi1/1],   medio: fibra-om4, cable_pt: cross, velocidad: 1G,   distancia_m: 180, canal: Po2, allowed: [1,24,94], hecho: true}
+  - {a: [SW-CORE, Gi4/1],  b: [SW-DIST-CORP, Gi0/1], medio: fibra-om3, cable_pt: cross, velocidad: 1G,   distancia_m: 120, allowed: [1,14,54,94], hecho: true}
+  - {a: [SW-CORE, Gi5/1],  b: [SW-PLANTA, Gi0/1],    medio: fibra-om3, cable_pt: cross, velocidad: 1G,   distancia_m: 90,  allowed: [1,34,94], hecho: true,
+     nota: "fibra por EMI industrial, NO por distancia — es la justificacion clave de §20"}
+
+  - {a: [SW-DIST-ID, Gi2/1], b: [SW-ID-1, Gi0/1],    medio: utp-cat6,  cable_pt: cross, velocidad: 1G,   allowed: [1,24,94], hecho: true}
+  - {a: [SW-DIST-ID, Gi3/1], b: [SW-ID-3, Gi0/1],    medio: utp-cat6,  cable_pt: cross, velocidad: 1G,   allowed: [1,24,94], hecho: true}
+  - {a: [SW-ID-1, Gi0/2],    b: [SW-ID-2, Gi0/1],    medio: utp-cat6,  cable_pt: cross, velocidad: 1G,   allowed: [1,24,94], hecho: true}
+  - {a: [SW-ID-2, Gi0/2],    b: [SW-ID-3, Gi0/2],    medio: utp-cat6,  cable_pt: cross, velocidad: 1G,   allowed: [1,24,94], hecho: true}
+  - {a: [SW-ID-1, Fa0/24],   b: [SW-ID-3, Fa0/24],   medio: utp-cat6,  cable_pt: cross, velocidad: 100M, allowed: [1,24,94], hecho: true,
+     nota: "cierre del anillo — costo STP 19 frente a 4: es el candidato al bloqueo"}
+
+  - {a: [SW-DIST-CORP, Gi1/1], b: [SW-ALA-A, Gi0/1],   medio: utp-cat6, cable_pt: cross, velocidad: 1G, allowed: [1,14,94], hecho: true}
+  - {a: [SW-DIST-CORP, Gi2/1], b: [SW-ALA-B, Gi0/1],   medio: utp-cat6, cable_pt: cross, velocidad: 1G, allowed: [1,14,94], hecho: true}
+  - {a: [SW-DIST-CORP, Gi3/1], b: [SW-COMUNES, Gi0/1], medio: utp-cat6, cable_pt: cross, velocidad: 1G, allowed: [1,54,94], hecho: true,
+     nota: "SOLO la VLAN 54: aislamiento de visitantes"}
+  - {a: [SW-ALA-A, Gi0/2],     b: [SW-ALA-B, Gi0/2],   medio: utp-cat6, cable_pt: cross, velocidad: 1G, distancia_m: 60, allowed: [1,14,94], hecho: true,
+     nota: "enlace de respaldo — se espera BLOQUEADO por STP en el extremo SW-ALA-B"}
+
+# Reparto de slots REAL de los 4 chasis modulares (verificado en el simulador).
+# Cada slot da exactamente un puerto, y el nombre del puerto es <Tipo><slot>/1.
+slots_modulares:
+  SW-CORE:        # los 6 slots usados: es el limite del chasis
+    0: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi0/1, medio: cobre, destino: "SW-SRV Gi0/1  (Po1)"}
+    1: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi1/1, medio: cobre, destino: "SW-SRV Gi0/2  (Po1)"}
+    2: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi2/1, medio: cobre, destino: "SW-DIST-ID Gi0/1 (Po2) — diseño: fibra"}
+    3: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi3/1, medio: cobre, destino: "SW-DIST-ID Gi1/1 (Po2) — diseño: fibra"}
+    4: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi4/1, medio: cobre, destino: "SW-DIST-CORP Gi0/1 — diseño: fibra"}
+    5: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi5/1, medio: cobre, destino: "SW-PLANTA Gi0/1 — diseño: fibra"}
+  SW-DIST-ID:
+    0: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi0/1, medio: cobre, destino: "SW-CORE Gi2/1 (Po2) — diseño: fibra"}
+    1: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi1/1, medio: cobre, destino: "SW-CORE Gi3/1 (Po2) — diseño: fibra"}
+    2: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi2/1, medio: cobre, destino: "SW-ID-1 Gi0/1"}
+    3: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi3/1, medio: cobre, destino: "SW-ID-3 Gi0/1"}
+  SW-DIST-CORP:
+    0: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi0/1, medio: cobre, destino: "SW-CORE Gi4/1 — diseño: fibra"}
+    1: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi1/1, medio: cobre, destino: "SW-ALA-A Gi0/1"}
+    2: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi2/1, medio: cobre, destino: "SW-ALA-B Gi0/1"}
+    3: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi3/1, medio: cobre, destino: "SW-COMUNES Gi0/1"}
+  SW-PLANTA:
+    0: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi0/1, medio: cobre, destino: "SW-CORE Gi5/1 — diseño: fibra OM3 90 m, ver S8"}
+    1: {modulo: PT-SWITCH-NM-1CFE, puerto: Fa1/1, medio: cobre, destino: "LIBRE - VLAN 999 + shutdown (no enlaza con el hub, ver S6)"}
+    2: {modulo: PT-SWITCH-NM-1CFE, puerto: Fa2/1, medio: cobre, destino: "PC-SUP-1"}
+    3: {modulo: PT-SWITCH-NM-1CFE, puerto: Fa3/1, medio: cobre, destino: "PC-SUP-2"}
+    4: {modulo: PT-SWITCH-NM-1CGE, puerto: Gi4/1, medio: cobre, destino: "HUB-LEGACY (unico puerto del segmento compartido) + port-security + storm-control"}
+
+etherchannels:
+  - {id: Po1, extremos: [SW-CORE, SW-SRV],     miembros: 2, protocolo: "lacp active/active", capacidad: "2 Gbps"}
+  - {id: Po2, extremos: [SW-CORE, SW-DIST-ID], miembros: 2, protocolo: "lacp active/active", capacidad: "2 Gbps",
+     nota: "trunk de mayor ancho de banda del campus — requisito del enunciado"}
+
+# ---------------------------------------------------------------------------
+# EQUIPOS FINALES — 24 + 4 servidores + 1 AP + 1 hub
+# ---------------------------------------------------------------------------
+equipos_finales:
+  - {switch: SW-SRV, puertos: [Fa0/1, Fa0/2, Fa0/3, Fa0/4], vlan: 44, tipo: "Server-PT",
+     nombres: [SRV-WEB, SRV-BD, SRV-ARCHIVOS, SRV-DNS]}
+  - {switch: SW-ID-1, puertos: [Fa0/1, Fa0/2, Fa0/3], vlan: 24, tipo: "PC-PT",
+     nombres: [PC-ID-1, PC-ID-2, PC-ID-3]}
+  - {switch: SW-ID-2, puertos: [Fa0/1, Fa0/2, Fa0/3], vlan: 24, tipo: "PC-PT",
+     nombres: [PC-ID-4, PC-ID-5, PC-ID-6]}
+  - {switch: SW-ID-3, puertos: [Fa0/1, Fa0/2], vlan: 24, tipo: "PC-PT",
+     nombres: [PC-ID-7, PC-ID-8]}
+  - {switch: SW-ALA-A, puertos: [Fa0/1, Fa0/2, Fa0/3], vlan: 14, tipo: "PC-PT",
+     nombres: [PC-GER-1, PC-GER-2, PC-GER-3]}
+  - {switch: SW-ALA-B, puertos: [Fa0/1, Fa0/2, Fa0/3], vlan: 14, tipo: "PC-PT",
+     nombres: [PC-GER-4, PC-GER-5, PC-GER-6]}
+  - {switch: SW-COMUNES, puertos: [Fa0/1], vlan: 54, tipo: "AccessPoint-PT",
+     nombres: [AP-VISITANTES],
+     inalambricos: [LAP-VIS-1, LAP-VIS-2, LAP-VIS-3]}
+  - {switch: SW-COMUNES, puertos: [Fa0/2], vlan: 54, tipo: "PC-PT",
+     nombres: [PC-VIS-1]}
+  - {switch: SW-PLANTA, puertos: [Gi4/1], vlan: 34, tipo: "Hub-PT",
+     nombres: [HUB-LEGACY],
+     colgados: [PC-MAQ-1, PC-MAQ-2, PC-MAQ-3, PC-MAQ-4],
+     nota: "UN solo puerto access. Repartir el hub en varios puertos crearia un bucle."}
+  - {switch: SW-PLANTA, puertos: [Fa2/1, Fa3/1], vlan: 34, tipo: "PC-PT",
+     nombres: [PC-SUP-1, PC-SUP-2],
+     nota: "supervision, fuera del hub, para no compartir el medio degradado"}
+
+puertos_no_utilizados:
+  accion: "switchport access vlan 999 + shutdown"
+  alcance: "todos los puertos libres de los switches de acceso"
+  requisito_enunciado: false   # buena practica anadida, no exigida
+
+# ---------------------------------------------------------------------------
+# RESULTADO ESPERADO — para contrastar, no para asumir
+# ---------------------------------------------------------------------------
+esperado:
+  dominios_colision: {total: 54, cableados: 53, inalambricos: 1, compartidos: ["HUB-LEGACY (6 miembros)", "AP-VISITANTES (3 laptops)"]}
+  dominios_broadcast: {con_usuarios: 5, vacios: ["94 nativa", "999 sin-uso"]}
+  stp_bloqueados:
+    - {switch: SW-ALA-B, interfaz: "Gi0/2", vlan: 14, rol: "Altn", estado: "BLK"}
+    - {switch: SW-ID-3,  interfaz: "Fa0/24", vlan: 24, rol: "Altn", estado: "BLK"}
+    - {switch: SW-ID-2,  interfaz: "Gi0/2",  vlan: 24, rol: "Altn", estado: "BLK"}
+  convergencia_stp_s: "30-50"
+  convergencia_etherchannel: "inmediata (no hay reconvergencia de STP)"
+
+# Riesgos de diseño, verificados en el simulador.
+riesgos_verificados:
+  - id: R1
+    estado: RESUELTO_OK
+    descripcion: "¿Acepta el chasis modular 'channel-group N mode active' sobre modulos de FIBRA?"
+    resultado: "SI. Probado en banco antes de cablear: dos Switch-PT-Empty con PT-SWITCH-NM-1FGE,
+                dos enlaces de fibra, 'channel-group 2 mode active' en ambos extremos -> la interfaz
+                Port-channel2 aparece en los dos switches."
+    consecuencia: "El canal se configura, pero el enlace de fibra no levanta (S8). Po2 se formó sobre
+                   cobre: Po2(SU) con Gig2/1(P) y Gig3/1(P) en SW-CORE (evidencia E5)."
+  - id: R2
+    estado: RESUELTO_CAMBIA_EL_DOC
+    descripcion: "La numeracion slot/puerto de los 4 chasis modulares era PREVISTA."
+    resultado: "Los slots se numeran DESDE 0 y cada uno da el puerto <Tipo>N/1. Lo previsto era
+                1-indexed (Gi1/1, Gi2/1...); lo real es 0-indexed (Gi0/1, Gi1/1...)."
+    consecuencia: "Corregidos este archivo ('slots_modulares'), README §14 y §23 y los 11 scripts."
+  - id: R3
+    estado: RESUELTO_OK
+    descripcion: "¿Acepta el chasis modular 'switchport nonegotiate'?"
+    resultado: "SI. Figura en el running-config de los 11 switches, incluidos los 4 chasis."
+
+# Restricciones de Packet Tracer que condicionan el modelo de los chasis.
+restricciones_del_simulador:
+  - id: S1
+    descripcion: "En Packet Tracer el 2960-24TT y el 3560-24PS NO son modulares: rechazan todo
+                  modulo SFP (probado con GLC-LH-SMD, GLC-GE-100FX y PT-SWITCH-NM-1FGE)."
+    consecuencia: "Un switch de IOS real NO puede terminar un enlace de fibra. La fibra obliga al
+                   chasis genérico, y eso valida usar chasis modulares en los 4 switches con fibra."
+  - id: S2
+    descripcion: "'Switch-PT' llega con los 6 slots YA ocupados por modulos de cobre."
+    consecuencia: "Hay que usar 'Switch-PT-Empty'. Con Switch-PT, addModule devuelve false siempre."
+  - id: S3
+    descripcion: "Los modulos solo entran con el chasis APAGADO."
+    consecuencia: "setPower(false) -> addModule -> setPower(true) + skipBoot. Encendido, addModule
+                   devuelve false EN SILENCIO, sin lanzar error."
+  - id: S4
+    descripcion: "El chasis tiene 6 slots y cada slot da UN puerto: maximo 6 puertos."
+    consecuencia: "SW-CORE usa los 6 justos (2 de Po1 + 2 de Po2 + 2 trunks). No queda ninguno libre."
+  - id: S6
+    descripcion: "El modulo de cobre FastEthernet del chasis generico (PT-SWITCH-NM-1CFE) NO enlaza
+                  con un Hub-PT: el puerto queda down en ambos extremos. El modulo de cobre GIGABIT
+                  (PT-SWITCH-NM-1CGE) SI enlaza con el hub."
+    evidencia: "Control: el mismo hub contra un 2960 real levanta (up=true); contra el puerto 1CFE
+                del chasis, no. Al recablearlo al puerto 1CGE del mismo chasis, levanta."
+    consecuencia: "El HUB-LEGACY cuelga de SW-PLANTA Gi4/1 (modulo 1CGE en el slot 4), NO de Fa1/1.
+                   Ahi van port-security maximum 5 restrict y storm-control broadcast level 20.
+                   Fa1/1 queda libre: VLAN 999 + shutdown (README §14 y §23)."
+  - id: S7
+    descripcion: "El Hub-PT tiene 6 puertos REALES: FastEthernet0..FastEthernet5. El catalogo los
+                  lista como 'Port 0'..'Port 7', pero eso es solo un alias de display y son 6."
+    consecuencia: "Con 4 maquinas + 1 switch se usan 5 de 6. No caben mas de 5 equipos colgados."
+  - id: S5
+    descripcion: "El chasis modular SI soporta el IOS que el proyecto necesita (leido de su
+                  startup-config real): pvst, root primary, priority, channel-group mode active,
+                  trunk native vlan, allowed vlan, port-security violation restrict, storm-control
+                  y banner motd."
+    consecuencia: "Era la duda que podia tumbar el diseno entero. No lo hace."
+  - id: S8
+    descripcion: "Ningun enlace de fibra levanta en esta instalacion de Packet Tracer: probado con
+                  PT-SWITCH-NM-1FGE, PT-SWITCH-NM-1FFE, cable fiber y auto, y entre routers, contra
+                  un control de cobre creado en el mismo instante, que si levanta."
+    consecuencia: "Los 4 enlaces de fibra del diseno (Po2 x2, Corporativo, Planta) van en cobre en el
+                   .pkt, con sus rotulos de medio y distancia de diseno. README §20.1."
+  - id: S9
+    descripcion: "removeModule sobre un switch encendido crashea Packet Tracer 15-30 s despues
+                  (SIGSEGV en Stp::CStpProcess::forwardingDelayCallback)."
+    consecuencia: "Apagar el equipo antes de quitarle modulos."

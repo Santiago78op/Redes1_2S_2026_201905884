@@ -1,0 +1,95 @@
+! ==========================================================
+! SW-PLANTA  -  Acceso Legacy + contencion del hub   (carne 201905884)
+! Modelo: Switch-PT-Empty   |   MAC (Bridge ID): 000D.BD13.C2CB
+! VTP (no figura en running-config; de 'show vtp status'): modo Client,
+!   dominio Smart_8, version 2, revision 29
+! Enlaces (segun las 'description' de la propia configuracion):
+!   Gi0/1   -> SW-CORE 90 m segmento industrial
+!   Fa1/1   Puerto libre
+!   Fa2/1   -> PC-SUP-1 supervision fuera del hub
+!   Fa3/1   -> PC-SUP-2 supervision fuera del hub
+!   Gi4/1   -> HUB-LEGACY dominio de colision compartido UN SOLO PUERTO
+! Volcado REAL de 'show running-config' tomado del simulador el 2026-09-16,
+! sobre Proyecto1_201905884.pkt. El script de origen esta en scripts/SW-PLANTA.txt
+! ==========================================================
+Building configuration...
+
+Current configuration : 1635 bytes
+!
+version 12.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW-PLANTA
+!
+!
+!
+ptp clock transparent domain 0 profile default
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface GigabitEthernet0/1
+ description -> SW-CORE 90 m segmento industrial
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,34,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface FastEthernet1/1
+ description Puerto libre
+ switchport access vlan 999
+ switchport mode access
+ switchport port-security maximum 5
+ switchport port-security violation restrict
+ spanning-tree portfast
+ storm-control broadcast level 20
+ shutdown
+!
+interface FastEthernet2/1
+ description -> PC-SUP-1 supervision fuera del hub
+ switchport access vlan 34
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet3/1
+ description -> PC-SUP-2 supervision fuera del hub
+ switchport access vlan 34
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface GigabitEthernet4/1
+ description -> HUB-LEGACY dominio de colision compartido UN SOLO PUERTO
+ switchport access vlan 34
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 5
+ switchport port-security mac-address sticky
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky 0030.A310.6303
+ spanning-tree portfast
+ storm-control broadcast level 20
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end

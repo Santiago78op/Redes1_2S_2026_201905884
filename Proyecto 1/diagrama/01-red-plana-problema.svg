@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" width="980" height="620" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 1 — La red plana actual del SmartCity Tech Park y sus cuatro síntomas</title>
+  <desc>Las cuatro áreas del campus cuelgan de un bloque de switches sin jerarquía, dentro de un único dominio de broadcast. La Planta concentra sus máquinas en un hub con colisiones, y cada área se conecta por un enlace único que es punto de falla.</desc>
+
+  <style>
+    .t    { font-size: 21px; fill: #212529; }
+    .area { fill: #f8f9fa; stroke: #495057; stroke-width: 2.2; }
+    .an   { font-size: 15px; font-weight: bold; fill: #343a40; }
+    .ad   { font-size: 12px; fill: #868e96; }
+    .sym  { font-size: 13px; font-weight: bold; fill: #c92a2a; }
+    .lnk  { fill: none; stroke: #868e96; stroke-width: 2.6; stroke-linecap: round; }
+    .sw   { fill: #fff; stroke: #343a40; stroke-width: 2; }
+  </style>
+
+  <text x="490" y="26" class="t" text-anchor="middle">Red plana actual: cuatro áreas, ninguna frontera</text>
+
+  <!-- nube de broadcast que envuelve todo -->
+  <rect x="26" y="52" width="928" height="500" rx="42" fill="#e03131" fill-opacity="0.055" stroke="#e03131" stroke-width="3" stroke-dasharray="12 8"/>
+  <rect x="300" y="38" width="380" height="28" rx="14" fill="#e03131"/>
+  <text x="490" y="58" font-size="14" fill="#fff" text-anchor="middle">UN SOLO DOMINIO DE BROADCAST</text>
+
+  <!-- bloque de switches sin jerarquía, al centro -->
+  <rect x="330" y="240" width="320" height="86" rx="12" fill="#fff3bf" stroke="#e8590c" stroke-width="2.4" stroke-dasharray="7 5"/>
+  <g class="sw">
+    <rect x="348" y="258" width="82" height="50" rx="7"/>
+    <rect x="448" y="258" width="82" height="50" rx="7"/>
+    <rect x="548" y="258" width="82" height="50" rx="7"/>
+  </g>
+  <g class="an" text-anchor="middle" font-size="13">
+    <text x="389" y="288">SW-1</text>
+    <text x="489" y="288">SW-2</text>
+    <text x="589" y="288">SW-3</text>
+  </g>
+  <line x1="430" y1="283" x2="448" y2="283" stroke="#343a40" stroke-width="2.6"/>
+  <line x1="530" y1="283" x2="548" y2="283" stroke="#343a40" stroke-width="2.6"/>
+  <text x="490" y="348" class="sym" text-anchor="middle">Bloque plano: sin núcleo, sin distribución, sin acceso</text>
+
+  <!-- ===== ENLACES ÚNICOS ===== -->
+  <path d="M280,160 C334,178 322,228 348,262" class="lnk"/>
+  <path d="M700,160 C646,178 658,228 632,262" class="lnk"/>
+  <path d="M280,440 C334,422 322,358 348,306" class="lnk"/>
+  <path d="M690,446 C640,424 658,358 632,306" class="lnk"/>
+
+  <g class="sym" text-anchor="middle" font-size="12">
+    <text x="330" y="208">1 enlace</text>
+    <text x="650" y="208">1 enlace</text>
+    <text x="330" y="386">1 enlace</text>
+    <text x="650" y="386">1 enlace</text>
+  </g>
+
+  <!-- ===== AREAS ===== -->
+  <!-- Centro de Datos (arriba izq) -->
+  <rect x="60" y="106" width="220" height="82" rx="10" class="area"/>
+  <text x="170" y="136" class="an" text-anchor="middle">Centro de Datos</text>
+  <text x="170" y="158" class="ad" text-anchor="middle">granja de servidores</text>
+  <text x="170" y="176" class="ad" text-anchor="middle">respaldos nocturnos</text>
+
+  <!-- Centro de I+D (arriba der) -->
+  <rect x="700" y="106" width="220" height="82" rx="10" class="area"/>
+  <text x="810" y="136" class="an" text-anchor="middle">Centro de I+D</text>
+  <text x="810" y="158" class="ad" text-anchor="middle">cómputo pesado</text>
+  <text x="810" y="176" class="ad" text-anchor="middle">transferencias grandes</text>
+
+  <!-- Edificio Corporativo (abajo izq) -->
+  <rect x="60" y="420" width="220" height="82" rx="10" class="area"/>
+  <text x="170" y="450" class="an" text-anchor="middle">Edificio Corporativo</text>
+  <text x="170" y="472" class="ad" text-anchor="middle">gerencia y administración</text>
+  <text x="170" y="490" class="ad" text-anchor="middle">visitantes en áreas comunes</text>
+
+  <!-- Planta de Produccion (abajo der) con hub -->
+  <rect x="690" y="400" width="240" height="132" rx="10" class="area"/>
+  <text x="810" y="424" class="an" text-anchor="middle">Planta de Producción</text>
+  <ellipse cx="810" cy="484" rx="106" ry="44" fill="#e03131" fill-opacity="0.12" stroke="#e03131" stroke-width="2.2" stroke-dasharray="8 5"/>
+  <rect x="770" y="436" width="80" height="24" rx="5" fill="#fff" stroke="#c92a2a" stroke-width="2"/>
+  <text x="810" y="453" font-size="12" font-weight="bold" fill="#c92a2a" text-anchor="middle">HUB</text>
+  <g stroke="#1971c2" stroke-width="1.8" stroke-linecap="round">
+    <line x1="782" y1="460" x2="740" y2="492"/>
+    <line x1="810" y1="460" x2="810" y2="492"/>
+    <line x1="838" y1="460" x2="880" y2="492"/>
+  </g>
+  <g fill="#fff" stroke="#495057" stroke-width="1.8">
+    <rect x="716" y="492" width="48" height="24" rx="4"/>
+    <rect x="786" y="492" width="48" height="24" rx="4"/>
+    <rect x="856" y="492" width="48" height="24" rx="4"/>
+  </g>
+  <g font-size="10" fill="#495057" text-anchor="middle">
+    <text x="740" y="508">máq. 1</text>
+    <text x="810" y="508">máq. 2</text>
+    <text x="880" y="508">máq. 3</text>
+  </g>
+  <g stroke="#e03131" stroke-width="2.4" stroke-linecap="round">
+    <path d="M795,472 l10,10 M805,472 l-10,10"/>
+    <path d="M845,472 l10,10 M855,472 l-10,10"/>
+  </g>
+
+  <!-- ===== SINTOMAS ===== -->
+  <text x="490" y="96" class="sym" text-anchor="middle">① Servidores, maquinaria, gerencia y visitantes comparten el mismo dominio de difusión</text>
+
+  <g class="sym" text-anchor="middle">
+    <text x="170" y="216">④ Enlaces saturados</text>
+    <text x="170" y="234" class="ad" fill="#c92a2a">sin agregación de capacidad</text>
+    <text x="810" y="216">② Un cable por área</text>
+    <text x="810" y="234" class="ad" fill="#c92a2a">un corte la aísla entera</text>
+  </g>
+
+  <g class="sym" text-anchor="end">
+    <text x="676" y="462">③ Dominio de colisión compartido</text>
+    <text x="676" y="480" class="ad" fill="#c92a2a">half-duplex · CSMA/CD · sin privacidad</text>
+  </g>
+
+  <text x="490" y="584" font-size="14" fill="#495057" text-anchor="middle">Los síntomas se realimentan: el ruido del segmento industrial atraviesa los enlaces saturados y llega a los servidores.</text>
+  <text x="490" y="606" font-size="14" fill="#495057" text-anchor="middle">Por eso el rediseño no puede ser incremental: hace falta segmentación, redundancia y un protocolo que la administre.</text>
+</svg>

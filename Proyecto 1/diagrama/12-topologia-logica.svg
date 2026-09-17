@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 13 — Topología lógica del campus SmartCity Tech Park</title>
+  <desc>Jerarquía Core, distribución y acceso; las cuatro áreas con su VLAN; medio y velocidad de cada enlace; los dos EtherChannel Po1 y Po2; y el enlace de respaldo entre alas que STP mantiene bloqueado.</desc>
+
+  <style>
+    .t    { font-size: 21px; fill: #212529; }
+    .area { fill: #f8f9fa; stroke: #adb5bd; stroke-width: 1.8; stroke-dasharray: 9 6; }
+    .an   { font-size: 14px; font-weight: bold; fill: #495057; }
+    .sw   { fill: #fff; stroke: #343a40; stroke-width: 2.2; }
+    .swt  { font-size: 12.5px; font-weight: bold; fill: #343a40; }
+    .rol  { font-size: 10px; fill: #868e96; }
+    .fib  { stroke: #e8590c; stroke-width: 5; stroke-linecap: round; fill: none; }
+    .cu   { stroke: #1971c2; stroke-width: 2.6; stroke-linecap: round; fill: none; }
+    .blk  { stroke: #e03131; stroke-width: 2.6; stroke-dasharray: 9 6; stroke-linecap: round; fill: none; }
+    .med  { font-size: 10.5px; fill: #495057; }
+    .end  { stroke: #495057; stroke-width: 1.6; fill: #fff; }
+  </style>
+
+  <text x="600" y="32" class="t" text-anchor="middle">Topología lógica — jerarquía, VLANs, medios y canales agregados</text>
+
+  <!-- ===== CORE ===== -->
+  <rect x="500" y="80" width="200" height="62" rx="9" class="sw" stroke="#2f9e44" stroke-width="3"/>
+  <text x="600" y="106" class="swt" text-anchor="middle">SW-CORE</text>
+  <text x="600" y="122" class="rol" text-anchor="middle">VTP Server · Root VLAN 34 y 44</text>
+  <text x="600" y="136" class="rol" text-anchor="middle">Centro de Datos</text>
+
+  <!-- ===== ENLACES DESDE EL CORE ===== -->
+  <path d="M520,142 C380,180 240,180 160,226" class="cu" stroke-width="5"/>
+  <rect x="120" y="158" width="176" height="34" rx="6" fill="#fff" fill-opacity="0.92"/>
+  <text x="208" y="172" class="med" text-anchor="middle" font-weight="bold" fill="#1971c2">Po1 · 2 × 1 Gbps</text>
+  <text x="208" y="186" class="med" text-anchor="middle">UTP Cat 6 · 10 m</text>
+
+  <path d="M556,142 C510,190 470,196 452,226" class="fib"/>
+  <rect x="318" y="158" width="168" height="34" rx="6" fill="#fff" fill-opacity="0.92"/>
+  <text x="478" y="172" class="med" text-anchor="end" font-weight="bold" fill="#e8590c">Po2 · 2 × 1 Gbps</text>
+  <text x="478" y="186" class="med" text-anchor="end">fibra OM4 · 180 m</text>
+
+  <path d="M646,142 C700,190 750,196 790,226" class="fib" stroke-width="4"/>
+  <rect x="560" y="158" width="152" height="34" rx="6" fill="#fff" fill-opacity="0.92"/>
+  <text x="704" y="172" class="med" text-anchor="end" font-weight="bold" fill="#e8590c">1 Gbps</text>
+  <text x="704" y="186" class="med" text-anchor="end">fibra OM3 · 120 m</text>
+
+  <path d="M684,142 C860,180 1000,184 1076,226" class="fib" stroke-width="4"/>
+  <rect x="806" y="158" width="290" height="34" rx="6" fill="#fff" fill-opacity="0.92"/>
+  <text x="950" y="172" class="med" text-anchor="middle" font-weight="bold" fill="#e8590c">1 Gbps · fibra OM3 · 90 m</text>
+  <text x="950" y="186" class="med" text-anchor="middle" fill="#c92a2a">⚡ fibra por EMI, no por distancia</text>
+
+  <!-- ===== ÁREA: CENTRO DE DATOS ===== -->
+  <rect x="34" y="214" width="250" height="230" rx="14" class="area"/>
+  <text x="159" y="236" class="an" text-anchor="middle">Centro de Datos</text>
+  <rect x="80" y="248" width="160" height="46" rx="8" class="sw"/>
+  <text x="160" y="268" class="swt" text-anchor="middle">SW-SRV</text>
+  <text x="160" y="284" class="rol" text-anchor="middle">acceso · Client</text>
+  <rect x="86" y="316" width="148" height="22" rx="11" fill="#343a40"/>
+  <text x="160" y="332" font-size="11" fill="#fff" text-anchor="middle">VLAN 44 SERVIDORES</text>
+  <g class="cu" stroke-width="2">
+    <path d="M100,294 L72,364"/><path d="M140,294 L130,364"/>
+    <path d="M180,294 L190,364"/><path d="M220,294 L248,364"/>
+  </g>
+  <g class="end">
+    <rect x="50"  y="364" width="46" height="40" rx="4"/>
+    <rect x="108" y="364" width="46" height="40" rx="4"/>
+    <rect x="166" y="364" width="46" height="40" rx="4"/>
+    <rect x="224" y="364" width="46" height="40" rx="4"/>
+  </g>
+  <g font-size="9" fill="#495057" text-anchor="middle">
+    <text x="73" y="388">WEB</text><text x="131" y="388">BD</text>
+    <text x="189" y="388">ARCH</text><text x="247" y="388">DNS</text>
+  </g>
+  <text x="159" y="428" class="rol" text-anchor="middle">4 servidores — mínimo del enunciado</text>
+
+  <!-- ===== ÁREA: CENTRO DE I+D ===== -->
+  <rect x="312" y="214" width="292" height="380" rx="14" class="area"/>
+  <text x="458" y="236" class="an" text-anchor="middle">Centro de I+D</text>
+  <rect x="372" y="248" width="170" height="46" rx="8" class="sw" stroke="#0c8599" stroke-width="3"/>
+  <text x="457" y="268" class="swt" text-anchor="middle">SW-DIST-ID</text>
+  <text x="457" y="284" class="rol" text-anchor="middle">distribución · Root VLAN 24</text>
+
+  <path d="M400,294 L378,338" class="cu"/>
+  <path d="M514,294 L536,338" class="cu"/>
+  <text x="352" y="322" class="med" text-anchor="end" fill="#1971c2">1 G</text>
+  <text x="566" y="322" class="med" text-anchor="start" fill="#1971c2">1 G</text>
+
+  <rect x="322" y="338" width="112" height="42" rx="7" class="sw"/>
+  <text x="378" y="358" class="swt" text-anchor="middle" font-size="11.5">SW-ID-1</text>
+  <text x="378" y="372" class="rol" text-anchor="middle">prio 28672</text>
+  <rect x="480" y="338" width="112" height="42" rx="7" class="sw"/>
+  <text x="536" y="358" class="swt" text-anchor="middle" font-size="11.5">SW-ID-3</text>
+  <rect x="401" y="440" width="112" height="42" rx="7" class="sw"/>
+  <text x="457" y="465" class="swt" text-anchor="middle" font-size="11.5">SW-ID-2</text>
+
+  <path d="M378,380 L440,440" class="cu"/>
+  <path d="M536,380 L500,440" class="blk"/>
+  <path d="M434,352 L480,352" class="blk"/>
+
+  <text x="404" y="418" class="med" fill="#1971c2">1 G</text>
+  <rect x="404" y="322" width="106" height="16" rx="5" fill="#fff" fill-opacity="0.94"/>
+  <text x="457" y="334" class="med" text-anchor="middle" fill="#c92a2a" font-size="10">100 M · costo 19</text>
+  <g transform="translate(448,356)">
+    <rect x="0" y="6" width="16" height="13" rx="3" fill="#e03131"/>
+    <path d="M3,6 V4 a5,5 0 0 1 10,0 V6" fill="none" stroke="#e03131" stroke-width="2"/>
+  </g>
+  <g transform="translate(508,404)">
+    <rect x="0" y="6" width="16" height="13" rx="3" fill="#e03131"/>
+    <path d="M3,6 V4 a5,5 0 0 1 10,0 V6" fill="none" stroke="#e03131" stroke-width="2"/>
+  </g>
+
+  <rect x="374" y="504" width="168" height="22" rx="11" fill="#0c8599"/>
+  <text x="458" y="520" font-size="11" fill="#fff" text-anchor="middle">VLAN 24 INVESTIGACION</text>
+  <text x="458" y="546" class="rol" text-anchor="middle">8 PC / laptops · 3 + 3 + 2</text>
+  <text x="458" y="572" class="rol" text-anchor="middle" fill="#c92a2a">Anillo cerrado + 2 uplinks: ningún switch aísla a los demás</text>
+
+  <!-- ===== ÁREA: EDIFICIO CORPORATIVO ===== -->
+  <rect x="628" y="214" width="336" height="380" rx="14" class="area"/>
+  <text x="796" y="236" class="an" text-anchor="middle">Edificio Corporativo</text>
+  <rect x="706" y="248" width="180" height="46" rx="8" class="sw" stroke="#7048e8" stroke-width="3"/>
+  <text x="796" y="268" class="swt" text-anchor="middle">SW-DIST-CORP</text>
+  <text x="796" y="284" class="rol" text-anchor="middle">distribución · Root VLAN 14 y 54</text>
+
+  <path d="M740,294 L698,338" class="cu"/>
+  <path d="M796,294 L800,338" class="cu"/>
+  <path d="M856,294 L906,338" class="cu"/>
+
+  <rect x="642" y="338" width="112" height="42" rx="7" class="sw"/>
+  <text x="698" y="358" class="swt" text-anchor="middle" font-size="11.5">SW-ALA-A</text>
+  <text x="698" y="372" class="rol" text-anchor="middle">prio 28672</text>
+  <rect x="744" y="400" width="112" height="42" rx="7" class="sw"/>
+  <text x="800" y="425" class="swt" text-anchor="middle" font-size="11.5">SW-ALA-B</text>
+  <rect x="850" y="338" width="106" height="42" rx="7" class="sw" stroke="#d6336c" stroke-width="2.6"/>
+  <text x="903" y="356" class="swt" text-anchor="middle" font-size="11">SW-COMUNES</text>
+  <text x="903" y="370" class="rol" text-anchor="middle" fill="#d6336c">VTP Transparent</text>
+
+  <path d="M698,380 L760,400" class="blk"/>
+  <g transform="translate(716,376)">
+    <rect x="0" y="6" width="16" height="13" rx="3" fill="#e03131"/>
+    <path d="M3,6 V4 a5,5 0 0 1 10,0 V6" fill="none" stroke="#e03131" stroke-width="2"/>
+  </g>
+  <rect x="638" y="424" width="122" height="30" rx="5" fill="#fff" fill-opacity="0.94"/>
+  <text x="644" y="436" class="med" fill="#c92a2a" font-size="10">enlace de respaldo</text>
+  <text x="644" y="448" class="med" fill="#c92a2a" font-size="10">bloqueado por STP</text>
+
+  <rect x="660" y="466" width="196" height="22" rx="11" fill="#7048e8"/>
+  <text x="758" y="482" font-size="11" fill="#fff" text-anchor="middle">VLAN 14 GERENCIA · 6 PC</text>
+  <rect x="846" y="400" width="112" height="22" rx="11" fill="#d6336c"/>
+  <text x="902" y="416" font-size="10.5" fill="#fff" text-anchor="middle">VLAN 54 VISITANTES</text>
+  <path d="M903,380 L903,400" class="cu"/>
+  <g class="end"><rect x="878" y="432" width="50" height="34" rx="4"/></g>
+  <text x="903" y="453" font-size="9" fill="#495057" text-anchor="middle">AP</text>
+  <path d="M903,422 L903,432" class="cu" stroke-width="2"/>
+  <text x="903" y="486" class="rol" text-anchor="middle" font-size="9.5">3 laptops + 1 PC</text>
+
+  <text x="796" y="524" class="rol" text-anchor="middle" fill="#c92a2a">Trunk a SW-COMUNES: sólo VLANs 1, 54 y 94</text>
+  <text x="796" y="546" class="rol" text-anchor="middle">Aislamiento de tráfico (VLAN) + de administración (Transparent)</text>
+  <text x="796" y="572" class="rol" text-anchor="middle">Las alas siguen comunicadas si cae un uplink</text>
+
+  <!-- ===== ÁREA: PLANTA ===== -->
+  <rect x="988" y="214" width="182" height="300" rx="14" class="area"/>
+  <text x="1079" y="236" class="an" text-anchor="middle">Planta de Producción</text>
+  <rect x="1002" y="248" width="154" height="46" rx="8" class="sw"/>
+  <text x="1079" y="268" class="swt" text-anchor="middle">SW-PLANTA</text>
+  <text x="1079" y="284" class="rol" text-anchor="middle">acceso · Client</text>
+
+  <rect x="1006" y="316" width="146" height="22" rx="11" fill="#f08c00"/>
+  <text x="1079" y="332" font-size="11" fill="#fff" text-anchor="middle">VLAN 34 PRODUCCION</text>
+
+  <path d="M1040,294 L1040,358" class="cu"/>
+  <path d="M1118,294 L1126,358" class="cu"/>
+  <ellipse cx="1052" cy="430" rx="62" ry="46" fill="#e03131" fill-opacity="0.10" stroke="#e03131" stroke-width="2" stroke-dasharray="7 5"/>
+  <rect x="1012" y="358" width="60" height="24" rx="5" fill="#fff" stroke="#c92a2a" stroke-width="2"/>
+  <text x="1042" y="375" font-size="10" fill="#c92a2a" text-anchor="middle" font-weight="bold">HUB</text>
+  <g class="end">
+    <rect x="1000" y="410" width="34" height="26" rx="4"/>
+    <rect x="1038" y="410" width="34" height="26" rx="4"/>
+    <rect x="1000" y="444" width="34" height="26" rx="4"/>
+    <rect x="1038" y="444" width="34" height="26" rx="4"/>
+  </g>
+  <text x="1052" y="492" class="rol" text-anchor="middle" fill="#c92a2a" font-size="9.5">1 dominio de colisión</text>
+  <text x="1052" y="504" class="rol" text-anchor="middle" fill="#c92a2a" font-size="9.5">compartido · 6 miembros</text>
+  <g class="end"><rect x="1108" y="358" width="42" height="26" rx="4"/></g>
+  <text x="1129" y="396" class="rol" text-anchor="middle" font-size="9">2 PC sup.</text>
+
+  <!-- ===== LEYENDA ===== -->
+  <rect x="34" y="626" width="1132" height="112" rx="12" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1.5"/>
+  <text x="56" y="652" class="an" font-size="13">Leyenda</text>
+  <g>
+    <line x1="60" y1="678" x2="120" y2="678" class="fib" stroke-width="5"/>
+    <text x="130" y="683" class="med">Fibra óptica</text>
+    <line x1="240" y1="678" x2="300" y2="678" class="cu"/>
+    <text x="310" y="683" class="med">Cobre UTP</text>
+    <line x1="420" y1="678" x2="480" y2="678" class="blk"/>
+    <g transform="translate(486,668)"><rect x="0" y="6" width="16" height="13" rx="3" fill="#e03131"/><path d="M3,6 V4 a5,5 0 0 1 10,0 V6" fill="none" stroke="#e03131" stroke-width="2"/></g>
+    <text x="512" y="683" class="med">Puerto bloqueado por STP</text>
+  </g>
+  <g font-size="11" fill="#fff">
+    <rect x="60"  y="700" width="128" height="20" rx="10" fill="#7048e8"/><text x="124" y="715" text-anchor="middle">14 GERENCIA</text>
+    <rect x="198" y="700" width="150" height="20" rx="10" fill="#0c8599"/><text x="273" y="715" text-anchor="middle">24 INVESTIGACION</text>
+    <rect x="358" y="700" width="136" height="20" rx="10" fill="#f08c00"/><text x="426" y="715" text-anchor="middle">34 PRODUCCION</text>
+    <rect x="504" y="700" width="136" height="20" rx="10" fill="#343a40"/><text x="572" y="715" text-anchor="middle">44 SERVIDORES</text>
+    <rect x="650" y="700" width="132" height="20" rx="10" fill="#d6336c"/><text x="716" y="715" text-anchor="middle">54 VISITANTES</text>
+    <rect x="792" y="700" width="152" height="20" rx="10" fill="#adb5bd"/><text x="868" y="715" text-anchor="middle">94 NATIVA (sin puertos)</text>
+  </g>
+  <text x="1080" y="715" class="med" text-anchor="middle" fill="#c92a2a" font-size="10">Dibujo derivado del diseño:</text>
+  <text x="1080" y="728" class="med" text-anchor="middle" fill="#c92a2a" font-size="10">contrastar con F12 y E3/E4</text>
+</svg>

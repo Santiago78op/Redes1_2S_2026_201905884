@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 720" width="860" height="720" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 3 — Un dominio de broadcast en la red plana; uno por VLAN tras la segmentación</title>
+  <desc>La misma planta física dibujada dos veces: arriba sin VLANs, con un único dominio de broadcast que alcanza a los seis equipos; abajo con tres VLANs, donde la trama de difusión sólo alcanza a los equipos de su propia VLAN.</desc>
+
+  <style>
+    .t    { font-size: 20px; fill: #212529; }
+    .h    { font-size: 17px; font-weight: bold; }
+    .lbl  { font-size: 12.5px; fill: #495057; }
+    .sub  { font-size: 13px; fill: #868e96; }
+    .sw   { fill: #f8f9fa; stroke: #343a40; stroke-width: 2; }
+    .cu   { stroke: #1971c2; stroke-width: 2; stroke-linecap: round; fill: none; }
+    .tr   { stroke: #343a40; stroke-width: 2.6; stroke-linecap: round; }
+  </style>
+
+  <!-- colores fijos por VLAN: 14 violeta · 24 turquesa · 34 ámbar -->
+
+  <!-- ============ ARRIBA: RED PLANA ============ -->
+  <text x="430" y="34" class="t" text-anchor="middle">La misma planta física, dos veces</text>
+
+  <text x="430" y="72" class="h" fill="#c92a2a" text-anchor="middle">Sin VLANs — 1 dominio de broadcast para todo</text>
+
+  <rect x="40" y="90" width="780" height="200" rx="34" fill="#e03131" fill-opacity="0.08" stroke="#e03131" stroke-width="2.6" stroke-dasharray="10 7"/>
+
+  <!-- switches -->
+  <g class="sw">
+    <rect x="110" y="120" width="130" height="42" rx="7"/>
+    <rect x="350" y="120" width="130" height="42" rx="7"/>
+    <rect x="590" y="120" width="130" height="42" rx="7"/>
+  </g>
+  <g class="lbl" text-anchor="middle" font-size="14" font-weight="bold" fill="#343a40">
+    <text x="175" y="147">SW-1</text>
+    <text x="415" y="147">SW-2</text>
+    <text x="655" y="147">SW-3</text>
+  </g>
+  <line x1="240" y1="141" x2="350" y2="141" class="tr"/>
+  <line x1="480" y1="141" x2="590" y2="141" class="tr"/>
+  <text x="295" y="132" class="lbl" text-anchor="middle" font-size="11">trunk</text>
+  <text x="535" y="132" class="lbl" text-anchor="middle" font-size="11">trunk</text>
+
+  <!-- cables cruzados: cada VLAN vive en dos switches distintos -->
+  <g class="cu">
+    <path d="M175,162 L116,214"/>  <path d="M415,162 L206,214"/>
+    <path d="M175,162 L336,214"/>  <path d="M655,162 L426,214"/>
+    <path d="M415,162 L556,214"/>  <path d="M655,162 L646,214"/>
+  </g>
+
+  <!-- PCs -->
+  <g stroke="#343a40" stroke-width="2">
+    <rect x="80"  y="214" width="72" height="42" rx="6" fill="#7048e8" fill-opacity="0.22"/>
+    <rect x="170" y="214" width="72" height="42" rx="6" fill="#7048e8" fill-opacity="0.22"/>
+    <rect x="300" y="214" width="72" height="42" rx="6" fill="#0c8599" fill-opacity="0.22"/>
+    <rect x="390" y="214" width="72" height="42" rx="6" fill="#0c8599" fill-opacity="0.22"/>
+    <rect x="520" y="214" width="72" height="42" rx="6" fill="#f08c00" fill-opacity="0.24"/>
+    <rect x="610" y="214" width="72" height="42" rx="6" fill="#f08c00" fill-opacity="0.24"/>
+  </g>
+  <g class="lbl" text-anchor="middle" font-size="12">
+    <text x="116" y="240">PC A</text> <text x="206" y="240">PC B</text>
+    <text x="336" y="240">PC C</text> <text x="426" y="240">PC D</text>
+    <text x="556" y="240">PC E</text> <text x="646" y="240">PC F</text>
+  </g>
+
+  <!-- trama de difusión -->
+  <rect x="58" y="266" width="132" height="22" rx="5" fill="#e03131"/>
+  <text x="124" y="282" font-size="11.5" fill="#fff" text-anchor="middle">FF:FF:FF:FF:FF:FF</text>
+
+  <text x="430" y="312" class="sub" text-anchor="middle" fill="#c92a2a" font-weight="bold">La trama de difusión de PC A alcanza a los 6 equipos, en los 3 switches.</text>
+  <text x="430" y="332" class="sub" text-anchor="middle">Encadenar switches no reduce el broadcast: lo extiende.</text>
+
+  <line x1="60" y1="358" x2="800" y2="358" stroke="#dee2e6" stroke-width="1.5" stroke-dasharray="6 6"/>
+
+  <!-- ============ ABAJO: CON VLANs ============ -->
+  <text x="430" y="400" class="h" fill="#2f9e44" text-anchor="middle">Con VLANs — 1 dominio de broadcast por VLAN</text>
+
+  <!-- nubes por VLAN -->
+  <ellipse cx="161" cy="590" rx="112" ry="62" fill="#7048e8" fill-opacity="0.10" stroke="#7048e8" stroke-width="2.6" stroke-dasharray="10 7"/>
+  <ellipse cx="381" cy="590" rx="112" ry="62" fill="#0c8599" fill-opacity="0.10" stroke="#0c8599" stroke-width="2.6" stroke-dasharray="10 7"/>
+  <ellipse cx="601" cy="590" rx="112" ry="62" fill="#f08c00" fill-opacity="0.12" stroke="#f08c00" stroke-width="2.6" stroke-dasharray="10 7"/>
+
+  <g class="sw">
+    <rect x="110" y="440" width="130" height="42" rx="7"/>
+    <rect x="350" y="440" width="130" height="42" rx="7"/>
+    <rect x="590" y="440" width="130" height="42" rx="7"/>
+  </g>
+  <g class="lbl" text-anchor="middle" font-size="14" font-weight="bold" fill="#343a40">
+    <text x="175" y="467">SW-1</text>
+    <text x="415" y="467">SW-2</text>
+    <text x="655" y="467">SW-3</text>
+  </g>
+  <line x1="240" y1="461" x2="350" y2="461" class="tr"/>
+  <line x1="480" y1="461" x2="590" y2="461" class="tr"/>
+  <text x="295" y="452" class="lbl" text-anchor="middle" font-size="11">trunk 802.1Q</text>
+  <text x="535" y="452" class="lbl" text-anchor="middle" font-size="11">trunk 802.1Q</text>
+
+  <g fill="none" stroke-width="2" stroke-linecap="round">
+    <path d="M175,482 L116,554" stroke="#7048e8"/>
+    <path d="M415,482 L206,554" stroke="#7048e8"/>
+    <path d="M175,482 L336,554" stroke="#0c8599"/>
+    <path d="M655,482 L426,554" stroke="#0c8599"/>
+    <path d="M415,482 L556,554" stroke="#f08c00"/>
+    <path d="M655,482 L646,554" stroke="#f08c00"/>
+  </g>
+
+  <g stroke="#343a40" stroke-width="2">
+    <rect x="80"  y="554" width="72" height="42" rx="6" fill="#7048e8" fill-opacity="0.22"/>
+    <rect x="170" y="554" width="72" height="42" rx="6" fill="#7048e8" fill-opacity="0.22"/>
+    <rect x="300" y="554" width="72" height="42" rx="6" fill="#0c8599" fill-opacity="0.22"/>
+    <rect x="390" y="554" width="72" height="42" rx="6" fill="#0c8599" fill-opacity="0.22"/>
+    <rect x="520" y="554" width="72" height="42" rx="6" fill="#f08c00" fill-opacity="0.24"/>
+    <rect x="610" y="554" width="72" height="42" rx="6" fill="#f08c00" fill-opacity="0.24"/>
+  </g>
+  <g class="lbl" text-anchor="middle" font-size="12">
+    <text x="116" y="580">PC A</text> <text x="206" y="580">PC B</text>
+    <text x="336" y="580">PC C</text> <text x="426" y="580">PC D</text>
+    <text x="556" y="580">PC E</text> <text x="646" y="580">PC F</text>
+  </g>
+
+  <rect x="58" y="606" width="132" height="22" rx="5" fill="#e03131"/>
+  <text x="124" y="622" font-size="11.5" fill="#fff" text-anchor="middle">FF:FF:FF:FF:FF:FF</text>
+
+  <!-- frontera: la trama se detiene -->
+  <g>
+    <circle cx="276" cy="590" r="15" fill="#fff" stroke="#e03131" stroke-width="3"/>
+    <line x1="266" y1="580" x2="286" y2="600" stroke="#e03131" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="496" cy="590" r="15" fill="#fff" stroke="#e03131" stroke-width="3"/>
+    <line x1="486" y1="580" x2="506" y2="600" stroke="#e03131" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <g class="lbl" font-size="13" font-weight="bold" text-anchor="middle">
+    <text x="161" y="662" fill="#7048e8">VLAN 14 — dominio 1</text>
+    <text x="381" y="662" fill="#0c8599">VLAN 24 — dominio 2</text>
+    <text x="601" y="662" fill="#f08c00">VLAN 34 — dominio 3</text>
+  </g>
+
+  <text x="430" y="692" class="sub" text-anchor="middle" fill="#2f9e44" font-weight="bold">La trama de PC A sólo alcanza a PC B: los dos equipos de su VLAN, aunque estén en switches distintos.</text>
+  <text x="430" y="712" class="sub" text-anchor="middle">Mismos cables, mismos switches. Lo único que cambió es la pertenencia lógica de cada puerto.</text>
+</svg>

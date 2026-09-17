@@ -1,0 +1,53 @@
+! ==========================================================
+! SW-DIST-CORP  -  Distribucion Corporativo / Root VLAN 14 y 54   (carne 201905884)
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! El volcado real de 'show running-config' va en configs/SW-DIST-CORP.txt
+! ==========================================================
+enable
+configure terminal
+ hostname SW-DIST-CORP
+ no ip domain-lookup
+ banner motd #Acceso Restringido - TechPark_201905884#
+ spanning-tree mode pvst
+ spanning-tree vlan 14,54 priority 24576       ! raíz primaria: deja el bloqueo en el enlace Ala A <-> Ala B
+!
+ vtp mode transparent
+ vtp mode client
+ vtp domain Smart_8
+ vtp password proyecto12S2026
+ vtp version 2
+!
+ interface GigabitEthernet0/1
+  description -> SW-CORE · fibra OM3 · 120 m
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,14,54,94
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface GigabitEthernet1/1
+  description -> SW-ALA-A
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,14,94
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface GigabitEthernet2/1
+  description -> SW-ALA-B
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,14,94
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface GigabitEthernet3/1
+  description -> SW-COMUNES · SOLO la VLAN 54: aislamiento de visitantes
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,54,94
+  switchport nonegotiate
+  no shutdown
+ exit
+end
+write memory

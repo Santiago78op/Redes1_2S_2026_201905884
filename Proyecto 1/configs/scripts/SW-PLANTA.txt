@@ -1,0 +1,61 @@
+! ==========================================================
+! SW-PLANTA  -  Acceso Legacy / contencion del hub   (carne 201905884)
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! El volcado real de 'show running-config' va en configs/SW-PLANTA.txt
+! ==========================================================
+enable
+configure terminal
+ hostname SW-PLANTA
+ no ip domain-lookup
+ spanning-tree mode pvst
+!
+ vtp mode transparent
+ vtp mode client
+ vtp domain Smart_8
+ vtp password proyecto12S2026
+ vtp version 2
+!
+ interface GigabitEthernet0/1
+  description -> SW-CORE · fibra OM3 · 90 m · fibra por EMI industrial
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,34,94
+  switchport nonegotiate
+  no shutdown
+ exit
+!
+! ---- Puerto del HUB Legacy: un solo puerto + contencion (§21.2) ----
+! Va en un modulo de cobre GIGABIT: el de cobre FastEthernet no enlaza con un hub (§14.11)
+ interface GigabitEthernet4/1
+  description -> HUB-LEGACY · 4 maquinas · dominio de colision compartido
+  switchport mode access
+  switchport access vlan 34
+  spanning-tree portfast
+  storm-control broadcast level 20
+  ! storm-control action trap  -> no existe en Packet Tracer (solo acepta 'broadcast'); va en equipo real (§21.2)
+  switchport port-security
+  switchport port-security maximum 5
+  switchport port-security violation restrict   ! NO shutdown: evita paradas de produccion
+  switchport port-security mac-address sticky
+  no shutdown
+ exit
+!
+! ---- PC de supervision: fuera del hub, para no compartir el medio degradado ----
+ interface range FastEthernet2/1 , FastEthernet3/1   ! una ranura = un puerto: no hay Fa2/2 ni Fa2/3
+  description PC de supervision de planta
+  switchport mode access
+  switchport access vlan 34
+  spanning-tree portfast
+  spanning-tree bpduguard enable   ! un BPDU en un puerto de equipo final lo apaga (§22)
+  no shutdown
+ exit
+!
+! ---- Puerto libre: el 1CFE no enlaza con el hub (§14.11); VLAN muerta + apagado ----
+ interface FastEthernet1/1
+  description Puerto libre
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+end
+write memory

@@ -1,0 +1,91 @@
+! ==========================================================
+! SW-DIST-ID  -  Distribucion I+D / Root VLAN 24 (Po2)   (carne 201905884)
+! Modelo: Switch-PT-Empty   |   MAC (Bridge ID): 0001.42D2.15BA
+! VTP (no figura en running-config; de 'show vtp status'): modo Client,
+!   dominio Smart_8, version 2, revision 29
+! Enlaces (segun las 'description' de la propia configuracion):
+!   Po2     Po2 -> SW-CORE 2x1G fibra OM4 180 m
+!   Gi0/1   Miembro de Po2 -> SW-CORE
+!   Gi1/1   Miembro de Po2 -> SW-CORE
+!   Gi2/1   -> SW-ID-1 UTP Cat6
+!   Gi3/1   -> SW-ID-3 UTP Cat6
+! Volcado REAL de 'show running-config' tomado del simulador el 2026-09-16,
+! sobre Proyecto1_201905884.pkt. El script de origen esta en scripts/SW-DIST-ID.txt
+! ==========================================================
+Building configuration...
+
+Current configuration : 1469 bytes
+!
+version 12.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW-DIST-ID
+!
+!
+!
+ptp clock transparent domain 0 profile default
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+spanning-tree vlan 24 priority 24576
+!
+interface Port-channel2
+ description Po2 -> SW-CORE 2x1G fibra OM4 180 m
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,24,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet0/1
+ description Miembro de Po2 -> SW-CORE
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,24,94
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 2 mode active
+!
+interface GigabitEthernet1/1
+ description Miembro de Po2 -> SW-CORE
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,24,94
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 2 mode active
+!
+interface GigabitEthernet2/1
+ description -> SW-ID-1 UTP Cat6
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,24,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet3/1
+ description -> SW-ID-3 UTP Cat6
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,24,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+banner motd ^CAcceso Restringido - TechPark_201905884^C
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end

@@ -1,0 +1,196 @@
+! ==========================================================
+! SW-COMUNES  -  Acceso visitantes (VTP Transparent)   (carne 201905884)
+! Modelo: 2960-24TT   |   MAC (Bridge ID): 0060.2F76.5D74
+! VTP (no figura en running-config; de 'show vtp status'): modo Transparent,
+!   dominio Smart_8, version 2, revision 0
+! Enlaces (segun las 'description' de la propia configuracion):
+!   Fa0/1   -> AP-VISITANTES laptops de visita
+!   Fa0/2   -> PC-VIS-1 kiosco de visitantes
+!   Gi0/1   -> SW-DIST-CORP SOLO VLAN 54
+! Volcado REAL de 'show running-config' tomado del simulador el 2026-09-16,
+! sobre Proyecto1_201905884.pkt. El script de origen esta en scripts/SW-COMUNES.txt
+! ==========================================================
+Building configuration...
+
+Current configuration : 3065 bytes
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW-COMUNES
+!
+!
+!
+no ip domain-lookup
+!
+vtp domain Smart_8
+vtp mode transparent
+vtp password proyecto12S2026
+vtp version 2
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan 54
+ name VISITANTES
+!
+vlan 94
+ name NATIVA
+!
+vlan 999
+ name SIN-USO
+!
+interface FastEthernet0/1
+ description -> AP-VISITANTES laptops de visita
+ switchport access vlan 54
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/2
+ description -> PC-VIS-1 kiosco de visitantes
+ switchport access vlan 54
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/3
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/4
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/5
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/6
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/7
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/8
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/9
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/10
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/11
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/12
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/13
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/14
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/15
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/16
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/17
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/18
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/19
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/20
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/21
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/22
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/23
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/24
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface GigabitEthernet0/1
+ description -> SW-DIST-CORP SOLO VLAN 54
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,54,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end

@@ -1,0 +1,193 @@
+! ==========================================================
+! SW-ALA-A  -  Acceso Ala A - raiz secundaria VLAN 14   (carne 201905884)
+! Modelo: 2960-24TT   |   MAC (Bridge ID): 0001.9717.05E7
+! VTP (no figura en running-config; de 'show vtp status'): modo Client,
+!   dominio Smart_8, version 2, revision 29
+! Enlaces (segun las 'description' de la propia configuracion):
+!   Fa0/1   Gerencia Ala A VLAN 14
+!   Fa0/2   Gerencia Ala A VLAN 14
+!   Fa0/3   Gerencia Ala A VLAN 14
+!   Gi0/1   -> SW-DIST-CORP
+!   Gi0/2   -> SW-ALA-B enlace directo de respaldo 60 m
+! Volcado REAL de 'show running-config' tomado del simulador el 2026-09-16,
+! sobre Proyecto1_201905884.pkt. El script de origen esta en scripts/SW-ALA-A.txt
+! ==========================================================
+Building configuration...
+
+Current configuration : 3194 bytes
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW-ALA-A
+!
+!
+!
+no ip domain-lookup
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+spanning-tree vlan 14 priority 28672
+!
+interface FastEthernet0/1
+ description Gerencia Ala A VLAN 14
+ switchport access vlan 14
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/2
+ description Gerencia Ala A VLAN 14
+ switchport access vlan 14
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/3
+ description Gerencia Ala A VLAN 14
+ switchport access vlan 14
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/4
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/5
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/6
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/7
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/8
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/9
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/10
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/11
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/12
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/13
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/14
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/15
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/16
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/17
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/18
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/19
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/20
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/21
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/22
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/23
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/24
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface GigabitEthernet0/1
+ description -> SW-DIST-CORP
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,14,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet0/2
+ description -> SW-ALA-B enlace directo de respaldo 60 m
+ switchport trunk native vlan 94
+ switchport trunk allowed vlan 1,14,94
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end

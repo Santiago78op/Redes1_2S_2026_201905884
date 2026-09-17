@@ -1,0 +1,53 @@
+! ==========================================================
+! SW-SRV  -  Acceso granja de servidores   (carne 201905884)
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! El volcado real de 'show running-config' va en configs/SW-SRV.txt
+! ==========================================================
+enable
+configure terminal
+ hostname SW-SRV
+ no ip domain-lookup
+ spanning-tree mode pvst
+!
+! ---- VTP: poner la revisión en 0 ANTES de integrarlo (§5.3) ----
+ vtp mode transparent
+ vtp mode client
+ vtp domain Smart_8
+ vtp password proyecto12S2026
+ vtp version 2
+!
+! ---- Po1 hacia el Core ----
+ interface range GigabitEthernet0/1-2
+  description Miembro de Po1 -> SW-CORE
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,44,94
+  switchport nonegotiate
+  channel-group 1 mode active
+  no shutdown
+ exit
+ interface Port-channel1
+  description Po1 -> SW-CORE · 2x1G UTP Cat6
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,44,94
+ exit
+!
+! ---- Granja de servidores: 4 puertos access en la VLAN 44 ----
+ interface range FastEthernet0/1-4
+  description Granja de servidores (Web, BD, Archivos, DNS)
+  switchport mode access
+  switchport access vlan 44
+  spanning-tree portfast
+  spanning-tree bpduguard enable   ! un BPDU en un puerto de equipo final lo apaga (§22)
+  no shutdown
+ exit
+!
+! ---- Puertos no utilizados: VLAN muerta + apagados (§9.3) ----
+ interface range FastEthernet0/5-24
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+end
+write memory

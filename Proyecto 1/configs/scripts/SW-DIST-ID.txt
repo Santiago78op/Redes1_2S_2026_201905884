@@ -1,0 +1,65 @@
+! ==========================================================
+! SW-DIST-ID  -  Distribucion I+D / Root VLAN 24   (carne 201905884)
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! El volcado real de 'show running-config' va en configs/SW-DIST-ID.txt
+! ==========================================================
+enable
+configure terminal
+ hostname SW-DIST-ID
+ no ip domain-lookup
+ banner motd #Acceso Restringido - TechPark_201905884#
+ spanning-tree mode pvst
+ spanning-tree vlan 24 priority 24576          ! raíz primaria de la VLAN 24
+!
+ vtp mode transparent
+ vtp mode client
+ vtp domain Smart_8
+ vtp password proyecto12S2026
+ vtp version 2
+!
+! ---- Po2 hacia el Core (fibra OM4) ----
+ interface GigabitEthernet0/1
+  description Miembro de Po2 -> SW-CORE
+  ! switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,24,94
+  switchport nonegotiate
+  channel-group 2 mode active
+  no shutdown
+ exit
+ interface GigabitEthernet1/1
+  description Miembro de Po2 -> SW-CORE
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,24,94
+  switchport nonegotiate
+  channel-group 2 mode active
+  no shutdown
+ exit
+ interface Port-channel2
+  description Po2 -> SW-CORE · 2x1G fibra OM4 · 180 m
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,24,94
+ exit
+!
+! ---- Dos bajadas al anillo: ningún switch del anillo es punto único de falla ----
+ interface GigabitEthernet2/1
+  description -> SW-ID-1 · UTP Cat6 1G
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,24,94
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface GigabitEthernet3/1
+  description -> SW-ID-3 · UTP Cat6 1G
+  switchport mode trunk
+  switchport trunk native vlan 94
+  switchport trunk allowed vlan 1,24,94
+  switchport nonegotiate
+  no shutdown
+ exit
+end
+write memory

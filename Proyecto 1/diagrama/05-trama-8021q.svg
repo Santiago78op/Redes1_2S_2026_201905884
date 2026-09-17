@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 5 — Inserción del tag 802.1Q de 4 bytes en la trama Ethernet</title>
+  <desc>El estándar 802.1Q no encapsula la trama: inserta cuatro bytes entre la MAC de origen y el campo Tipo. Esos cuatro bytes se desglosan en TPID, PCP, DEI y un VLAN ID de doce bits.</desc>
+
+  <style>
+    .t   { font-size: 20px; fill: #212529; }
+    .h   { font-size: 15px; font-weight: bold; }
+    .f   { stroke: #343a40; stroke-width: 2; }
+    .fn  { font-size: 12px; fill: #212529; }
+    .fb  { font-size: 10.5px; fill: #868e96; }
+    .sub { font-size: 13px; fill: #868e96; }
+  </style>
+
+  <text x="450" y="32" class="t" text-anchor="middle">802.1Q no envuelve la trama: le inserta 4 bytes</text>
+
+  <!-- ===== TRAMA SIN ETIQUETA ===== -->
+  <text x="100" y="76" class="h" fill="#868e96">① Trama Ethernet II normal — sin etiqueta</text>
+
+  <g class="f" fill="#f8f9fa">
+    <rect x="100" y="90" width="130" height="46" rx="4"/>
+    <rect x="230" y="90" width="130" height="46" rx="4"/>
+    <rect x="360" y="90" width="80"  height="46" rx="4"/>
+    <rect x="440" y="90" width="280" height="46" rx="4"/>
+    <rect x="720" y="90" width="80"  height="46" rx="4"/>
+  </g>
+  <g class="fn" text-anchor="middle">
+    <text x="165" y="112">MAC destino</text><text x="165" y="128" class="fb">6 bytes</text>
+    <text x="295" y="112">MAC origen</text><text x="295" y="128" class="fb">6 bytes</text>
+    <text x="400" y="112">Tipo</text><text x="400" y="128" class="fb">2 B</text>
+    <text x="580" y="112">Datos</text><text x="580" y="128" class="fb">46 – 1500 bytes</text>
+    <text x="760" y="112">FCS</text><text x="760" y="128" class="fb">4 B</text>
+  </g>
+  <text x="450" y="158" class="sub" text-anchor="middle">Máximo <tspan font-weight="bold">1518 bytes</tspan> · Por aquí viaja la <tspan font-weight="bold" fill="#495057">VLAN nativa 94</tspan>: sin etiqueta</text>
+
+  <!-- ===== TRAMA ETIQUETADA ===== -->
+  <text x="100" y="212" class="h" fill="#1971c2">② La misma trama dentro de un trunk — etiquetada</text>
+
+  <g class="f" fill="#f8f9fa">
+    <rect x="100" y="226" width="130" height="46" rx="4"/>
+    <rect x="230" y="226" width="130" height="46" rx="4"/>
+    <rect x="450" y="226" width="70"  height="46" rx="4"/>
+    <rect x="520" y="226" width="200" height="46" rx="4"/>
+    <rect x="720" y="226" width="80"  height="46" rx="4"/>
+  </g>
+  <rect x="360" y="226" width="90" height="46" rx="4" fill="#4dabf7" stroke="#1971c2" stroke-width="2.4"/>
+
+  <g class="fn" text-anchor="middle">
+    <text x="165" y="248">MAC destino</text><text x="165" y="264" class="fb">6 bytes</text>
+    <text x="295" y="248">MAC origen</text><text x="295" y="264" class="fb">6 bytes</text>
+    <text x="405" y="248" fill="#fff" font-weight="bold">TAG</text><text x="405" y="264" fill="#e7f5ff" font-size="10.5">4 bytes</text>
+    <text x="485" y="248">Tipo</text><text x="485" y="264" class="fb">2 B</text>
+    <text x="620" y="248">Datos</text><text x="620" y="264" class="fb">46 – 1500 bytes</text>
+    <text x="760" y="248">FCS</text><text x="760" y="264" class="fb">4 B</text>
+  </g>
+  <!-- zoom -->
+  <path d="M360,278 L180,344 M450,278 L820,344" stroke="#1971c2" stroke-width="1.6" stroke-dasharray="6 4" fill="none"/>
+
+  <rect x="210" y="282" width="480" height="24" rx="6" fill="#fff"/>
+  <text x="450" y="299" class="sub" text-anchor="middle">Máximo <tspan font-weight="bold">1522 bytes</tspan> · el switch recalcula el FCS, porque el contenido cambió</text>
+
+  <!-- ===== DESGLOSE DEL TAG ===== -->
+  <text x="500" y="334" class="h" fill="#1971c2" text-anchor="middle">Los 4 bytes, por dentro</text>
+
+  <g stroke="#1971c2" stroke-width="2" fill="#e7f5ff">
+    <rect x="180" y="344" width="200" height="52" rx="4"/>
+    <rect x="380" y="344" width="110" height="52" rx="4"/>
+    <rect x="490" y="344" width="90"  height="52" rx="4"/>
+    <rect x="580" y="344" width="240" height="52" rx="4"/>
+  </g>
+  <g class="fn" text-anchor="middle">
+    <text x="280" y="366" font-weight="bold">TPID  0x8100</text><text x="280" y="384" class="fb">2 bytes</text>
+    <text x="435" y="366" font-weight="bold">PCP</text><text x="435" y="384" class="fb">3 bits</text>
+    <text x="535" y="366" font-weight="bold">DEI</text><text x="535" y="384" class="fb">1 bit</text>
+    <text x="700" y="366" font-weight="bold">VLAN ID</text><text x="700" y="384" class="fb">12 bits</text>
+  </g>
+
+  <g class="fb" text-anchor="middle" font-size="11.5">
+    <text x="280" y="416">«esta trama lleva etiqueta»</text>
+    <text x="435" y="416">prioridad 0–7</text>
+    <text x="535" y="416">descartable</text>
+    <text x="700" y="416" fill="#1971c2" font-weight="bold" font-size="12.5">2¹² = 4096 valores → 1–4094 utilizables</text>
+    <text x="700" y="434" fill="#1971c2">de ahí salen las VLANs 14, 24, 34, 44, 54 y 94</text>
+  </g>
+
+  <rect x="150" y="452" width="600" height="34" rx="9" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1.5"/>
+  <text x="450" y="474" class="sub" text-anchor="middle">El tag sólo existe dentro del trunk: se pone al entrar y se quita antes de llegar al equipo final.</text>
+</svg>

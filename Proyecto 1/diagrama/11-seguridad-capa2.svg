@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 660" width="980" height="660" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 11 — VLAN hopping por doble etiquetado y MAC flooding</title>
+  <desc>Dos ataques que la configuración por defecto de un switch permite, con su contramedida al lado: el salto de VLAN mediante doble etiqueta 802.1Q y el desbordamiento de la tabla CAM que degrada el switch a hub.</desc>
+
+  <defs>
+    <marker id="ra" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7,3.2 L0,6.4 z" fill="#e03131"/>
+    </marker>
+  </defs>
+
+  <style>
+    .t   { font-size: 20px; fill: #212529; }
+    .h   { font-size: 16px; font-weight: bold; fill: #c92a2a; }
+    .sw  { fill: #f8f9fa; stroke: #343a40; stroke-width: 2.2; }
+    .swt { font-size: 13.5px; font-weight: bold; fill: #343a40; }
+    .sub { font-size: 12px; fill: #868e96; }
+    .red { font-size: 12px; font-weight: bold; fill: #c92a2a; }
+    .grn { font-size: 12.5px; font-weight: bold; fill: #2f9e44; }
+    .arr { fill: none; stroke: #e03131; stroke-width: 2.6; marker-end: url(#ra); }
+  </style>
+
+  <text x="490" y="30" class="t" text-anchor="middle">Dos ataques que la configuración por defecto permite</text>
+
+  <!-- ================= ① VLAN HOPPING ================= -->
+  <text x="40" y="70" class="h">① VLAN hopping por doble etiquetado</text>
+  <rect x="26" y="82" width="700" height="216" rx="14" fill="#fff5f5" stroke="#ffc9c9" stroke-width="1.8"/>
+
+  <!-- atacante -->
+  <rect x="50" y="170" width="90" height="46" rx="6" fill="#ffe3e3" stroke="#e03131" stroke-width="2.2"/>
+  <text x="95" y="192" class="red" text-anchor="middle">atacante</text>
+  <text x="95" y="208" class="sub" text-anchor="middle" font-size="10">puerto access</text>
+  <text x="95" y="238" class="sub" text-anchor="middle" font-size="11">está en la VLAN 1,</text>
+  <text x="95" y="252" class="sub" text-anchor="middle" font-size="11">igual que la nativa</text>
+
+  <!-- trama con dos tags -->
+  <g>
+    <rect x="160" y="176" width="120" height="30" rx="4" fill="#fff" stroke="#343a40" stroke-width="1.6"/>
+    <rect x="160" y="176" width="34" height="30" rx="4" fill="#adb5bd"/>
+    <text x="177" y="196" font-size="9.5" fill="#fff" text-anchor="middle">tag 1</text>
+    <rect x="194" y="176" width="34" height="30" fill="#343a40"/>
+    <text x="211" y="196" font-size="9.5" fill="#fff" text-anchor="middle">tag 44</text>
+    <text x="254" y="196" font-size="9.5" fill="#495057" text-anchor="middle">datos</text>
+  </g>
+  <text x="220" y="166" class="red" text-anchor="middle">DOS etiquetas</text>
+
+  <rect x="300" y="160" width="120" height="62" rx="8" class="sw"/>
+  <text x="360" y="186" class="swt" text-anchor="middle">SW-1</text>
+  <text x="360" y="204" class="sub" text-anchor="middle" font-size="10">quita el tag externo</text>
+  <text x="360" y="216" class="sub" text-anchor="middle" font-size="10">(coincide con la nativa)</text>
+
+  <!-- trama con un tag -->
+  <g>
+    <rect x="436" y="176" width="86" height="30" rx="4" fill="#fff" stroke="#343a40" stroke-width="1.6"/>
+    <rect x="436" y="176" width="34" height="30" rx="4" fill="#343a40"/>
+    <text x="453" y="196" font-size="9.5" fill="#fff" text-anchor="middle">tag 44</text>
+    <text x="496" y="196" font-size="9.5" fill="#495057" text-anchor="middle">datos</text>
+  </g>
+  <text x="479" y="166" class="sub" text-anchor="middle" font-size="11">sobrevive la interna</text>
+
+  <rect x="540" y="160" width="120" height="62" rx="8" class="sw"/>
+  <text x="600" y="184" class="swt" text-anchor="middle">SW-2</text>
+  <text x="600" y="202" class="sub" text-anchor="middle" font-size="10">lee el tag interno y la</text>
+  <text x="600" y="214" class="sub" text-anchor="middle" font-size="10">entrega en la VLAN 44</text>
+
+  <path d="M140,191 L156,191" class="arr"/>
+  <path d="M284,191 L296,191" class="arr"/>
+  <path d="M424,191 L432,191" class="arr"/>
+  <path d="M526,191 L536,191" class="arr"/>
+  <path d="M664,191 L686,191" class="arr"/>
+
+  <rect x="690" y="168" width="26" height="46" rx="4" fill="#343a40"/>
+  <text x="703" y="240" class="red" text-anchor="middle" font-size="11">servidor</text>
+  <text x="703" y="254" class="red" text-anchor="middle" font-size="11">VLAN 44</text>
+
+  <text x="376" y="118" class="sub" text-anchor="middle" font-size="12.5">El ataque es <tspan font-weight="bold">unidireccional</tspan> —no hay camino de vuelta— pero basta para inyectar tráfico.</text>
+
+  <!-- contramedida 1 -->
+  <rect x="744" y="82" width="210" height="216" rx="14" fill="#ebfbee" stroke="#8ce99a" stroke-width="1.8"/>
+  <text x="849" y="110" class="grn" text-anchor="middle">CONTRAMEDIDA</text>
+  <text x="849" y="142" class="sub" text-anchor="middle" font-size="12">Nativa fuera de la VLAN 1…</text>
+  <rect x="768" y="154" width="162" height="26" rx="5" fill="#fff" stroke="#2f9e44" stroke-width="1.6"/>
+  <text x="849" y="172" font-size="10.5" fill="#2f9e44" text-anchor="middle">native vlan 94</text>
+  <text x="849" y="204" class="sub" text-anchor="middle" font-size="12">…y sin ningún puerto</text>
+  <text x="849" y="220" class="sub" text-anchor="middle" font-size="12">de acceso dentro de ella</text>
+  <text x="849" y="252" class="grn" text-anchor="middle" font-size="11.5">Sin las dos, no sirve:</text>
+  <text x="849" y="268" class="sub" text-anchor="middle" font-size="11">si el atacante puede originar</text>
+  <text x="849" y="282" class="sub" text-anchor="middle" font-size="11">tráfico en la nativa, vuelve a entrar</text>
+
+  <!-- ================= ② MAC FLOODING ================= -->
+  <text x="40" y="350" class="h">② MAC flooding — el switch degradado a hub</text>
+  <rect x="26" y="362" width="700" height="252" rx="14" fill="#fff5f5" stroke="#ffc9c9" stroke-width="1.8"/>
+
+  <rect x="50" y="450" width="90" height="46" rx="6" fill="#ffe3e3" stroke="#e03131" stroke-width="2.2"/>
+  <text x="95" y="472" class="red" text-anchor="middle">atacante</text>
+  <text x="95" y="488" class="sub" text-anchor="middle" font-size="10">miles de MAC</text>
+  <path d="M142,473 L232,473" class="arr"/>
+  <text x="188" y="462" class="red" text-anchor="middle" font-size="11">MAC falsas</text>
+
+  <!-- tabla CAM llena -->
+  <rect x="240" y="396" width="180" height="156" rx="8" fill="#fff" stroke="#e03131" stroke-width="2.4"/>
+  <text x="330" y="418" class="red" text-anchor="middle">Tabla CAM — LLENA</text>
+  <g font-size="10" fill="#868e96" text-anchor="middle">
+    <text x="330" y="440">aa:bb:cc:00:00:01 → Fa0/1</text>
+    <text x="330" y="458">aa:bb:cc:00:00:02 → Fa0/1</text>
+    <text x="330" y="476">aa:bb:cc:00:00:03 → Fa0/1</text>
+    <text x="330" y="494">…</text>
+    <text x="330" y="514" fill="#c92a2a" font-weight="bold">sin espacio para</text>
+    <text x="330" y="530" fill="#c92a2a" font-weight="bold">las MAC legítimas</text>
+  </g>
+
+  <rect x="450" y="450" width="130" height="48" rx="8" class="sw" stroke="#e03131"/>
+  <text x="515" y="480" class="swt" text-anchor="middle" fill="#c92a2a">SWITCH</text>
+  <path d="M424,473 L446,473" class="arr"/>
+
+  <!-- inunda -->
+  <g stroke="#e03131" stroke-width="2.2" stroke-linecap="round">
+    <line x1="480" y1="498" x2="450" y2="552"/>
+    <line x1="515" y1="498" x2="515" y2="552"/>
+    <line x1="550" y1="498" x2="580" y2="552"/>
+  </g>
+  <g fill="#fff" stroke="#495057" stroke-width="1.8">
+    <rect x="422" y="552" width="56" height="26" rx="4"/>
+    <rect x="487" y="552" width="56" height="26" rx="4"/>
+    <rect x="552" y="552" width="56" height="26" rx="4"/>
+  </g>
+  <text x="515" y="598" class="red" text-anchor="middle">Al no encontrar el destino, inunda por todos los puertos</text>
+  <text x="710" y="418" class="sub" text-anchor="end" font-size="12">El switch queda funcionando como un hub:</text>
+  <text x="710" y="434" class="sub" text-anchor="end" font-size="12">el atacante lee el tráfico de sus vecinos</text>
+
+  <!-- contramedida 2 -->
+  <rect x="744" y="362" width="210" height="252" rx="14" fill="#ebfbee" stroke="#8ce99a" stroke-width="1.8"/>
+  <text x="849" y="390" class="grn" text-anchor="middle">CONTRAMEDIDA</text>
+  <rect x="768" y="406" width="162" height="26" rx="5" fill="#fff" stroke="#2f9e44" stroke-width="1.6"/>
+  <text x="849" y="424" font-size="10.5" fill="#2f9e44" text-anchor="middle">port-security maximum N</text>
+  <text x="849" y="454" class="sub" text-anchor="middle" font-size="12">Limita cuántas MAC puede</text>
+  <text x="849" y="470" class="sub" text-anchor="middle" font-size="12">aprender cada puerto</text>
+  <text x="849" y="502" class="grn" text-anchor="middle" font-size="11.5">Límite honesto:</text>
+  <text x="849" y="520" class="sub" text-anchor="middle" font-size="11">la MAC es falsificable — quien</text>
+  <text x="849" y="534" class="sub" text-anchor="middle" font-size="11">clone la autorizada, pasa igual</text>
+  <text x="849" y="562" class="sub" text-anchor="middle" font-size="11">Y mal dimensionado, deja puertos</text>
+  <text x="849" y="576" class="sub" text-anchor="middle" font-size="11">caídos por un cambio legítimo</text>
+  <text x="849" y="598" class="sub" text-anchor="middle" font-size="11" fill="#495057">de equipo (modo <tspan font-style="italic">shutdown</tspan>)</text>
+
+  <text x="490" y="644" class="sub" text-anchor="middle" font-size="13">Ninguna medida de Capa 2 es completa por sí sola: por eso §9.2 documenta también lo que cada una <tspan font-weight="bold">no</tspan> resuelve.</text>
+</svg>

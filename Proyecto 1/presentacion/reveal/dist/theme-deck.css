@@ -1,0 +1,224 @@
+/* ============================================================
+   Tema SGO-Logic v2 — claro, corporativo, infográfico
+   (estilo plantilla ejecutiva: fondo claro, tarjetas blancas,
+   acentos de color por categoría, títulos centrados)
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,700;0,800;0,900&family=Inter:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --r-background-color: #f2f4f7;
+  --panel: #ffffff;
+  --panel-2: #f7f9fb;
+  --line: #dfe5ec;
+  --r-main-font: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --r-main-font-size: 30px;
+  --r-main-color: #3d4753;
+  --r-heading-font: 'Inter Tight', 'Segoe UI', Arial, sans-serif;
+  --r-heading-color: #1f3a5f;
+  --r-heading-text-transform: none;
+  --r-heading-letter-spacing: -1.2px;
+  --r-heading1-size: 2.2em;
+  --r-heading2-size: 1.58em;
+  --r-heading3-size: 1.0em;
+  --r-link-color: #2e86c1;
+  --r-link-color-hover: #1f6da3;
+  --r-selection-background-color: #c0392b;
+  --accent: #c0392b;      /* rojo MegaStore */
+  --navy: #1f3a5f;        /* azul corporativo */
+  --teal: #16a085;        /* verde: lo que la arquitectura garantiza */
+  --gold: #e67e22;        /* ámbar: cifras y avisos */
+  --blue: #2e86c1;
+  --muted: #7a8595;
+  --faint: #a5aebb;
+  --mono: 'IBM Plex Mono', Consolas, monospace;
+}
+
+.reveal-viewport { background: var(--r-background-color); }
+.reveal {
+  font-family: var(--r-main-font);
+  font-size: var(--r-main-font-size);
+  font-weight: 400;
+  color: var(--r-main-color);
+}
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  font-family: var(--r-heading-font);
+  color: var(--r-heading-color);
+  letter-spacing: var(--r-heading-letter-spacing);
+  text-transform: var(--r-heading-text-transform);
+  line-height: 1.22;
+  margin: 0 0 18px 0;
+  word-wrap: break-word;
+  font-weight: 800;
+}
+.reveal h1 { font-size: var(--r-heading1-size); }
+.reveal h2 { font-size: var(--r-heading2-size); }
+.reveal h3 { font-size: var(--r-heading3-size); }
+.reveal a { color: var(--r-link-color); text-decoration: none; }
+.reveal a:hover { color: var(--r-link-color-hover); }
+.reveal ::selection { background: var(--r-selection-background-color); color: #fff; }
+.reveal p { margin: 0 0 10px 0; }
+.reveal img { margin: 0; }
+
+.reveal { font-weight: 400; }
+.reveal .slides { text-align: left; }
+/* retícula única: mismo margen lateral en TODAS las planchas,
+   y todo el cuerpo (term, listas, tablas, avisos) alineado a ese borde */
+.reveal .slides section { padding: 0 28px; }
+.reveal p { line-height: 1.55; }
+.reveal strong { color: var(--navy); font-weight: 700; }
+.reveal em { color: var(--gold); font-style: normal; font-weight: 600; }
+.reveal .progress { color: var(--accent); height: 4px; }
+.reveal .controls { color: var(--accent); }
+.reveal .slide-number { background: transparent; font-family: var(--mono); font-size: 14px; color: var(--faint); }
+
+/* ---- título de plancha: centrado, con línea de acento (estilo PPT) ---- */
+.eyebrow {
+  font-family: var(--mono); font-size: 0.42em; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--accent); margin: 0 0 12px 0; font-weight: 500;
+  text-align: center;
+}
+.reveal .slides section > h2 {
+  text-align: center;
+  position: relative;
+  margin-bottom: 26px;
+}
+.lead { font-size: 0.6em; color: var(--muted); max-width: 74ch; line-height: 1.6; margin-left: 0; margin-right: 0; }
+
+/* ---- recuadro de definición (término de teoría) ---- */
+.term {
+  border-left: 4px solid var(--teal); background: #eef7f5;
+  padding: 14px 20px; border-radius: 0 10px 10px 0;
+  font-size: 0.54em; line-height: 1.55; color: var(--r-main-color);
+  margin: 16px 0 6px 0; max-width: 100%;
+}
+.term b { color: var(--navy); }
+.term .src { display: block; margin-top: 6px; font-family: var(--mono); font-size: 0.8em; color: var(--muted); }
+
+/* aviso ámbar */
+.warnbox {
+  border-left: 4px solid var(--gold); background: #fdf3e7;
+  padding: 12px 18px; border-radius: 0 10px 10px 0;
+  font-size: 0.5em; line-height: 1.5; margin-top: 18px; color: var(--r-main-color);
+}
+
+/* ---- tarjetas / grillas ---- */
+.cards { display: grid; gap: 16px; margin-top: 20px; }
+.cards.c2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.cards.c3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.cards.c4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+  border-top: 4px solid var(--blue);
+  padding: 16px 18px; font-size: 0.52em; line-height: 1.5;
+  box-shadow: 0 4px 14px rgba(31, 58, 95, 0.07);
+}
+.cards .card:nth-child(4n+1) { border-top-color: var(--blue); }
+.cards .card:nth-child(4n+2) { border-top-color: var(--teal); }
+.cards .card:nth-child(4n+3) { border-top-color: var(--gold); }
+.cards .card:nth-child(4n+4) { border-top-color: var(--accent); }
+.card h4 { margin: 0 0 6px 0; font-family: var(--r-heading-font); font-size: 1.1em; color: var(--navy); font-weight: 700; }
+.card .id { font-family: var(--mono); font-size: 0.78em; color: var(--blue); display: block; margin-bottom: 4px; letter-spacing: 0.5px; }
+.card.hot { border-top-color: var(--accent); }
+.card.hot .id { color: var(--accent); }
+
+/* ---- cifras grandes (stat tiles) ---- */
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; margin-top: 22px; }
+.stat {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+  padding: 22px 24px; text-align: center;
+  box-shadow: 0 4px 14px rgba(31, 58, 95, 0.07);
+}
+.stat .big { font-family: var(--r-heading-font); font-weight: 800; font-size: 1.55em; color: var(--navy); letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+.stat .big span { color: var(--accent); }
+.stat .big.ok { color: var(--teal); }
+.stat .big.ok span { color: var(--teal); }
+.stat .what { font-size: 0.48em; color: var(--muted); line-height: 1.5; margin-top: 8px; }
+
+/* ---- tablas: encabezado azul, cebra suave ---- */
+.reveal table { font-size: 0.5em; border-collapse: collapse; margin: 16px auto 0 auto; width: 100%;
+  background: var(--panel); border-radius: 14px; overflow: hidden;
+  box-shadow: 0 4px 14px rgba(31, 58, 95, 0.07); }
+.reveal table th {
+  font-family: var(--r-heading-font); font-weight: 700; font-size: 0.82em;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: #ffffff; background: var(--navy);
+  padding: 10px 14px; text-align: left; border: none;
+}
+.reveal table td { border: none; border-bottom: 1px solid var(--line); padding: 9px 14px; line-height: 1.45; vertical-align: top; }
+.reveal table tr:nth-child(even) td { background: var(--panel-2); }
+.reveal table tr:last-child td { border-bottom: none; }
+.reveal td.id, .reveal span.mono { font-family: var(--mono); color: var(--blue); white-space: nowrap; font-weight: 500; }
+.reveal tr.hot td { background: #faeceb !important; }
+.reveal tr.hot td.id { color: var(--accent); }
+
+/* ---- listas con viñeta de círculo (alineadas a la retícula) ---- */
+.reveal ul { margin-top: 14px; margin-left: 0; padding-left: 24px; }
+.reveal ul li { font-size: 0.58em; line-height: 1.55; margin-bottom: 10px; }
+.reveal ul ul li { font-size: 0.92em; }
+.reveal li::marker { color: var(--accent); font-weight: 700; }
+
+/* ---- marcos de imagen: tarjeta blanca con sombra ---- */
+.board {
+  background: #ffffff; border: 1px solid var(--line); border-radius: 22px; padding: 16px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 10px 30px rgba(31, 58, 95, 0.14);
+  width: fit-content; max-width: 100%; margin: 0 auto;
+}
+.board img { max-width: 100%; max-height: 100%; object-fit: contain; margin: 0; border: none; background: transparent; }
+.reveal .caption { text-align: center; font-size: 0.42em; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+.caption b { color: var(--navy); font-weight: 600; }
+
+/* ---- dos columnas ---- */
+.cols { display: flex; gap: 30px; align-items: flex-start; }
+.cols > div { min-width: 0; }
+
+/* ---- portada (clara, centrada) ---- */
+.cover { text-align: center; }
+.cover .eyebrow { color: var(--muted); }
+.cover-mega {
+  font-family: var(--r-heading-font); font-weight: 900; font-size: 3.7em;
+  line-height: 0.98; letter-spacing: -4px; color: var(--navy); margin: 14px 0 0 0;
+}
+.cover-mega em {
+  font-weight: 900;
+  background: linear-gradient(100deg, #c0392b 10%, #e67e22 55%, #8e44ad 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.reveal .cover-sub { font-size: 0.62em; color: var(--r-main-color); margin: 22px auto 0 auto; max-width: 56ch; line-height: 1.6; text-wrap: balance; }
+.cover-rule { width: 110px; height: 5px; border-radius: 3px; margin: 26px auto 0 auto;
+  background: linear-gradient(90deg, var(--accent), var(--gold), var(--teal)); }
+.cover-meta { display: flex; gap: 26px; margin-top: 34px; font-family: var(--mono); font-size: 0.4em; color: var(--muted); flex-wrap: wrap; justify-content: center; }
+
+/* ---- separadores de bloque: plancha de color pleno ---- */
+.divider { text-align: center; }
+.divider .num { font-family: var(--mono); font-size: 0.48em; color: #f5c26b; letter-spacing: 4px; }
+.divider h2 { font-size: 1.9em; margin-top: 14px; color: #ffffff !important; }
+.divider h2::after { background: linear-gradient(90deg, #f5c26b, #ffffff) !important; }
+.divider .who { font-family: var(--mono); font-size: 0.42em; color: #b9c6d8; margin-top: 16px; }
+
+/* ---- pipeline de pasos numerados (proceso / formato ADR) ---- */
+.pipeline { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; justify-content: center; }
+.pipeline .step {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+  border-top: 4px solid var(--blue);
+  padding: 14px 14px 12px 14px; font-size: 0.42em; line-height: 1.45;
+  flex: 1 1 140px; min-width: 140px;
+  box-shadow: 0 4px 14px rgba(31, 58, 95, 0.07);
+}
+.pipeline .step:nth-child(4n+1) { border-top-color: var(--blue); }
+.pipeline .step:nth-child(4n+2) { border-top-color: var(--teal); }
+.pipeline .step:nth-child(4n+3) { border-top-color: var(--gold); }
+.pipeline .step:nth-child(4n+4) { border-top-color: var(--accent); }
+.pipeline .step b { display: block; font-family: var(--r-heading-font); font-weight: 700; color: var(--navy); font-size: 0.95em; margin-bottom: 5px; letter-spacing: 0.5px; }
+
+/* ---- las 6 partes del EaC ---- */
+.sixparts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22px; }
+.sixparts .part {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 16px; font-size: 0.44em; line-height: 1.5;
+  box-shadow: 0 4px 14px rgba(31, 58, 95, 0.07);
+}
+.sixparts .part b { display: block; font-family: var(--mono); text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.8em; color: var(--gold); margin-bottom: 6px; }
+
+/* pie de fuente */
+.srcline { position: absolute; bottom: -60px; left: 10px; font-family: var(--mono); font-size: 13px; color: var(--faint); }

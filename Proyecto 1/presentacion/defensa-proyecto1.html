@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartCity Tech Park — Defensa Proyecto 1 · Redes 1 · 201905884</title>
+  <link rel="stylesheet" href="reveal/dist/reset.css">
+  <link rel="stylesheet" href="reveal/dist/reveal.css">
+  <link rel="stylesheet" href="reveal/dist/theme-deck.css">
+  <style>
+    /* ===== ajustes locales del deck ===== */
+    .reveal table.compact { font-size: 0.38em; }
+    .reveal table.mid { font-size: 0.44em; }
+    .reveal .lead.tight { font-size: 0.5em; margin-bottom: 4px; }
+    .reveal td.ok { color: #16a085; font-weight: 700; }
+    .keyline { font-size: 0.46em; color: var(--muted); margin-top: 14px; line-height: 1.55; }
+    .keyline b { color: var(--navy); }
+    .stats.s2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .stats.s4 { grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
+    .stats.s4 .stat { padding: 16px 12px; }
+    .stats.s4 .big { font-size: 1.25em; }
+    .cards.tightc .card { font-size: 0.46em; padding: 13px 15px; }
+    .imgrow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 18px; }
+    .imgrow .board { height: 290px; padding: 10px; border-radius: 14px; }
+    .imgrow .cap { text-align: center; font-size: 0.34em; color: var(--muted); margin-top: 7px; font-family: var(--mono); }
+
+    /* ---- íconos Lucide inline ---- */
+    .icon { display: inline-flex; align-items: center; justify-content: center; }
+    .icon svg { width: 100%; height: 100%; stroke-width: 1.6; }
+    .reveal p.divic { width: 74px; height: 74px; color: #f5c26b; margin: 0 auto 26px auto; display: flex; }
+
+    /* ---- planchas-cita ---- */
+    .quoteslide { text-align: center; position: relative; }
+    .quoteslide > * { position: relative; z-index: 1; }
+    .quoteslide blockquote {
+      margin: 0 auto; padding: 0; border: none; background: transparent; box-shadow: none; width: auto;
+      max-width: 24ch; font-family: 'Inter Tight', Arial, sans-serif; font-weight: 800;
+      font-size: 1.8em; line-height: 1.24; color: #f5f5f7; letter-spacing: -1.8px; text-wrap: balance; font-style: normal;
+    }
+    .quoteslide blockquote em {
+      font-style: normal;
+      background: linear-gradient(100deg, #5ac8fa 5%, #e67e22 55%, #ff6482 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .quoteslide blockquote footer { margin-top: 32px; font-family: var(--mono); font-size: 0.27em; letter-spacing: 3px; text-transform: uppercase; color: #86868b; font-weight: 400; }
+    .quoteslide .quotelink { margin: 42px auto 0 auto; font-size: 0.55em; color: #d2d2d7; max-width: 60ch; line-height: 1.65; }
+    .quoteslide .quotelink strong { color: #f5f5f7; }
+    .quoteslide::before { content: ""; position: absolute; width: 620px; height: 620px; right: -160px; top: -200px; border-radius: 50%; filter: blur(90px); background: radial-gradient(circle, rgba(90,200,250,.22), transparent 65%); z-index: 0; pointer-events: none; }
+    .quoteslide::after { content: ""; position: absolute; width: 560px; height: 560px; left: -150px; bottom: -190px; border-radius: 50%; filter: blur(90px); background: radial-gradient(circle, rgba(255,100,130,.18), rgba(230,126,34,.14), transparent 70%); z-index: 0; pointer-events: none; }
+
+    /* ============================================================
+       ANIMACIONES (CSS puro, offline) — se desactivan solas
+       ============================================================ */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal .slides section.present > .eyebrow { animation: trackIn 1.1s cubic-bezier(.2,.8,.2,1) backwards; }
+      .reveal .slides section.present > h2 { animation: riseBlur .85s cubic-bezier(.2,.8,.2,1) .08s backwards; }
+      .reveal .slides section .fragment { transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1), filter .7s ease; transform: translateY(28px); filter: blur(10px); }
+      .reveal .slides section .fragment.visible { transform: none; filter: blur(0); }
+      .reveal section.present .stats .stat { animation: popSpring .95s cubic-bezier(.34,1.56,.64,1) backwards; }
+      .reveal section.present .stats .stat:nth-child(2) { animation-delay: .16s; }
+      .reveal section.present .stats .stat:nth-child(3) { animation-delay: .32s; }
+      .reveal section.present .stats .stat:nth-child(4) { animation-delay: .48s; }
+      .board.showcase { position: relative; overflow: hidden; }
+      .reveal section.present .board.showcase { animation: productIn 1.4s cubic-bezier(.2,.8,.2,1) backwards; }
+      .reveal section.present .board.showcase::after {
+        content: ""; position: absolute; inset: -45%;
+        background: linear-gradient(115deg, transparent 42%, rgba(255,255,255,.6) 50%, transparent 58%);
+        transform: translateX(-130%); pointer-events: none;
+        animation: sheen 1.5s cubic-bezier(.6,0,.3,1) 1.25s forwards;
+      }
+      .reveal section.present .board.showcase img { animation: levitate 7s ease-in-out 3s infinite; }
+      .divider { position: relative; }
+      .divider > * { position: relative; z-index: 1; }
+      .divider::before, .divider::after { content: ""; position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; z-index: 0; }
+      .divider::before { width: 420px; height: 420px; right: -60px; top: -80px; background: radial-gradient(circle, rgba(245,194,107,.55), transparent 65%); animation: orbFloat 9s ease-in-out infinite; }
+      .divider::after { width: 520px; height: 520px; left: -110px; bottom: -140px; background: radial-gradient(circle, rgba(192,57,43,.5), rgba(42,154,146,.25), transparent 70%); animation: orbFloat 11s ease-in-out infinite reverse; }
+      .reveal section.present.quoteslide blockquote { animation: heroIn 1.3s cubic-bezier(.2,.8,.2,1) .15s backwards; }
+      .reveal section.present.quoteslide .quotelink { animation: riseBlur .9s cubic-bezier(.2,.8,.2,1) 1.2s backwards; }
+      .quoteslide::before { animation: orbFloat 12s ease-in-out infinite; }
+      .quoteslide::after { animation: orbFloat 14s ease-in-out infinite reverse; }
+      .reveal section.present .divic { animation: popSpring 1s cubic-bezier(.34,1.56,.64,1) backwards; }
+      .reveal section.present .divic svg { animation: levitate 5s ease-in-out 1.5s infinite; }
+      .reveal section.present.cover .eyebrow { animation: trackIn 1.2s cubic-bezier(.2,.8,.2,1) .1s backwards; }
+      .reveal section.present.cover .cover-mega { animation: heroIn 1.2s cubic-bezier(.2,.8,.2,1) .35s backwards; }
+      .reveal section.present.cover .cover-sub { animation: riseBlur .9s cubic-bezier(.2,.8,.2,1) .85s backwards; }
+      .reveal section.present.cover .cover-rule { animation: drawRule 1s cubic-bezier(.6,0,.2,1) 1.15s backwards; }
+      .reveal section.present.cover .cover-meta { animation: softIn .8s ease 1.5s backwards; }
+    }
+    @keyframes trackIn { from { opacity: 0; letter-spacing: 14px; filter: blur(6px); } }
+    @keyframes riseBlur { from { opacity: 0; transform: translateY(34px); filter: blur(16px); } }
+    @keyframes drawRule { from { width: 0; opacity: 0; } }
+    @keyframes popSpring { from { opacity: 0; transform: scale(.7) translateY(34px); filter: blur(8px); } }
+    @keyframes softIn { from { opacity: 0; } }
+    @keyframes sheen { to { transform: translateX(130%); } }
+    @keyframes levitate { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+    @keyframes orbFloat { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(36px, -30px) scale(1.18); } }
+    @keyframes heroIn { 0% { opacity: 0; transform: perspective(900px) translateZ(160px) translateY(20px); filter: blur(22px); } 100% { opacity: 1; transform: none; filter: blur(0); } }
+    @keyframes productIn { 0% { opacity: 0; transform: perspective(1300px) rotateX(20deg) translateY(100px) scale(.82); filter: blur(18px); } 55% { filter: blur(0); } 100% { opacity: 1; transform: perspective(1300px) rotateX(0) translateY(0) scale(1); } }
+
+    /* ============================================================
+       ÍNDICE OCULTO — tecla M o botón
+       ============================================================ */
+    #navdex {
+      position: fixed; top: 0; left: 0; bottom: 0; width: 372px; z-index: 60;
+      background: rgba(11, 11, 15, 0.94);
+      -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+      transform: translateX(-105%); transition: transform .45s cubic-bezier(.2,.8,.2,1);
+      overflow-y: auto; padding: 26px 0 30px 0; box-shadow: 30px 0 80px rgba(0,0,0,.35);
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    }
+    #navdex.open { transform: translateX(0); }
+    #navdex .ndx-head { padding: 0 24px 14px 24px; font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #86868b; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 8px; }
+    #navdex .ndx-group { padding: 14px 24px 5px 24px; font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 10.5px; letter-spacing: 2.5px; text-transform: uppercase; color: #f5c26b; cursor: pointer; }
+    #navdex .ndx-item { display: flex; gap: 12px; align-items: baseline; padding: 6px 24px; cursor: pointer; font-size: 13.5px; color: #d2d2d7; line-height: 1.35; }
+    #navdex .ndx-item:hover { background: rgba(255,255,255,.07); }
+    #navdex .ndx-item .n { font-family: 'IBM Plex Mono', Consolas, monospace; font-size: 11px; color: #86868b; min-width: 20px; text-align: right; flex-shrink: 0; }
+    #navdex .ndx-item.current { color: #ffffff; background: rgba(192,57,43,.22); }
+    #navdex .ndx-item.current .n { color: #ff6d5e; font-weight: 700; }
+    #ndx-btn { position: fixed; left: 14px; bottom: 12px; z-index: 61; width: 34px; height: 34px; border: none; border-radius: 9px; background: transparent; color: #9aa2ad; font-size: 19px; line-height: 1; cursor: pointer; opacity: .28; transition: opacity .25s, background .25s; }
+    #ndx-btn:hover { opacity: 1; background: rgba(127,127,127,.15); }
+    @media print { #navdex, #ndx-btn { display: none; } }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ============ 1 · PORTADA ============ -->
+    <section class="cover">
+      <p class="eyebrow">Universidad de San Carlos de Guatemala · FIUSAC · Redes de Computadoras 1 · 2S 2026</p>
+      <h1 class="cover-mega">SmartCity <em>Tech Park</em></h1>
+      <p class="cover-sub"><strong>Rediseño de la infraestructura en Capa 1 y Capa 2.</strong> De una red plana a un campus jerárquico, segmentado y redundante — con cada decisión justificada y medida en el simulador.</p>
+      <div class="cover-rule"></div>
+      <div class="cover-meta">
+        <span>PROYECTO 1 · 22 PTS</span>
+        <span>CARNÉ 201905884</span>
+        <span>PACKET TRACER 8.x</span>
+      </div>
+      <aside class="notes">Saludo y encuadre: el proyecto es de Capa 1 y 2, no hay routing. 30 s.</aside>
+    </section>
+
+    <!-- ============ 2 · EL ENCARGO ============ -->
+    <section>
+      <p class="eyebrow">El encargo · qué pedía el enunciado</p>
+      <h2>Cuatro áreas. Un campus. Cero fronteras.</h2>
+      <div class="cols">
+        <div style="flex: 1.15;">
+          <table class="mid">
+            <tr><th>Área</th><th>Lo que exige el enunciado</th></tr>
+            <tr><td><b>Centro de Datos</b></td><td>VTP Server del dominio · granja de ≥ 4 servidores con enlace redundante de alto tráfico</td></tr>
+            <tr><td><b>Centro de I+D</b></td><td>≥ 3 switches donde <em>la caída de uno no aísle a los demás</em> · el trunk de mayor ancho de banda del campus · ≥ 8 equipos</td></tr>
+            <tr><td><b>Ed. Corporativo</b></td><td>Dos alas con conectividad entre sí · Áreas Comunes con visitantes aislados · AP inalámbrico</td></tr>
+            <tr><td><b>Planta</b></td><td>Hub Legacy <em>conservado</em> con las máquinas industriales, y su impacto documentado</td></tr>
+          </table>
+        </div>
+        <div style="flex: .85;">
+          <p class="lead tight">Los parámetros <b>no son decisión de diseño</b>: salen del carné <span class="mono">201905884</span> y un ID mal puesto penaliza del 50 % al 100 %.</p>
+          <table class="compact">
+            <tr><th>Parámetro</th><th>Valor aplicado</th></tr>
+            <tr><td>VLANs (X = 4)</td><td class="id">14 · 24 · 34 · 44 · 54</td></tr>
+            <tr><td>VLAN nativa</td><td class="id">94</td></tr>
+            <tr><td>Dominio VTP (# = 8)</td><td class="id">Smart_8</td></tr>
+            <tr><td>Agregación (par)</td><td class="id">LACP</td></tr>
+            <tr><td>Spanning Tree (par)</td><td class="id">PVST+</td></tr>
+            <tr><td>Banner MOTD</td><td class="id">TechPark_201905884</td></tr>
+          </table>
+        </div>
+      </div>
+      <aside class="notes">El enunciado NO dio topología: dio requisitos por área. La forma de la red es lo que se califica. 1 min.</aside>
+    </section>
+
+    <!-- ============ 3 · EL PROBLEMA ============ -->
+    <section>
+      <p class="eyebrow">Punto de partida · la red actual</p>
+      <h2>Un solo dominio de broadcast.</h2>
+      <div class="cols">
+        <div style="flex: 1;">
+          <div class="board" style="height: 390px;"><img src="../diagrama/01-red-plana-problema.svg" alt="La red plana del campus y sus cuatro síntomas"></div>
+        </div>
+        <div style="flex: 1;">
+          <table class="compact">
+            <tr><th>Síntoma en el campus</th><th>Causa en Capa 1/2</th><th>Lo resuelve</th></tr>
+            <tr><td>Tráfico administrativo mezclado con el de visitantes</td><td>Un solo dominio de broadcast</td><td class="id">VLANs</td></tr>
+            <tr><td>Colisiones continuas en el segmento industrial</td><td>Hub: dominio de colisión compartido</td><td class="id">Switch + contención</td></tr>
+            <tr><td>Enlaces saturados a servidores e I+D</td><td>Un solo enlace físico por trunk</td><td class="id">EtherChannel</td></tr>
+            <tr><td>Caída total ante la falla de un cable</td><td>Rutas únicas, sin redundancia</td><td class="id">Redundancia + STP</td></tr>
+            <tr><td>VLANs inconsistentes entre switches</td><td>Administración manual por equipo</td><td class="id">VTP</td></tr>
+          </table>
+          <p class="keyline fragment">Y los síntomas <b>se realimentan</b>: el ruido del segmento Legacy no se queda en la Planta — cruza los enlaces saturados y llega a los servidores.</p>
+        </div>
+      </div>
+      <aside class="notes">Insistir: no es un problema de cableado. Agregar un cable "por las dudas" sobre esta topología crearía un bucle sin nadie que lo controle. 1 min.</aside>
+    </section>
+
+    <!-- ============ 4 · CITA ============ -->
+    <section class="quoteslide" data-background-color="#0b0b0f" data-transition="zoom">
+      <blockquote>Una red plana no es una red mal cableada: es una red sin <em>fronteras</em>.<footer>Manual Técnico · §2</footer></blockquote>
+      <p class="quotelink">Por eso el rediseño no fue incremental: introduce dos fronteras que no existían —la VLAN en Capa 2 y la jerarquía en la topología— y administra la redundancia que antes no se podía tener.</p>
+      <aside class="notes">Pausa de 5 segundos. Es la bisagra entre el problema y la solución.</aside>
+    </section>
+
+    <!-- ============ 5 · LA TOPOLOGÍA APLICADA ============ -->
+    <section>
+      <p class="eyebrow">La decisión estructural · §11</p>
+      <h2>Tres niveles. Tres zonas redundantes.</h2>
+      <div class="cols">
+        <div style="flex: 1.25;">
+          <div class="board showcase" style="height: 400px;"><img src="../diagrama/12-topologia-logica.svg" alt="Topología lógica: jerarquía, VLANs por área y canales agregados"></div>
+        </div>
+        <div style="flex: .95;">
+          <table class="compact">
+            <tr><th>Nivel</th><th>Qué hace</th><th>Qué NO hace</th></tr>
+            <tr><td><b>Core</b><br><span class="mono">SW-CORE</span></td><td>Conmuta entre edificios; concentra los 4 trunks; es el VTP Server</td><td>Ni una sola PC cuelga de él</td></tr>
+            <tr><td><b>Distribución</b><br><span class="mono">DIST-ID · DIST-CORP</span></td><td>Agrega su edificio y presenta <em>un solo</em> enlace al Core</td><td>No conecta equipos finales</td></tr>
+            <tr><td><b>Acceso</b><br><span class="mono">8 switches</span></td><td>PCs, servidores, AP y hub; aquí viven los puertos <span class="mono">access</span></td><td>No administra VLANs (son VTP Client)</td></tr>
+          </table>
+          <div class="warnbox fragment"><b>Una excepción deliberada:</b> SW-PLANTA cuelga directo del Core. Un solo switch y una sola VLAN: un nivel intermedio añadiría costo y un punto de falla. <em>La jerarquía se aplica donde aporta, no como formalidad.</em></div>
+        </div>
+      </div>
+      <aside class="notes">Señalar en el diagrama las 3 zonas con camino alterno: Po1, Po2, y el anillo/triángulo. 1.5 min.</aside>
+    </section>
+
+    <!-- ============ 6 · LAS CUATRO ÁREAS ============ -->
+    <section>
+      <p class="eyebrow">Implementación en Packet Tracer · §12</p>
+      <h2>11 switches. 24 equipos finales.</h2>
+      <div class="imgrow">
+        <div>
+          <div class="board"><img src="../capturas/areas/01-centro-de-datos.png" alt="Centro de Datos"></div>
+          <p class="cap">CENTRO DE DATOS · 4 servidores · Po1</p>
+        </div>
+        <div>
+          <div class="board"><img src="../capturas/areas/02-centro-id.png" alt="Centro de I+D"></div>
+          <p class="cap">I+D · anillo de 3 + 2 uplinks · Po2</p>
+        </div>
+        <div>
+          <div class="board"><img src="../capturas/areas/03-edificio-corporativo.png" alt="Edificio Corporativo"></div>
+          <p class="cap">CORPORATIVO · triángulo de alas + AP</p>
+        </div>
+        <div>
+          <div class="board"><img src="../capturas/areas/04-planta-produccion.png" alt="Planta de Producción"></div>
+          <p class="cap">PLANTA · hub Legacy acotado</p>
+        </div>
+      </div>
+      <p class="keyline fragment">Tres formas conviviendo, cada una por un motivo distinto: <b>estrella jerárquica</b> en el campus, <b>anillo</b> en I+D porque la caída de un switch no debe aislar a los otros, y <b>triángulo</b> en el Corporativo porque las alas deben hablarse aunque caiga el distribuidor.</p>
+      <aside class="notes">No detenerse en cada área: es la plancha de "esto existe y está armado". 1 min.</aside>
+    </section>
+
+    <!-- ============ 7 · VLANs Y DOMINIOS ============ -->
+    <section>
+      <p class="eyebrow">Segmentación lógica · §13, §15, §16</p>
+      <h2>De un dominio de broadcast a cinco.</h2>
+      <div class="cols">
+        <div style="flex: .95;">
+          <table class="compact">
+            <tr><th>VLAN</th><th>Nombre</th><th>Dónde</th><th>Equipos</th></tr>
+            <tr><td class="id">14</td><td>GERENCIA</td><td>Corporativo (2 alas)</td><td>6 PC</td></tr>
+            <tr><td class="id">24</td><td>INVESTIGACION</td><td>Centro de I+D</td><td>8 PC</td></tr>
+            <tr><td class="id">34</td><td>PRODUCCION</td><td>Planta</td><td>4 máq. + 2 sup.</td></tr>
+            <tr><td class="id">44</td><td>SERVIDORES</td><td>Centro de Datos</td><td>4 servidores</td></tr>
+            <tr><td class="id">54</td><td>VISITANTES</td><td>Áreas Comunes</td><td>3 laptops + 1 PC</td></tr>
+            <tr class="hot"><td class="id">94</td><td>NATIVA</td><td>Todos los trunks</td><td><b>Ninguno, a propósito</b></td></tr>
+            <tr><td class="id">999</td><td>SIN-USO</td><td>Puertos apagados</td><td>Ninguno</td></tr>
+          </table>
+          <p class="keyline fragment">La <b>94</b> se deja vacía porque la VLAN nativa viaja <em>sin etiqueta</em>: sin puertos de acceso en ella, el <b>VLAN hopping por doble etiquetado</b> se queda sin vector.</p>
+        </div>
+        <div style="flex: 1.05;">
+          <div class="board" style="height: 330px;"><img src="../diagrama/13-dominios-broadcast-campus.svg" alt="Los cinco dominios de broadcast del campus"></div>
+          <div class="stats s2" style="margin-top: 14px;">
+            <div class="stat"><div class="big">1 <span>&rarr;</span> 5</div><div class="what">dominios de broadcast</div></div>
+            <div class="stat"><div class="big ok">54</div><div class="what">dominios de colisión — <b>52 punto a punto</b>; solo 2 compartidos (hub y AP), ambos por requisito</div></div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">Este es el resultado cuantificable del trabajo. Si preguntan por los 54: 52 son full-duplex, donde la colisión es estructuralmente imposible. 1.5 min.</aside>
+    </section>
+
+    <!-- ============ 8 · VTP ============ -->
+    <section>
+      <p class="eyebrow">Administración centralizada · §17</p>
+      <h2>Las VLANs se crean una vez.</h2>
+      <div class="cols">
+        <div style="flex: 1.05;">
+          <table class="mid">
+            <tr><th>Modo</th><th>Switches</th><th>Por qué</th></tr>
+            <tr><td class="id">Server</td><td>SW-CORE</td><td>Único punto por donde pasan los 4 trunks: un anuncio llega a los 3 edificios en un salto</td></tr>
+            <tr><td class="id">Client</td><td>los otros 9</td><td>Reciben VLANs, no las crean: menos riesgo de desincronizar el dominio</td></tr>
+            <tr class="hot"><td class="id">Transparent</td><td>SW-COMUNES</td><td>Aislamiento <em>de administración</em>: ni siquiera conoce las VLANs 14, 24, 34 y 44</td></tr>
+          </table>
+          <div class="warnbox"><b>El riesgo real de VTP no es el modo, es la revisión.</b> Manda el switch con el <em>número de revisión más alto</em>, aunque esté en Client. Por eso, antes de conectar cualquier equipo: <span class="mono">vtp mode transparent &rarr; vtp mode client</span>, que deja la revisión en 0.</div>
+        </div>
+        <div style="flex: .95;">
+          <div class="board" style="height: 350px;"><img src="../capturas/evidencias/01-sw-core-show-vtp-status.png" alt="show vtp status en SW-CORE"></div>
+          <p class="caption"><b>E1 —</b> <span class="mono">Server</span> · dominio <span class="mono">Smart_8</span> · versión 2 · revisión <b>29</b></p>
+        </div>
+      </div>
+      <p class="keyline fragment">Medido en los 11 switches: los <b>9 Client comparten la revisión 29</b> con el Server — el dominio está sincronizado — y <b>SW-COMUNES está en 0</b>, porque un Transparent reenvía los anuncios sin aplicarlos. La prueba de fondo: SW-ALA-A tiene las 7 VLANs <em>sin que se creara ninguna ahí</em>.</p>
+      <aside class="notes">Si preguntan cómo se demuestra que VTP propagó: no es el show vtp status, es el show vlan brief de un Client. 1.5 min.</aside>
+    </section>
+
+    <!-- ============ 9 · STP ============ -->
+    <section>
+      <p class="eyebrow">Prevención de bucles · §18</p>
+      <h2>La raíz va donde está la redundancia.</h2>
+      <div class="cols">
+        <div style="flex: 1.15;">
+          <div class="board" style="height: 370px;"><img src="../diagrama/14-arbol-stp.svg" alt="Root Bridge por VLAN y puertos bloqueados"></div>
+        </div>
+        <div style="flex: 1;">
+          <table class="compact">
+            <tr><th>VLAN</th><th>Root Bridge</th><th>Por qué ahí</th></tr>
+            <tr><td class="id">14 · 54</td><td><b>SW-DIST-CORP</b></td><td>El bloqueo cae en el enlace Ala A ↔ Ala B, que <em>debe</em> ser solo respaldo</td></tr>
+            <tr><td class="id">24</td><td><b>SW-DIST-ID</b></td><td>El bloqueo cae dentro del anillo de I+D, no en un uplink</td></tr>
+            <tr><td class="id">34 · 44</td><td><b>SW-CORE</b></td><td>No hay ciclo; se fija igual para que el resultado sea <em>determinista</em></td></tr>
+          </table>
+          <p class="keyline">STP bloquea el puerto <b>más lejano a la raíz</b>. Poniendo la raíz en el distribuidor de cada edificio, lo bloqueado es el enlace de respaldo y no un uplink de uso diario.</p>
+          <p class="keyline fragment">Detalle fino: el cierre del anillo va a <b>100 Mbps a propósito</b> — costo STP <span class="mono">19</span> frente a <span class="mono">4</span>, así que es el candidato natural al bloqueo. Predecible, no accidental.</p>
+        </div>
+      </div>
+      <p class="keyline fragment" style="text-align:center;"><b>Medido (E3/E4):</b> las 5 raíces y los 3 puertos bloqueados coinciden exactamente con lo documentado — <span class="mono">SW-ALA-B Gi0/2 BLK 4</span> · <span class="mono">SW-ID-3 Fa0/24 BLK 19</span> · <span class="mono">SW-ID-2 Gi0/2 BLK 4</span>.</p>
+      <aside class="notes">Esta es LA decisión de diseño del proyecto. Mencionar que sustituyó a la propuesta inicial de "Root = Core para casi todo". 2 min.</aside>
+    </section>
+
+    <!-- ============ 10 · CITA ============ -->
+    <section class="quoteslide" data-background-color="#0b0b0f" data-transition="zoom">
+      <blockquote>Redundancia y agregación <em>no</em> son lo mismo.<footer>Manual Técnico · §11, §27</footer></blockquote>
+      <p class="quotelink">Donde hacía falta <strong>capacidad</strong> se usó EtherChannel: los enlaces trabajan a la vez. Donde hacía falta un <strong>camino alterno</strong> se usó STP: el enlace está bloqueado hasta que hace falta. Confundirlas lleva a bloquear enlaces que debían sumar, o a crear bucles donde solo hacía falta un respaldo.</p>
+      <aside class="notes">Pausa. Es la distinción que el manual debe demostrar y la pregunta más probable del catedrático.</aside>
+    </section>
+
+    <!-- ============ 11 · ETHERCHANNEL ============ -->
+    <section>
+      <p class="eyebrow">Agregación de enlaces · §19</p>
+      <h2>Dos canales. Cuatro gigabits.</h2>
+      <div class="cols">
+        <div style="flex: 1.1;">
+          <table class="mid">
+            <tr><th>Canal</th><th>Extremos</th><th>Medio y capacidad</th><th>Propósito</th></tr>
+            <tr><td class="id">Po1</td><td>SW-CORE ↔ SW-SRV</td><td>UTP Cat 6 · 2 × 1 Gbps</td><td>Enlace de alto tráfico a la granja de servidores</td></tr>
+            <tr><td class="id">Po2</td><td>SW-CORE ↔ SW-DIST-ID</td><td>Fibra OM4 · 2 × 1 Gbps</td><td><b>Trunk de mayor ancho de banda del campus</b></td></tr>
+          </table>
+          <div class="term"><b>Por qué <span class="mono">active</span> y no <span class="mono">on</span>.</b> El modo <span class="mono">on</span> fuerza el canal sin negociar: si el cableado está mal, produce un <b>bucle de Capa 2</b>. LACP simplemente no levanta el canal y deja que STP bloquee lo sobrante. Es la diferencia entre fallar de forma segura y fallar de forma catastrófica.<span class="src">§7.2 — ambos extremos en active/active; passive–passive nunca forma el canal</span></div>
+          <p class="keyline fragment">Para STP, un Port-channel es <b>un solo enlace lógico</b>. Por eso no hay bucle que bloquear… y por eso perder un miembro no dispara reconvergencia.</p>
+        </div>
+        <div style="flex: .9;">
+          <div class="board" style="height: 330px;"><img src="../capturas/evidencias/05-sw-core-show-etherchannel-summary.png" alt="show etherchannel summary en SW-CORE"></div>
+          <p class="caption"><b>E5 —</b> <span class="mono">Po1(SU)</span> y <span class="mono">Po2(SU)</span>: <b>S</b> = Capa 2, <b>U</b> = en uso. Los cuatro miembros en <span class="mono">(P)</span>, ninguno en <span class="mono">(I)</span>.</p>
+        </div>
+      </div>
+      <aside class="notes">Leer las tres marcas S, U y (P). Un miembro en (I) significaría que LACP no negoció. 1.5 min.</aside>
+    </section>
+
+    <!-- ============ 12 · MEDIOS ============ -->
+    <section>
+      <p class="eyebrow">Capa 1 · medios de transmisión · §20</p>
+      <h2>90 metros. Cabe en cobre. Va en fibra.</h2>
+      <div class="cols">
+        <div style="flex: 1.1;">
+          <table class="mid">
+            <tr><th>Enlace</th><th>Medio</th><th>Dist.</th><th>Criterio que decide</th></tr>
+            <tr><td>Core ↔ I+D (Po2)</td><td>Fibra OM4</td><td class="id">180 m</td><td>1 — Distancia: fuera del alcance del cobre</td></tr>
+            <tr><td>Core ↔ Corporativo</td><td>Fibra OM3</td><td class="id">120 m</td><td>1 — Distancia: también excede los 100 m</td></tr>
+            <tr class="hot"><td>Core ↔ Planta</td><td>Fibra OM3</td><td class="id">90 m</td><td><b>3 — Inmunidad a EMI</b>, no distancia</td></tr>
+            <tr><td>Core ↔ SW-SRV (Po1)</td><td>UTP Cat 6</td><td class="id">10 m</td><td>4 — Costo: fibra aquí sería pagar transceptores sin ganancia</td></tr>
+          </table>
+          <p class="keyline">Los cuatro criterios se aplican <b>en orden de descarte</b>: distancia → ancho de banda → interferencia → costo.</p>
+        </div>
+        <div style="flex: .9;">
+          <div class="board" style="height: 300px;"><img src="../diagrama/10-medios-transmision.svg" alt="Criterios de elección del medio de transmisión"></div>
+        </div>
+      </div>
+      <div class="warnbox fragment"><b>Si hubiera que defender una sola fila, es la de la Planta.</b> Los otros dos enlaces de fibra se explican solos: 180 m y 120 m no admiten cobre y no hay decisión que tomar. Los 90 m sí admitían UTP, y se descartó por los motores, variadores y equipos de soldadura del entorno industrial — la fibra transporta luz, es inmune por construcción, y además aísla galvánicamente ambos edificios.</div>
+      <aside class="notes">Pregunta probable: "¿por qué fibra si caben 90 m en cobre?". Esta plancha es la respuesta. 1.5 min.</aside>
+    </section>
+
+    <!-- ============ 13 · SEGURIDAD ============ -->
+    <section>
+      <p class="eyebrow">Seguridad de Capa 2 · §22</p>
+      <h2>Qué mitiga cada medida. Y qué no.</h2>
+      <table class="mid">
+        <tr><th>Medida aplicada</th><th>Qué mitiga</th><th>Lo que <em>no</em> resuelve</th></tr>
+        <tr><td>VLAN nativa <span class="mono">94</span> sin puertos de acceso</td><td>VLAN hopping por doble etiquetado</td><td>Nada, si se deja un puerto de acceso en la 94</td></tr>
+        <tr><td><span class="mono">port-security</span> máx. 5 · <span class="mono">restrict</span> · <span class="mono">sticky</span></td><td>MAC flooding y equipos no autorizados en el hub</td><td>La MAC es <b>falsificable</b></td></tr>
+        <tr><td><span class="mono">storm-control broadcast level 20</span></td><td>Tormentas del segmento Legacy</td><td><b>No elimina la colisión</b>: eso solo se logra quitando el hub</td></tr>
+        <tr><td><span class="mono">allowed vlan</span> restringida por trunk</td><td>Que un trunk transporte lo que no le corresponde</td><td>—</td></tr>
+        <tr><td>PortFast + <b>BPDU Guard</b> en 21 puertos de PC y servidores</td><td>Que un equipo final inyecte BPDUs y altere el árbol</td><td>—</td></tr>
+        <tr><td>Banner MOTD <span class="mono">Acceso Restringido - TechPark_201905884</span></td><td>Respaldo <b>legal</b> del acceso</td><td><b>No impide el acceso</b>, solo advierte</td></tr>
+        <tr><td>Puertos no usados → VLAN 999 + <span class="mono">shutdown</span></td><td>Conexión oportunista en un puerto libre</td><td>—</td></tr>
+      </table>
+      <p class="keyline fragment"><b>El aislamiento de visitantes es triple y es de Capa 2:</b> VLAN 54 separada + VTP Transparent + trunk <span class="mono">allowed 1,54,94</span>. Impide que un visitante alcance las VLANs internas — pero dentro de la 54 sí se ven entre ellos, porque no hay Capa 3 ni ACL. <em>Declararlo es más honesto que presentarlo como aislamiento total.</em></p>
+      <aside class="notes">La columna que da puntos es la tercera. Documentar qué NO resuelve cada medida resultó más útil que enumerar lo que hace. 1.5 min.</aside>
+    </section>
+
+    <!-- ============ 14 · EVIDENCIA ============ -->
+    <section>
+      <p class="eyebrow">Verificación · §24</p>
+      <h2>No se argumenta. Se mide.</h2>
+      <div class="stats s4">
+        <div class="stat"><div class="big">12</div><div class="what">pruebas ejecutadas<br>(9 de conectividad + 3 de fallas)</div></div>
+        <div class="stat"><div class="big ok">12</div><div class="what">aprobadas</div></div>
+        <div class="stat"><div class="big">29</div><div class="what">capturas de evidencia<br>E1 – E14</div></div>
+        <div class="stat"><div class="big"><span>1</span></div><div class="what">resultado que obligó a<br>corregir el documento</div></div>
+      </div>
+      <div class="cards c3 tightc" style="margin-top: 20px;">
+        <div class="card"><span class="id">E10 · E11</span><h4>Fallan al 100 % — y ese es el éxito</h4>Ping entre VLANs distintas sin router <b>debe</b> dar 100 % de pérdida. Un 0 % ahí sería un error de diseño, no un logro.</div>
+        <div class="card"><span class="id">E13</span><h4>La firma de una reconvergencia</h4>Cae el uplink del Ala B: <b>100 % → 50 % → 0 %</b> de pérdida. Ese es el costo de PVST+, medido en ~26 s y ~42 s.</div>
+        <div class="card"><span class="id">E14</span><h4>El canal no se cae</h4>Cae un miembro de Po1 y <span class="mono">Po1</span> sigue <span class="mono">up</span> en ambos extremos, sin reconvergencia. Si tardara 30 s, el EtherChannel no se habría formado.</div>
+      </div>
+      <p class="keyline fragment" style="text-align:center;">Las dos redundancias del diseño, contrastadas en el simulador: <b>~30–50 s</b> con STP frente a <b>recuperación inmediata</b> con LACP.</p>
+      <aside class="notes">Aquí está el corazón de la calificación: el aislamiento se demuestra con un ping que falla. 1.5 min.</aside>
+    </section>
+
+    <!-- ============ 15 · EL HALLAZGO ============ -->
+    <section>
+      <p class="eyebrow">Prueba de tolerancia F-1 · §24.2</p>
+      <h2>La medición corrigió al manual.</h2>
+      <div class="cols">
+        <div style="flex: 1;">
+          <div class="board" style="height: 230px;"><img src="../capturas/evidencias/12-falla-sw-id-2-durante.png" alt="Ping durante la caída de SW-ID-2"></div>
+          <p class="caption"><b>E12 —</b> <span class="mono">PC-ID-1 → PC-ID-7</span> con SW-ID-2 apagado.</p>
+        </div>
+        <div style="flex: 1;">
+          <table class="mid">
+            <tr><th>Momento</th><th>Resultado</th></tr>
+            <tr><td>Antes</td><td class="ok">0 % de pérdida</td></tr>
+            <tr><td><b>Con SW-ID-2 apagado</b></td><td class="ok">0 % de pérdida</td></tr>
+          </table>
+          <p class="keyline"><b>Estimado en el diseño:</b> 30–50 s de convergencia. &nbsp;<b>Medido:</b> interrupción nula.</p>
+          <div class="term">La predicción suponía que el tráfico cruzaba el anillo. No lo hace: SW-ID-1 y SW-ID-3 tienen <b>uplink propio</b>, así que la caída de SW-ID-2 ni siquiera requiere que STP reconverja. <em>Poner dos uplinks en vez de uno resultó mejor de lo documentado.</em><span class="src">§24.2 se reescribió con esta medición</span></div>
+        </div>
+      </div>
+      <p class="keyline fragment" style="text-align:center;"><b>Regla de trabajo del proyecto:</b> cuando el simulador contradice al documento, manda el simulador. Se corrigió el manual, no la medición.</p>
+      <aside class="notes">Esta plancha vale por el método, no por el resultado. También se corrigieron §22, §23 y §27 al comparar los 11 running-config contra el manual. 1 min.</aside>
+    </section>
+
+    <!-- ============ 16 · CONCLUSIONES ============ -->
+    <section>
+      <p class="eyebrow">Cierre · §27</p>
+      <h2>Lo que queda demostrado.</h2>
+      <div class="cards c2 tightc">
+        <div class="card"><span class="id">01</span><h4>El problema era de fronteras</h4>Ninguno de los cuatro síntomas se resolvía tendiendo cable: encadenar switches <b>extiende</b> el broadcast en lugar de contenerlo.</div>
+        <div class="card"><span class="id">02</span><h4>Cinco dominios de broadcast donde había uno</h4>Y 54 de colisión, de los cuales 52 son punto a punto. Los 2 compartidos están por requisito, no por descuido.</div>
+        <div class="card"><span class="id">03</span><h4>Cada redundancia donde corresponde</h4>LACP donde hacía falta capacidad; STP donde hacía falta un camino alterno. Medido: inmediato frente a ~30–50 s.</div>
+        <div class="card"><span class="id">04</span><h4>La raíz, donde está la redundancia</h4>No en el switch más importante. Así lo bloqueado es el respaldo y no un uplink de uso diario.</div>
+      </div>
+      <p class="keyline fragment" style="margin-top:16px;"><b>Y lo que queda pendiente, con nombre y apellido:</b> sustituir el hub (lo prohíbe el enunciado) · Rapid-PVST+ en lugar de PVST+ (lo fija el carné) · acceso de gestión con contraseñas y SSH — hoy el banner advierte, pero no impide · routing inter-VLAN con ACL, fuera del alcance de Capa 1 y 2.</p>
+      <aside class="notes">Cerrar con la 03 o la 04, que son las que distinguen el trabajo. 1 min.</aside>
+    </section>
+
+    <!-- ============ 17 · CIERRE ============ -->
+    <section class="quoteslide" data-background-color="#0b0b0f" data-transition="zoom">
+      <blockquote>Cuando el simulador contradice al documento, <em>manda</em> el simulador.<footer>Método de trabajo · 12 pruebas · 29 capturas</footer></blockquote>
+      <p class="quotelink">Gracias. Quedan los anexos con las salidas completas para las preguntas.</p>
+      <aside class="notes">Fin de la exposición. Pasar a preguntas; los anexos están a continuación y con la tecla M.</aside>
+    </section>
+
+    <!-- ============ 18 · DIVIDER ANEXOS ============ -->
+    <section class="divider" data-background-color="#0b0b0f" data-transition="zoom">
+      <p class="icon divic"><svg class="lucide lucide-layers" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg></p>
+      <p class="num">ANEXOS · PARA PREGUNTAS</p>
+      <h2>Las salidas completas</h2>
+      <p class="who">Topología en el simulador · raíces y bloqueos medidos · direccionamiento de pruebas</p>
+    </section>
+
+    <!-- ============ 19 · ANEXO A ============ -->
+    <section>
+      <p class="eyebrow">Anexo A · la topología en Packet Tracer</p>
+      <h2>El campus armado.</h2>
+      <div class="board showcase" style="height: 450px;"><img src="../capturas/topologia/00-topologia-completa.png" alt="Topología completa del campus en Packet Tracer"></div>
+      <p class="caption">11 switches · 1 hub · 1 AP · 4 servidores · 24 equipos finales · 17 enlaces entre switches · archivo <span class="mono">Proyecto1_201905884.pkt</span></p>
+    </section>
+
+    <!-- ============ 20 · ANEXO B ============ -->
+    <section>
+      <p class="eyebrow">Anexo B · STP medido, VLAN por VLAN</p>
+      <h2>Raíces y bloqueos.</h2>
+      <div class="cols">
+        <div style="flex: 1;">
+          <table class="mid">
+            <tr><th>VLAN</th><th>Root medido</th><th>ID de prioridad</th></tr>
+            <tr><td class="id">14</td><td>SW-DIST-CORP</td><td class="id">24590</td></tr>
+            <tr><td class="id">24</td><td>SW-DIST-ID</td><td class="id">24600</td></tr>
+            <tr><td class="id">34</td><td>SW-CORE</td><td class="id">24610</td></tr>
+            <tr><td class="id">44</td><td>SW-CORE</td><td class="id">24620</td></tr>
+            <tr><td class="id">54</td><td>SW-DIST-CORP</td><td class="id">24630</td></tr>
+          </table>
+          <table class="mid" style="margin-top: 14px;">
+            <tr><th>VLAN</th><th>Puerto bloqueado</th><th>Costo</th></tr>
+            <tr><td class="id">14</td><td><span class="mono">SW-ALA-B Gi0/2</span> Altn BLK</td><td class="id">4</td></tr>
+            <tr><td class="id">24</td><td><span class="mono">SW-ID-3 Fa0/24</span> Altn BLK</td><td class="id">19</td></tr>
+            <tr><td class="id">24</td><td><span class="mono">SW-ID-2 Gi0/2</span> Altn BLK</td><td class="id">4</td></tr>
+          </table>
+        </div>
+        <div style="flex: 1;">
+          <div class="board" style="height: 370px;"><img src="../capturas/evidencias/03a-sw-dist-corp-show-spanning-tree-vlan-14.png" alt="show spanning-tree vlan 14 en SW-DIST-CORP"></div>
+          <p class="caption"><b>E3 —</b> <span class="mono">This bridge is the root</span> para la VLAN 14 en SW-DIST-CORP.</p>
+        </div>
+      </div>
+      <p class="keyline">Las cinco raíces y los tres bloqueos coinciden con §18 del manual. Sin prioridades fijadas, el desempate habría dependido de qué MAC salió más baja.</p>
+    </section>
+
+    <!-- ============ 21 · ANEXO C ============ -->
+    <section>
+      <p class="eyebrow">Anexo C · direccionamiento y resultados</p>
+      <h2>Las pruebas, en una tabla.</h2>
+      <div class="cols">
+        <div style="flex: .85;">
+          <table class="compact">
+            <tr><th>VLAN</th><th>Red asignada para probar</th></tr>
+            <tr><td class="id">14</td><td class="id">192.168.14.0/24</td></tr>
+            <tr><td class="id">24</td><td class="id">192.168.24.0/24</td></tr>
+            <tr><td class="id">34</td><td class="id">192.168.34.0/24</td></tr>
+            <tr><td class="id">44</td><td class="id">192.168.44.0/24</td></tr>
+            <tr><td class="id">54</td><td class="id">192.168.54.0/24</td></tr>
+          </table>
+          <p class="keyline">El proyecto es de <b>Capa 2 pura</b>: el direccionamiento se asignó solo para poder hacer ping, <b>sin gateway y sin router</b>. Eso es justamente lo que hace que E10 y E11 fallen, que es el resultado correcto.</p>
+        </div>
+        <div style="flex: 1.15;">
+          <table class="compact">
+            <tr><th>Ev.</th><th>Prueba</th><th>Resultado medido</th></tr>
+            <tr><td class="id">E9</td><td>Ping intra-VLAN entre switches distintos</td><td class="ok">0 % pérdida</td></tr>
+            <tr><td class="id">E10</td><td>Ping inter-VLAN (14 → 44)</td><td class="ok">100 % — correcto</td></tr>
+            <tr><td class="id">E11</td><td>Visitante (54) → servidor (44)</td><td class="ok">100 % — correcto</td></tr>
+            <tr><td class="id">E12</td><td>Caída de SW-ID-2</td><td class="ok">Interrupción nula</td></tr>
+            <tr><td class="id">E13</td><td>Caída del uplink del Ala B</td><td class="ok">100 → 50 → 0 %</td></tr>
+            <tr><td class="id">E14</td><td>Caída de un miembro de Po1</td><td class="ok">Canal <span class="mono">up</span>, sin reconvergencia</td></tr>
+          </table>
+          <p class="keyline"><b>Estado final verificado:</b> tras las tres fallas, los 11 switches quedaron con la misma configuración, las mismas raíces, los mismos puertos bloqueados y los dos canales en <span class="mono">(SU)</span>.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="reveal/dist/reveal.js"></script>
+<script src="reveal/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 760,
+    margin: 0.04,
+    center: true,
+    minScale: 0.1,
+    maxScale: 2.5,
+    touch: true,
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'fade',
+    controls: true,
+    progress: true,
+    plugins: [ RevealNotes ]
+  });
+
+  /* ===== Índice oculto de navegación (tecla M · botón) ===== */
+  Reveal.on('ready', () => {
+    const nav = document.createElement('nav');
+    nav.id = 'navdex';
+    nav.setAttribute('aria-label', 'Índice de planchas');
+    nav.innerHTML = '<div class="ndx-head">Índice · M para abrir/cerrar</div>';
+
+    const secciones = [...document.querySelectorAll('.reveal .slides > section')];
+    secciones.forEach((sec, i) => {
+      const esDivider = sec.classList.contains('divider');
+      const h = sec.querySelector('h1, h2, blockquote');
+      let titulo = h ? h.textContent.replace(/\s+/g, ' ').trim() : 'Plancha ' + (i + 1);
+      const foot = h && h.querySelector('footer');
+      if (foot) titulo = titulo.replace(foot.textContent.replace(/\s+/g, ' ').trim(), '').trim();
+      if (sec.classList.contains('quoteslide')) titulo = 'Cita · ' + titulo.slice(0, 46) + '…';
+      else if (titulo.length > 56) titulo = titulo.slice(0, 55) + '…';
+
+      const el = document.createElement('div');
+      el.className = esDivider ? 'ndx-group' : 'ndx-item';
+      el.innerHTML = esDivider
+        ? titulo
+        : '<span class="n">' + (i + 1) + '</span><span>' + titulo + '</span>';
+      el.addEventListener('click', () => { Reveal.slide(i); cerrar(); });
+      el.dataset.idx = i;
+      nav.appendChild(el);
+    });
+
+    const btn = document.createElement('button');
+    btn.id = 'ndx-btn';
+    btn.title = 'Índice (M)';
+    btn.textContent = '☰';
+    document.body.append(nav, btn);
+
+    const abrir = () => { nav.classList.add('open'); marcar(); };
+    const cerrar = () => nav.classList.remove('open');
+    const alternar = () => nav.classList.contains('open') ? cerrar() : abrir();
+    btn.addEventListener('click', e => { e.stopPropagation(); alternar(); });
+    document.addEventListener('keydown', e => {
+      if ((e.key === 'm' || e.key === 'M') && !e.ctrlKey && !e.metaKey && !e.altKey) alternar();
+      if (e.key === 'Escape') cerrar();
+    });
+    document.addEventListener('click', e => {
+      if (nav.classList.contains('open') && !nav.contains(e.target)) cerrar();
+    });
+
+    function marcar() {
+      const actual = Reveal.getIndices().h;
+      nav.querySelectorAll('.ndx-item').forEach(it => {
+        const activo = Number(it.dataset.idx) === actual;
+        it.classList.toggle('current', activo);
+        if (activo) it.scrollIntoView({ block: 'nearest' });
+      });
+    }
+    Reveal.on('slidechanged', () => { if (nav.classList.contains('open')) marcar(); });
+  });
+</script>
+</body>
+</html>

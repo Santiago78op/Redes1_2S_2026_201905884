@@ -1,0 +1,392 @@
+===============================================================================
+ GLOSARIO DE DEFENSA — PROYECTO 1 · SMARTCITY TECH PARK
+ Redes de Computadoras 1 · USAC · Carne 201905884
+ Todas las definiciones salen del Marco Teorico (secciones 3 a 9) del
+ Manual Tecnico del proyecto, para que lo dicho coincida con lo entregado.
+ La marca (!) es la trampa: lo que suelen preguntar justo despues.
+===============================================================================
+
+
+===============================================================================
+ 1 · DOMINIOS: EL VOCABULARIO BASE
+===============================================================================
+
+DOMINIO DE COLISION
+  Conjunto de dispositivos que comparten un mismo medio: si dos transmiten a
+  la vez, las senales se superponen y ambas tramas se destruyen. Es un
+  fenomeno de CAPA 1, electrico, anterior a cualquier direccion MAC.
+  (!) Se cuenta asi: un dominio por PUERTO DE SWITCH CON CABLE, y el hub
+      aporta UNO SOLO para el y todos sus equipos.
+
+CSMA/CD  (Carrier Sense Multiple Access with Collision Detection)
+  El mecanismo con que Ethernet arbitra un medio compartido: escuchar antes
+  de transmitir y, si hay colision, abortar, emitir senal de atasco y esperar
+  un tiempo aleatorio creciente (backoff exponencial).
+  (!) Funciona, pero el tiempo en colisiones y esperas es tiempo sin datos
+      utiles: el rendimiento cae mucho antes del ancho de banda nominal.
+
+HALF-DUPLEX / FULL-DUPLEX
+  En half, emision y recepcion comparten el canal y CSMA/CD esta activo (es
+  lo que cuelga de un hub). En full usan pares separados y simultaneos: con
+  un solo equipo al otro extremo LA COLISION ES IMPOSIBLE y CSMA/CD se
+  desactiva.
+  (!) Este es el porque de los 52 dominios "sin colision" del proyecto: son
+      punto a punto en full-duplex.
+
+DOMINIO DE BROADCAST
+  Alcance de una trama de difusion: el conjunto de equipos que recibiran una
+  trama con MAC destino FF:FF:FF:FF:FF:FF. Es de CAPA 2.
+  (!) ENCADENAR SWITCHES NO REDUCE EL BROADCAST: LO EXTIENDE. Solo dos cosas
+      lo detienen: un ROUTER (Capa 3) y una VLAN (Capa 2).
+
+INUNDACION (flooding)
+  Lo que hace el switch con una trama que no puede conmutar a un puerto
+  concreto: la reenvia por todos los puertos activos menos el de entrada. Es
+  obligatorio con el broadcast, y tambien ocurre con unicast cuyo destino no
+  esta en la tabla.
+
+TABLA CAM / TABLA MAC
+  Donde el switch guarda que MAC vive en que puerto. Tiene TAMANO FINITO, y
+  de ahi sale el ataque de MAC flooding.
+
+
+===============================================================================
+ 2 · VLAN Y TRONCALES
+===============================================================================
+
+VLAN
+  Particion logica de un switch: un subconjunto de puertos que el switch
+  trata como red independiente. La definicion formal, para decirla textual:
+  "UNA VLAN ES UN DOMINIO DE BROADCAST DEFINIDO POR CONFIGURACION Y NO POR
+  CABLEADO".
+  (!) El limite honesto, y es lo primero que preguntan: LAS VLANs AISLAN, NO
+      COMUNICAN. Comunicarlas exige Capa 3 (router o switch multicapa con
+      SVIs) = routing inter-VLAN, fuera del alcance de este proyecto.
+
+PUERTO DE ACCESO
+  Pertenece a UNA VLAN, no etiqueta, y va hacia equipos finales (PC,
+  servidor, AP, hub).
+  (!) EL EQUIPO FINAL NUNCA SABE EN QUE VLAN ESTA. La pertenencia es una
+      propiedad DEL PUERTO DEL SWITCH, no de la PC ni de su tarjeta de red.
+      Por eso cambiar de VLAN es un comando en el switch.
+
+PUERTO TRONCAL (trunk)
+  Transporta VARIAS VLANs por un solo cable, etiquetando cada trama (excepto
+  la nativa). Va siempre hacia otro switch o un router.
+
+IEEE 802.1Q
+  El estandar que define COMO se marca la trama. No la encapsula: INSERTA
+  4 BYTES dentro de la trama Ethernet, despues de la MAC de origen. Como el
+  contenido cambia, el switch recalcula el FCS.
+
+      CAMPO    TAMANO    QUE ES
+      -------  --------  ----------------------------------------------
+      TPID     2 bytes   0x8100, la marca de "esta trama lleva etiqueta"
+      PCP      3 bits    Prioridad 0-7 (802.1p), no usada aqui
+      DEI      1 bit     Trama descartable ante congestion
+      VLAN ID  12 bits   El numero de VLAN -> 4096 valores, 1-4094 utiles
+
+  (!) Los 4 bytes suben la trama maxima de 1518 a 1522. Un equipo que no
+      entienda 802.1Q la descartaria como "giant": por eso el tag solo viaja
+      entre switches, nunca hacia un equipo final.
+
+VLAN NATIVA
+  La unica VLAN de un trunk cuyo trafico viaja SIN ETIQUETAR. Existe por
+  compatibilidad historica, y por ahi viaja el trafico de control previo a
+  cualquier negociacion.
+  (!) Debe COINCIDIR EN AMBOS EXTREMOS. Si no, ademas del aviso de "Native
+      VLAN mismatch" por CDP, PUEDE PRODUCIR BUCLES DE STP, porque las BPDU
+      de una VLAN llegan a la instancia de otra.
+
+DTP  (Dynamic Trunking Protocol)
+  Protocolo propietario de Cisco con el que un puerto sin configurar NEGOCIA
+  si sera access o trunk. Comodo y peligroso.
+  (!) Por eso en este proyecto TODOS los puertos llevan el modo fijado a mano
+      y los trunks llevan "switchport nonegotiate". Un puerto que nunca
+      negocia no puede ser convencido de volverse trunk.
+
+LISTA "allowed vlan"
+  Que VLANs puede transportar ese trunk. Limita el alcance de un trunk
+  comprometido y evita propagar broadcast innecesario.
+
+
+===============================================================================
+ 3 · VTP
+===============================================================================
+
+VTP  (VLAN Trunking Protocol, propietario de Cisco)
+  Centraliza la administracion: las VLANs se crean UNA SOLA VEZ en un switch
+  y el protocolo las propaga al resto POR LOS ENLACES TRONCALES.
+
+      VTP SI                                VTP NO
+      ------------------------------------  ---------------------------------
+      Propaga la EXISTENCIA de las VLANs    NO ASIGNA PUERTOS a VLANs: eso
+      (su ID y su nombre)                   es siempre manual, switch por
+                                            switch
+      Sincroniza altas, bajas y             No transporta datos de usuario
+      renombrados
+      Viaja solo por enlaces troncales      No funciona sobre puertos access
+      Exige mismo dominio y contrasena      NO SUSTITUYE A 802.1Q: VTP
+                                            anuncia, 802.1Q etiqueta
+
+SERVER / CLIENT / TRANSPARENT
+  Server crea, borra y renombra para todo el dominio. Client solo adopta y
+  reenvia. TRANSPARENT REENVIA LOS ANUNCIOS PERO NO LOS ADOPTA: mantiene su
+  base local y editable a mano.
+  (!) La frase para SW-COMUNES: "es un switch que participa del cableado del
+      dominio sin participar de su administracion".
+
+NUMERO DE REVISION DE CONFIGURACION
+  Contador que el Server incrementa en 1 con cada cambio. Al recibir un
+  anuncio: si la revision es MENOR O IGUAL, se ignora; si es MAYOR,
+  SOBRESCRIBE LA BASE DE VLANs COMPLETA.
+  (!) No dice "fusiona", dice SOBRESCRIBE. Y el criterio es SOLO EL NUMERO,
+      no la antiguedad ni el modo del emisor: UN SWITCH EN CLIENT PUEDE
+      DESTRUIR EL DOMINIO ENTERO. Se mitiga poniendo la revision en 0
+      (vtp mode transparent -> vtp mode client) antes de conectar nada.
+
+
+===============================================================================
+ 4 · SPANNING TREE
+===============================================================================
+
+BUCLE DE CAPA 2
+  Lo que ocurre con dos caminos fisicos y ningun protocolo que los controle.
+  La causa raiz, en una frase: ETHERNET NO TIENE TTL. Un paquete IP tiene
+  Time To Live y muere; la trama Ethernet no tiene nada equivalente y circula
+  para siempre.
+  Tres efectos simultaneos:
+    - TORMENTA DE BROADCAST: crecimiento exponencial de copias.
+    - INESTABILIDAD DE LA TABLA MAC (MAC flapping): la misma MAC de origen
+      llega por puertos distintos en cada vuelta.
+    - TRAMAS DUPLICADAS: rompen protocolos de capas superiores.
+  (!) El resultado es una red CAIDA, NO DEGRADADA: ni siquiera se puede
+      entrar por la red a apagar el bucle.
+
+BPDU  (Bridge Protocol Data Unit)
+  Los mensajes de control con que los switches se ponen de acuerdo en una
+  topologia sin ciclos.
+
+STP  (Spanning Tree Protocol, IEEE 802.1D)
+  Acuerda un arbol sin ciclos y BLOQUEA LOGICAMENTE los puertos sobrantes. El
+  puerto bloqueado sigue fisicamente conectado y sigue escuchando BPDU; lo
+  unico que no hace es reenviar trafico de datos.
+
+ROOT BRIDGE
+  El switch con el Bridge ID mas bajo; es la referencia del arbol.
+
+BRIDGE ID (BID)
+  Prioridad (4 bits) + ID de sistema extendido (12 bits = nro de VLAN) +
+  direccion MAC (6 bytes). Prioridad por defecto 32768, configurable en
+  multiplos de 4096.
+  (!) Si no se configura nada GANA LA MAC MAS BAJA, que suele ser el switch
+      mas viejo y peor ubicado. Por eso fijar la raiz a mano es obligatorio.
+  (!) El ID de sistema extendido explica por que en "show spanning-tree" la
+      prioridad de la VLAN 24 se lee 32768 + 24 = 32792. Las raices medidas
+      en este proyecto (24590, 24600, 24610, 24620, 24630) son 24576 + nro
+      de VLAN.
+
+COSTO STP
+  Depende de la velocidad del enlace y SE SUMA a lo largo del camino.
+  MENOR COSTO = ENLACE MAS RAPIDO.
+
+      10 Mbps    100 Mbps    1 Gbps    10 Gbps
+      -------    --------    ------    -------
+        100         19          4         2
+
+ROLES Y ESTADOS DE PUERTO
+  Root Port (el de menor costo hacia la raiz), Designated Port (el que
+  reenvia en cada segmento) y el resto en BLOCKING (se muestra BLK, rol Altn).
+  Al tomar el relevo, un puerto recorre:
+      Blocking -> LISTENING (15 s) -> LEARNING (15 s) -> Forwarding
+  (!) De ahi salen los 30 SEGUNDOS; y hasta 50 s si primero hay que esperar
+      el max age (20 s) por perdida de BPDU. Si el cronometro da medio
+      minuto, el comportamiento es CORRECTO Y ESPERADO, no un defecto.
+
+PVST+  (Per-VLAN Spanning Tree Plus)
+  UNA INSTANCIA DE STP POR VLAN. Cada VLAN puede tener su propia raiz y
+  bloquear un puerto distinto, lo que habilita balanceo de carga por VLAN.
+  (!) PVST+ NO ES "EL MODO POR DEFECTO QUE SE DEJA SIN TOCAR". Es un modo que
+      se selecciona, y el comando "spanning-tree mode pvst" debe aparecer en
+      la configuracion y en la evidencia.
+
+RAPID-PVST+  (IEEE 802.1w)
+  Lo mismo pero converge en SEGUNDOS por negociacion proposal/agreement, con
+  estados Discarding / Learning / Forwarding. Es la mejora futura declarada,
+  descartada porque el carne par fija PVST+.
+
+PORTFAST / BPDU GUARD
+  PortFast salta Listening y Learning en un puerto de equipo final, que no
+  puede formar bucle. BPDU Guard apaga ese puerto si recibe una BPDU: un
+  equipo final no tiene por que emitirlas. Aplicados en 21 puertos.
+
+
+===============================================================================
+ 5 · ETHERCHANNEL
+===============================================================================
+
+ETHERCHANNEL (port-channel)
+  Agrupa varios enlaces fisicos en UNA SOLA INTERFAZ LOGICA (Po1, Po2) que el
+  resto del sistema trata como un unico puerto.
+  (!) El porque de su existencia: sin el, si se tienden 4 cables de 1 Gbps,
+      STP BLOQUEA 3 y deja 1 Gbps efectivo con 3 Gbps desperdiciados.
+
+LOS DOS BENEFICIOS, SIMULTANEOS
+  - CAPACIDAD AGREGADA: el ancho de banda del canal es la suma de sus
+    miembros.
+  - TOLERANCIA A FALLOS SIN RECONVERGENCIA DE STP: si cae un miembro, el
+    canal SIGUE ARRIBA con capacidad reducida. No hay eleccion de STP ni
+    espera de 30 segundos.
+  (!) El matiz honesto que da puntos: el reparto se hace por HASH POR
+      CONVERSACION, NO POR TRAMA. Un canal de 2 x 1 Gbps NO DA 2 Gbps A UNA
+      SOLA TRANSFERENCIA; da 2 Gbps de capacidad total repartida entre
+      conversaciones distintas. Para una granja de servidores, con muchos
+      flujos simultaneos, es el escenario favorable.
+
+LACP (IEEE 802.3ad) FRENTE A PAgP
+  LACP es un estandar ABIERTO, con modos active / passive. PAgP es el
+  equivalente propietario de Cisco, con modos desirable / auto.
+  (!) "active" inicia la negociacion, "passive" solo responde: PASSIVE-PASSIVE
+      NUNCA FORMA EL CANAL (es el error de configuracion mas comun).
+  (!) El modo "on" fuerza el canal sin negociar nada: con un error de
+      cableado produce un BUCLE en lugar de un canal que simplemente no sube.
+      Es la diferencia entre fallar de forma segura y fallar de forma
+      catastrofica.
+
+REQUISITO PARA QUE EL CANAL SE FORME
+  Todos los puertos miembros deben coincidir en velocidad, duplex, modo
+  (access o trunk), VLAN nativa y lista de VLANs permitidas.
+
+COMO LEER "show etherchannel summary"
+      S    = canal de Capa 2
+      U    = in use, el canal esta operativo
+      (P)  = bundled: el puerto esta efectivamente agrupado
+      (I)  = stand-alone: ese cable trabaja suelto, LACP no negocio
+
+INTERACCION CON SPANNING TREE
+  STP VE EL PORT-CHANNEL COMO UN UNICO ENLACE LOGICO, ASI QUE NO BLOQUEA A
+  SUS MIEMBROS. Tres consecuencias:
+    1. Todos los cables reenvian a la vez.
+    2. El canal tiene COSTO STP MENOR y se vuelve camino preferente solo.
+    3. LA CAIDA DE UN MIEMBRO NO ES UN EVENTO DE STP.
+
+
+===============================================================================
+ 6 · MEDIOS DE TRANSMISION (CAPA 1)
+===============================================================================
+
+LOS CUATRO CRITERIOS, EN ORDEN DE DESCARTE
+  1. DISTANCIA. Por encima de 100 m el cobre queda descartado. Limite
+     normativo ANSI/TIA-568: 90 m horizontal + 10 m de patch cords. No es un
+     consejo: es atenuacion y retardo de propagacion.
+  2. ANCHO DE BANDA REQUERIDO.
+  3. INMUNIDAD ELECTROMAGNETICA (EMI). Decide incluso en enlaces cortos.
+  4. COSTO. Solo se aplica cuando los tres anteriores empatan.
+
+      MEDIO                  ALCANCE      B. ANCHA      EMI     COSTO
+      ---------------------  -----------  ------------  ------  ------
+      UTP Cat 6              100 m        1 Gbps        Baja    Bajo
+      UTP Cat 6A             100 m        10 Gbps       Media   Medio
+      Fibra multimodo OM3/4  300-550 m    10-40 Gbps    Total   Alto
+      Fibra monomodo OS2     10 km+       10-100 Gbps   Total   Alto
+
+  (!) LA FIBRA TRANSPORTA LUZ: ES INMUNE POR CONSTRUCCION. Y encarece por los
+      TRANSCEPTORES Y LA TERMINACION, no tanto por el cable. Ese es el
+      criterio 3 que decide el enlace de 90 m hacia la Planta.
+
+
+===============================================================================
+ 7 · SEGURIDAD DE CAPA 2
+===============================================================================
+
+LA PREMISA
+  Un switch recien sacado de la caja funciona sin configurarlo. LAS OPCIONES
+  POR DEFECTO ESTAN ELEGIDAS PARA QUE LA RED FUNCIONE, NO PARA QUE SEA SEGURA.
+
+VLAN HOPPING POR DOBLE ETIQUETADO
+  El atacante, conectado a un puerto de acceso que esta en la misma VLAN que
+  la nativa del trunk, fabrica una trama con DOS etiquetas 802.1Q: la externa
+  con la VLAN nativa y la interna con la VLAN que quiere alcanzar. El primer
+  switch quita la externa (porque coincide con la nativa, que no se etiqueta)
+  y reenvia por el trunk una trama que TODAVIA LLEVA LA ETIQUETA INTERNA; el
+  segundo switch la lee y la entrega dentro de la VLAN de destino.
+  (!) Es UNIDIRECCIONAL (no hay camino de vuelta), pero basta para inyectar
+      trafico. Se cierra con DOS medidas juntas: nativa distinta de la 1 Y
+      sin ningun puerto de acceso en ella.
+
+MAC FLOODING
+  El atacante genera miles de tramas con MAC de origen inventadas hasta
+  llenar la tabla CAM. A partir de ahi el switch ya no aprende direcciones
+  legitimas y, al no encontrar el destino, INUNDA EL UNICAST POR TODOS LOS
+  PUERTOS DE LA VLAN: funciona, de hecho, como un hub. La contramedida es
+  port-security.
+
+SWITCH SPOOFING POR DTP
+  El mas simple de los tres: no hay que fabricar nada, basta con hablar DTP
+  contra un puerto que quedo en modo dinamico.
+
+      COMPARACION            VLAN HOPPING           SWITCH SPOOFING
+      ---------------------  ---------------------  ----------------------
+      Que necesita           Fabricar trama con     Solo hablar DTP
+                             dos etiquetas
+      Alcance                UNA VLAN, elegida      TODAS las del trunk
+      Direccion              Unidireccional         Bidireccional (trunk
+                                                    de verdad)
+      Se cierra con          Nativa != 1 Y sin      "switchport mode access"
+                             puertos access en      fijo Y "nonegotiate"
+                             ella
+
+PORT-SECURITY
+  Limita cuantas MAC puede aprender cada puerto.
+  Modos de violacion:
+    - shutdown (por defecto): deja el puerto en err-disabled y exige
+      intervencion manual.
+    - restrict: descarta y registra.
+    - protect: solo descarta.
+  (!) En este proyecto se eligio "restrict" Y HAY QUE JUSTIFICARLO, NO
+      HEREDARLO: en un entorno industrial una parada no programada cuesta
+      produccion.
+  (!) "sticky" aprende y fija las MAC presentes EN ESE MOMENTO: si se activa
+      con un intruso ya conectado, lo autoriza.
+  (!) La MAC es FALSIFICABLE: quien la clone pasa igual.
+
+STORM-CONTROL
+  Descarta el exceso de trafico de difusion por puerto. NO CONVIERTE EL MEDIO
+  COMPARTIDO EN CONMUTADO: no elimina la colision del hub. Eso solo se logra
+  quitando el hub, que el enunciado obliga a conservar.
+
+BANNER MOTD
+  Aviso legal. Es DISUASORIO Y LEGAL, NO TECNICO: no impide el acceso.
+
+VLAN MUERTA (999) + SHUTDOWN
+  Un puerto libre esta administrativamente activo y, por defecto, en la
+  VLAN 1: cualquiera que enchufe un cable obtiene conectividad de Capa 2
+  inmediata, sin autenticacion. Apagarlo evita que el enlace levante;
+  confinarlo a una VLAN sin salida es defensa en profundidad por si alguien
+  lo reactiva.
+
+
+===============================================================================
+ LAS 6 FRASES QUE MAS RINDEN SI TE QUEDAS EN BLANCO
+===============================================================================
+
+  1. "Una VLAN es un dominio de broadcast definido por configuracion y no por
+     cableado."
+
+  2. "Encadenar switches no reduce el broadcast: lo extiende."
+
+  3. "Ethernet no tiene TTL: por eso una trama en un bucle circula para
+     siempre."
+
+  4. "En VTP manda el numero de revision mas alto, no el modo: un Client
+     puede destruir el dominio."
+
+  5. "Para STP, un port-channel es un solo enlace logico: por eso no bloquea
+     a sus miembros ni reconverge si cae uno."
+
+  6. "La fibra transporta luz: es inmune por construccion." (justificacion de
+     los 90 m hacia la Planta)
+
+===============================================================================
+ FIN DEL GLOSARIO
+===============================================================================

@@ -1,0 +1,114 @@
+! ==========================================================
+! SW-MODA  -  Principal Zona 4 (Distrito Moda) / Root VLAN 44   (carne 201905884)
+! Modelo: Cisco 3560-24PS
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! ==========================================================
+enable
+configure terminal
+ hostname SW-MODA
+ no ip domain-lookup
+!
+! ---- Spanning Tree: Rapid PVST+ ----
+ spanning-tree mode rapid-pvst
+! raiz primaria de la VLAN de su zona
+ spanning-tree vlan 44 priority 24576
+!
+! ---- VTP: server del dominio 201905884 ----
+! transparent primero: deja la revision de configuracion en 0
+ vtp mode transparent
+ vtp domain 201905884
+ vtp password cayala2S2026
+ vtp version 2
+ vtp mode server
+!
+! ---- Po2: EtherChannel LACP 2x100M hacia SW-EMPRESARIAL ----
+! El Port-channel se crea ANTES de sumar los miembros: si un miembro entra
+! con una configuracion distinta a la del canal, queda suspendido (s).
+ interface Port-channel2
+  description Po2 -> SW-EMPRESARIAL (2x100M LACP)
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 14,44,99
+  switchport nonegotiate
+ exit
+ interface range FastEthernet0/21-22
+  description Miembro de Po2 -> SW-EMPRESARIAL
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 14,44,99
+  switchport nonegotiate
+  channel-protocol lacp
+  channel-group 2 mode active
+  no shutdown
+ exit
+!
+! ---- Troncales 802.1Q: nativa 99 y solo las VLANs necesarias ----
+ interface FastEthernet0/1
+  description -> SW-MODA-A1
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 44,99
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface FastEthernet0/2
+  description -> SW-MODA-A2
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 44,99
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface FastEthernet0/23
+  description -> SW-PASEO (cierra la malla del nucleo)
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 14,44,99
+  switchport nonegotiate
+  no shutdown
+ exit
+!
+! ---- VLANs que este servidor VTP aporta al dominio ----
+ vlan 44
+  name MODA
+ exit
+!
+! ---- Puertos de acceso VLAN 44 (MODA) ----
+ interface range FastEthernet0/3-4
+  description Hosts del Distrito Moda
+  switchport mode access
+  switchport access vlan 44
+  spanning-tree portfast
+  spanning-tree bpduguard enable
+  no shutdown
+ exit
+! ---- Puertos sin uso: VLAN Blackhole 999 y apagados ----
+ interface range FastEthernet0/5-20
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+ interface FastEthernet0/24
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+ interface range GigabitEthernet0/1-2
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+!
+! ---- Administracion del switch sobre la VLAN 99 ----
+ interface Vlan99
+  ip address 192.168.4.196 255.255.255.240
+  no shutdown
+ exit
+ ip default-gateway 192.168.4.193
+end
+write memory

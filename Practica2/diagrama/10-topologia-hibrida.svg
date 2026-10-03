@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 10 — Tres esquemas de topología combinados</title>
+  <desc>La misma red vista tres veces: la malla completa del núcleo, los dos anillos que dan redundancia con pocos enlaces, y las ramas en estrella de las zonas donde un corte es tolerable.</desc>
+  <style>
+    .t   { font-size: 20px; fill: #212529; }
+    .h   { font-size: 15px; font-weight: bold; fill: #212529; }
+    .sub { font-size: 12.5px; fill: #868e96; }
+    .lbl { font-size: 12px; fill: #495057; }
+    .swt { font-size: 12.5px; font-weight: bold; fill: #212529; }
+    .red { font-size: 12.5px; font-weight: bold; fill: #c92a2a; }
+    .grn { font-size: 12.5px; font-weight: bold; fill: #2f9e44; }
+  </style>
+  <rect width="960" height="400" fill="#ffffff"/>
+  <text x="480" y="32" class="t" text-anchor="middle">Una red, tres esquemas: cada zona se conecta según lo que necesita</text>
+  <text x="170.0" y="76" class="h" text-anchor="middle">Malla completa</text>
+  <line x1="171.7" y1="166.0" x2="99.7" y2="228.0" stroke="#1971c2" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="168.3" y1="162.0" x2="96.3" y2="224.0" stroke="#1971c2" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="171.7" y1="162.0" x2="243.7" y2="224.0" stroke="#1971c2" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="168.3" y1="166.0" x2="240.3" y2="228.0" stroke="#1971c2" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="98.0" y1="226.0" x2="242.0" y2="226.0" stroke="#1971c2" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="170.0" y1="164.0" x2="54.0" y2="146.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="98.0" y1="226.0" x2="54.0" y2="146.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="170.0" y1="164.0" x2="286.0" y2="146.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="170.0" y1="164.0" x2="170.0" y2="110.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="98.0" y1="226.0" x2="50.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="98.0" y1="226.0" x2="138.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="50.0" y1="292.0" x2="138.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="242.0" y1="226.0" x2="202.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="242.0" y1="226.0" x2="290.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <rect x="141.0" y="153.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#1971c2" stroke-width="2.6"/>
+  <text x="170.0" y="167.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">EMPRES.</text>
+  <rect x="155.0" y="99.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="170.0" y="113.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="25.0" y="135.0" width="58.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="54.0" y="149.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">DECIMO</text>
+  <rect x="257.0" y="135.0" width="58.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="286.0" y="149.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">ENCINOS</text>
+  <rect x="69.0" y="215.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#1971c2" stroke-width="2.6"/>
+  <text x="98.0" y="229.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">PASEO</text>
+  <rect x="213.0" y="215.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#1971c2" stroke-width="2.6"/>
+  <text x="242.0" y="229.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">MODA</text>
+  <rect x="35.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="50.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="123.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="138.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A2</text>
+  <rect x="187.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="202.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="275.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="290.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A2</text>
+  <text x="170.0" y="326.0" class="sub" text-anchor="middle">Núcleo: las tres zonas de más carga</text>
+  <text x="170.0" y="343.0" class="sub" text-anchor="middle">unidas todas con todas.</text>
+  <text x="480.0" y="76" class="h" text-anchor="middle">Anillo</text>
+  <line x1="481.7" y1="166.0" x2="409.7" y2="228.0" stroke="#e8590c" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="478.3" y1="162.0" x2="406.3" y2="224.0" stroke="#e8590c" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="481.7" y1="162.0" x2="553.7" y2="224.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="478.3" y1="166.0" x2="550.3" y2="228.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="408.0" y1="226.0" x2="552.0" y2="226.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="480.0" y1="164.0" x2="364.0" y2="146.0" stroke="#e8590c" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="408.0" y1="226.0" x2="364.0" y2="146.0" stroke="#e8590c" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="480.0" y1="164.0" x2="596.0" y2="146.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="480.0" y1="164.0" x2="480.0" y2="110.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="408.0" y1="226.0" x2="360.0" y2="292.0" stroke="#e8590c" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="408.0" y1="226.0" x2="448.0" y2="292.0" stroke="#e8590c" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="360.0" y1="292.0" x2="448.0" y2="292.0" stroke="#e8590c" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="552.0" y1="226.0" x2="512.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="552.0" y1="226.0" x2="600.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <rect x="451.0" y="153.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#e8590c" stroke-width="2.6"/>
+  <text x="480.0" y="167.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">EMPRES.</text>
+  <rect x="465.0" y="99.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="480.0" y="113.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="335.0" y="135.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#e8590c" stroke-width="2.6"/>
+  <text x="364.0" y="149.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">DECIMO</text>
+  <rect x="567.0" y="135.0" width="58.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="596.0" y="149.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">ENCINOS</text>
+  <rect x="379.0" y="215.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#e8590c" stroke-width="2.6"/>
+  <text x="408.0" y="229.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">PASEO</text>
+  <rect x="523.0" y="215.0" width="58.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="552.0" y="229.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">MODA</text>
+  <rect x="345.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#ffffff" stroke="#e8590c" stroke-width="2.6"/>
+  <text x="360.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="433.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#ffffff" stroke="#e8590c" stroke-width="2.6"/>
+  <text x="448.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A2</text>
+  <rect x="497.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="512.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="585.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="600.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A2</text>
+  <text x="480.0" y="326.0" class="sub" text-anchor="middle">Zona 3 y accesos de la zona 1:</text>
+  <text x="480.0" y="343.0" class="sub" text-anchor="middle">un camino alterno con el mínimo de enlaces.</text>
+  <text x="790.0" y="76" class="h" text-anchor="middle">Estrella</text>
+  <line x1="791.7" y1="166.0" x2="719.7" y2="228.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="788.3" y1="162.0" x2="716.3" y2="224.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="791.7" y1="162.0" x2="863.7" y2="224.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="788.3" y1="166.0" x2="860.3" y2="228.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="718.0" y1="226.0" x2="862.0" y2="226.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="790.0" y1="164.0" x2="674.0" y2="146.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="718.0" y1="226.0" x2="674.0" y2="146.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="790.0" y1="164.0" x2="906.0" y2="146.0" stroke="#5f3dc4" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="790.0" y1="164.0" x2="790.0" y2="110.0" stroke="#5f3dc4" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="718.0" y1="226.0" x2="670.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="718.0" y1="226.0" x2="758.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="670.0" y1="292.0" x2="758.0" y2="292.0" stroke="#ced4da" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="862.0" y1="226.0" x2="822.0" y2="292.0" stroke="#5f3dc4" stroke-width="4.2" stroke-linecap="round"/>
+  <line x1="862.0" y1="226.0" x2="910.0" y2="292.0" stroke="#5f3dc4" stroke-width="4.2" stroke-linecap="round"/>
+  <rect x="761.0" y="153.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#5f3dc4" stroke-width="2.6"/>
+  <text x="790.0" y="167.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">EMPRES.</text>
+  <rect x="775.0" y="99.0" width="30.0" height="22.0" rx="5" fill="#ffffff" stroke="#5f3dc4" stroke-width="2.6"/>
+  <text x="790.0" y="113.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="645.0" y="135.0" width="58.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="674.0" y="149.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">DECIMO</text>
+  <rect x="877.0" y="135.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#5f3dc4" stroke-width="2.6"/>
+  <text x="906.0" y="149.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">ENCINOS</text>
+  <rect x="689.0" y="215.0" width="58.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="718.0" y="229.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">PASEO</text>
+  <rect x="833.0" y="215.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#5f3dc4" stroke-width="2.6"/>
+  <text x="862.0" y="229.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">MODA</text>
+  <rect x="655.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="670.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="743.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#f8f9fa" stroke="#868e96" stroke-width="1.6"/>
+  <text x="758.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A2</text>
+  <rect x="807.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#ffffff" stroke="#5f3dc4" stroke-width="2.6"/>
+  <text x="822.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="895.0" y="281.0" width="30.0" height="22.0" rx="5" fill="#ffffff" stroke="#5f3dc4" stroke-width="2.6"/>
+  <text x="910.0" y="295.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A2</text>
+  <text x="790.0" y="326.0" class="sub" text-anchor="middle">Zona 5 y accesos de las zonas 2 y 4:</text>
+  <text x="790.0" y="343.0" class="sub" text-anchor="middle">un solo enlace por nodo.</text>
+  <line x1="325" y1="70" x2="325" y2="372" stroke="#dee2e6" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <line x1="635" y1="70" x2="635" y2="372" stroke="#dee2e6" stroke-width="1.5" stroke-dasharray="7 6"/>
+</svg>

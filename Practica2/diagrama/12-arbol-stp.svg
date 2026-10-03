@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 12 — Root Bridge y puertos bloqueados por VLAN</title>
+  <desc>Árbol de Rapid PVST+ medido en las VLANs 14, 34 y 44. La raíz es el switch principal de cada zona y el puerto en estado alterno queda siempre sobre un enlace de respaldo.</desc>
+  <style>
+    .t   { font-size: 20px; fill: #212529; }
+    .h   { font-size: 15px; font-weight: bold; fill: #212529; }
+    .sub { font-size: 12.5px; fill: #868e96; }
+    .lbl { font-size: 12px; fill: #495057; }
+    .swt { font-size: 12.5px; font-weight: bold; fill: #212529; }
+    .red { font-size: 12.5px; font-weight: bold; fill: #c92a2a; }
+    .grn { font-size: 12.5px; font-weight: bold; fill: #2f9e44; }
+  </style>
+  <rect width="960" height="470" fill="#ffffff"/>
+  <text x="480" y="32" class="t" text-anchor="middle">Un árbol por VLAN: la raíz es el switch principal de cada zona</text>
+  <text x="170.0" y="82" class="h" text-anchor="middle">VLAN 14</text>
+  <line x1="171.7" y1="172.0" x2="99.7" y2="234.0" stroke="#7048e8" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="168.3" y1="168.0" x2="96.3" y2="230.0" stroke="#7048e8" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="171.7" y1="168.0" x2="243.7" y2="230.0" stroke="#7048e8" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="168.3" y1="172.0" x2="240.3" y2="234.0" stroke="#7048e8" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="98.0" y1="232.0" x2="242.0" y2="232.0" stroke="#e03131" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="7 5"/>
+  <line x1="98.0" y1="232.0" x2="50.0" y2="298.0" stroke="#7048e8" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="98.0" y1="232.0" x2="138.0" y2="298.0" stroke="#7048e8" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="50.0" y1="298.0" x2="138.0" y2="298.0" stroke="#e03131" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="7 5"/>
+  <rect x="141.0" y="159.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#7048e8" stroke-width="2"/>
+  <text x="170.0" y="173.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">EMPRES.</text>
+  <rect x="69.0" y="221.0" width="58.0" height="22.0" rx="5" fill="#e5dbff" stroke="#7048e8" stroke-width="3.4"/>
+  <text x="98.0" y="235.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">PASEO</text>
+  <rect x="213.0" y="221.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#7048e8" stroke-width="2"/>
+  <text x="242.0" y="235.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">MODA</text>
+  <rect x="35.0" y="287.0" width="30.0" height="22.0" rx="5" fill="#ffffff" stroke="#7048e8" stroke-width="2"/>
+  <text x="50.0" y="301.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="123.0" y="287.0" width="30.0" height="22.0" rx="5" fill="#ffffff" stroke="#7048e8" stroke-width="2"/>
+  <text x="138.0" y="301.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A2</text>
+  <text x="170.0" y="332.0" class="sub" text-anchor="middle">Alternos: Gi0/2 de SW-PASEO-A2</text>
+  <text x="170.0" y="349.0" class="sub" text-anchor="middle">y Fa0/23 de SW-MODA.</text>
+  <g transform="translate(118.6,298.0) scale(0.8)"><rect x="-9" y="-3" width="18" height="14" rx="3" fill="#e03131"/><path d="M-6,-3 V-6 a6,6 0 0 1 12,0 V-3" fill="none" stroke="#e03131" stroke-width="2.4"/></g>
+  <g transform="translate(213.2,232.0) scale(0.8)"><rect x="-9" y="-3" width="18" height="14" rx="3" fill="#e03131"/><path d="M-6,-3 V-6 a6,6 0 0 1 12,0 V-3" fill="none" stroke="#e03131" stroke-width="2.4"/></g>
+  <text x="64.0" y="236.0" text-anchor="end" font-size="11" font-weight="bold" fill="#7048e8">RAÍZ</text>
+  <text x="480.0" y="82" class="h" text-anchor="middle">VLAN 34</text>
+  <line x1="481.7" y1="172.0" x2="409.7" y2="234.0" stroke="#e03131" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="7 5"/>
+  <line x1="478.3" y1="168.0" x2="406.3" y2="230.0" stroke="#e03131" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="7 5"/>
+  <line x1="480.0" y1="170.0" x2="364.0" y2="152.0" stroke="#f08c00" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="408.0" y1="232.0" x2="364.0" y2="152.0" stroke="#f08c00" stroke-width="3.6" stroke-linecap="round"/>
+  <rect x="451.0" y="159.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#f08c00" stroke-width="2"/>
+  <text x="480.0" y="173.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">EMPRES.</text>
+  <rect x="335.0" y="141.0" width="58.0" height="22.0" rx="5" fill="#ffe8cc" stroke="#f08c00" stroke-width="3.4"/>
+  <text x="364.0" y="155.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">DECIMO</text>
+  <rect x="379.0" y="221.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#f08c00" stroke-width="2"/>
+  <text x="408.0" y="235.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">PASEO</text>
+  <text x="480.0" y="332.0" class="sub" text-anchor="middle">Alterno: Po1 en SW-PASEO.</text>
+  <text x="480.0" y="349.0" class="sub" text-anchor="middle">Cada vecino llega a la raíz por su enlace directo.</text>
+  <g transform="translate(422.4,219.6) scale(0.8)"><rect x="-9" y="-3" width="18" height="14" rx="3" fill="#e03131"/><path d="M-6,-3 V-6 a6,6 0 0 1 12,0 V-3" fill="none" stroke="#e03131" stroke-width="2.4"/></g>
+  <text x="364.0" y="136.0" text-anchor="middle" font-size="11" font-weight="bold" fill="#f08c00">RAÍZ</text>
+  <text x="790.0" y="82" class="h" text-anchor="middle">VLAN 44</text>
+  <line x1="791.7" y1="172.0" x2="719.7" y2="234.0" stroke="#343a40" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="788.3" y1="168.0" x2="716.3" y2="230.0" stroke="#343a40" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="791.7" y1="168.0" x2="863.7" y2="230.0" stroke="#343a40" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="788.3" y1="172.0" x2="860.3" y2="234.0" stroke="#343a40" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="718.0" y1="232.0" x2="862.0" y2="232.0" stroke="#e03131" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="7 5"/>
+  <line x1="862.0" y1="232.0" x2="822.0" y2="298.0" stroke="#343a40" stroke-width="3.6" stroke-linecap="round"/>
+  <line x1="862.0" y1="232.0" x2="910.0" y2="298.0" stroke="#343a40" stroke-width="3.6" stroke-linecap="round"/>
+  <rect x="761.0" y="159.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#343a40" stroke-width="2"/>
+  <text x="790.0" y="173.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">EMPRES.</text>
+  <rect x="689.0" y="221.0" width="58.0" height="22.0" rx="5" fill="#ffffff" stroke="#343a40" stroke-width="2"/>
+  <text x="718.0" y="235.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">PASEO</text>
+  <rect x="833.0" y="221.0" width="58.0" height="22.0" rx="5" fill="#dee2e6" stroke="#343a40" stroke-width="3.4"/>
+  <text x="862.0" y="235.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">MODA</text>
+  <rect x="807.0" y="287.0" width="30.0" height="22.0" rx="5" fill="#ffffff" stroke="#343a40" stroke-width="2"/>
+  <text x="822.0" y="301.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A1</text>
+  <rect x="895.0" y="287.0" width="30.0" height="22.0" rx="5" fill="#ffffff" stroke="#343a40" stroke-width="2"/>
+  <text x="910.0" y="301.6" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#343a40">A2</text>
+  <text x="790.0" y="332.0" class="sub" text-anchor="middle">Alterno: Fa0/23 de SW-PASEO.</text>
+  <text x="790.0" y="349.0" class="sub" text-anchor="middle">El enlace que cierra la malla queda de respaldo.</text>
+  <g transform="translate(746.8,232.0) scale(0.8)"><rect x="-9" y="-3" width="18" height="14" rx="3" fill="#e03131"/><path d="M-6,-3 V-6 a6,6 0 0 1 12,0 V-3" fill="none" stroke="#e03131" stroke-width="2.4"/></g>
+  <text x="896.0" y="236.0" text-anchor="start" font-size="11" font-weight="bold" fill="#343a40">RAÍZ</text>
+  <line x1="325" y1="70" x2="325" y2="372" stroke="#dee2e6" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <line x1="635" y1="70" x2="635" y2="372" stroke="#dee2e6" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <rect x="40" y="392" width="880" height="62" rx="8" fill="#f8f9fa" stroke="#ced4da" stroke-width="1.4"/>
+  <text x="480" y="414" class="lbl" text-anchor="middle" font-size="13">Prioridad de cada raíz: 24576 · VLAN 24 y VLAN 99 → raíz SW-EMPRESARIAL · VLAN 54 → raíz SW-ENCINOS</text>
+  <text x="480" y="436" class="sub" text-anchor="middle">Las VLANs 24 y 54 no tienen caminos redundantes: ningún puerto queda bloqueado.</text>
+  <g transform="translate(60.0,372.0) scale(0.8)"><rect x="-9" y="-3" width="18" height="14" rx="3" fill="#e03131"/><path d="M-6,-3 V-6 a6,6 0 0 1 12,0 V-3" fill="none" stroke="#e03131" stroke-width="2.4"/></g>
+  <text x="76" y="380" class="lbl">extremo en estado alterno (BLK)</text>
+</svg>

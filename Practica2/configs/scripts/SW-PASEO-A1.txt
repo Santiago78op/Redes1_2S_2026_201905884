@@ -1,0 +1,57 @@
+! ==========================================================
+! SW-PASEO-A1  -  Acceso 1 Zona 1 (Paseo Cayala)   (carne 201905884)
+! Modelo: Cisco 2960-24TT
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! ==========================================================
+enable
+configure terminal
+ hostname SW-PASEO-A1
+ no ip domain-lookup
+!
+! ---- Spanning Tree: Rapid PVST+ ----
+ spanning-tree mode rapid-pvst
+!
+! ---- VTP: client del dominio 201905884 ----
+! transparent primero: deja la revision de configuracion en 0
+ vtp mode transparent
+ vtp domain 201905884
+ vtp password cayala2S2026
+ vtp version 2
+ vtp mode client
+!
+! ---- Troncales 802.1Q: nativa 99 y solo las VLANs necesarias ----
+ interface GigabitEthernet0/1
+  description -> SW-PASEO (uplink)
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 14,99
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface GigabitEthernet0/2
+  description -> SW-PASEO-A2 (respaldo entre accesos)
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 14,99
+  switchport nonegotiate
+  no shutdown
+ exit
+!
+! ---- Puertos de acceso VLAN 14 (PASEO) ----
+ interface range FastEthernet0/1-24
+  description Locales del Paseo
+  switchport mode access
+  switchport access vlan 14
+  spanning-tree portfast
+  spanning-tree bpduguard enable
+  no shutdown
+ exit
+!
+! ---- Administracion del switch sobre la VLAN 99 ----
+ interface Vlan99
+  ip address 192.168.4.198 255.255.255.240
+  no shutdown
+ exit
+ ip default-gateway 192.168.4.193
+end
+write memory

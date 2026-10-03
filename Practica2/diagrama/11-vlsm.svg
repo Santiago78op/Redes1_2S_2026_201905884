@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 330" width="960" height="330" font-family="Segoe Print, Bradley Hand, Comic Sans MS, Comic Neue, cursive">
+  <title>Figura 11 — División de 192.168.4.0/24 con VLSM</title>
+  <desc>El bloque /24 se reparte de la subred más grande a la más pequeña: dos /26, un /27 y tres /28, con 48 direcciones libres al final.</desc>
+  <style>
+    .t   { font-size: 20px; fill: #212529; }
+    .h   { font-size: 15px; font-weight: bold; fill: #212529; }
+    .sub { font-size: 12.5px; fill: #868e96; }
+    .lbl { font-size: 12px; fill: #495057; }
+    .swt { font-size: 12.5px; font-weight: bold; fill: #212529; }
+    .red { font-size: 12.5px; font-weight: bold; fill: #c92a2a; }
+    .grn { font-size: 12.5px; font-weight: bold; fill: #2f9e44; }
+  </style>
+  <rect width="960" height="330" fill="#ffffff"/>
+  <text x="480" y="32" class="t" text-anchor="middle">192.168.4.0/24 repartido de mayor a menor</text>
+  <rect x="40.0" y="90" width="220.0" height="70" fill="#e5dbff" stroke="#7048e8" stroke-width="2.4"/>
+  <text x="150.0" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#7048e8">VLAN 14 · PASEO</text>
+  <text x="150.0" y="140" class="lbl" text-anchor="middle">/26 · 62 útiles · 60 hosts</text>
+  <rect x="260.0" y="90" width="220.0" height="70" fill="#dee2e6" stroke="#343a40" stroke-width="2.4"/>
+  <text x="370.0" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#343a40">VLAN 44 · MODA</text>
+  <text x="370.0" y="140" class="lbl" text-anchor="middle">/26 · 62 útiles · 50 hosts</text>
+  <rect x="480.0" y="90" width="110.0" height="70" fill="#c5f6fa" stroke="#0c8599" stroke-width="2.4"/>
+  <text x="535.0" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#0c8599">VLAN 24</text>
+  <text x="535.0" y="140" class="lbl" text-anchor="middle" font-size="11">/27 · 28 hosts</text>
+  <rect x="590.0" y="90" width="55.0" height="70" fill="#ffe8cc" stroke="#f08c00" stroke-width="2.4"/>
+  <text x="617.5" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#f08c00">34</text>
+  <text x="617.5" y="140" class="lbl" text-anchor="middle">/28</text>
+  <line x1="617.5" y1="160" x2="617.5" y2="196" stroke="#f08c00" stroke-width="1.4"/>
+  <text x="623.5" y="208" class="lbl">DECIMO · 14 útiles · 12 hosts</text>
+  <rect x="645.0" y="90" width="55.0" height="70" fill="#ffdeeb" stroke="#d6336c" stroke-width="2.4"/>
+  <text x="672.5" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#d6336c">54</text>
+  <text x="672.5" y="140" class="lbl" text-anchor="middle">/28</text>
+  <line x1="672.5" y1="160" x2="672.5" y2="218" stroke="#d6336c" stroke-width="1.4"/>
+  <text x="678.5" y="230" class="lbl">ENCINOS · 14 útiles · 7 hosts</text>
+  <rect x="700.0" y="90" width="55.0" height="70" fill="#f1f3f5" stroke="#adb5bd" stroke-width="2.4"/>
+  <text x="727.5" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#495057">99</text>
+  <text x="727.5" y="140" class="lbl" text-anchor="middle">/28</text>
+  <line x1="727.5" y1="160" x2="727.5" y2="240" stroke="#adb5bd" stroke-width="1.4"/>
+  <text x="733.5" y="252" class="lbl">ADMIN · 14 útiles · 10 sw</text>
+  <rect x="755.0" y="90" width="165.0" height="70" fill="#ffffff" stroke="#adb5bd" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="837.5" y="130" class="sub" text-anchor="middle" font-size="14">libre · 48</text>
+  <text x="40.0" y="80" class="lbl" text-anchor="start">.0</text>
+  <text x="260.0" y="80" class="lbl" text-anchor="middle">.64</text>
+  <text x="480.0" y="80" class="lbl" text-anchor="middle">.128</text>
+  <text x="590.0" y="80" class="lbl" text-anchor="middle">.160</text>
+  <text x="645.0" y="80" class="lbl" text-anchor="middle">.176</text>
+  <text x="700.0" y="80" class="lbl" text-anchor="middle">.192</text>
+  <text x="755.0" y="80" class="lbl" text-anchor="middle">.208</text>
+  <text x="920.0" y="80" class="lbl" text-anchor="end">.255</text>
+  <text x="40" y="276" class="h">Regla: el tamaño se calcula con hosts + 1, porque el gateway ocupa una dirección.</text>
+  <text x="40" y="300" class="sub" font-size="13.5">Por eso la zona 5 lleva /28 y no /29: un /29 tiene 6 útiles y hacen falta 8 (7 hosts + gateway).</text>
+</svg>

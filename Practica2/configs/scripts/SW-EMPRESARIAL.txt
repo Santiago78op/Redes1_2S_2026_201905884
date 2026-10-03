@@ -1,0 +1,162 @@
+! ==========================================================
+! SW-EMPRESARIAL  -  Principal Zona 2 (Distrito Empresarial) / nucleo L3 / Root VLAN 24 y 99   (carne 201905884)
+! Modelo: Cisco 3560-24PS
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! ==========================================================
+enable
+configure terminal
+ hostname SW-EMPRESARIAL
+ no ip domain-lookup
+!
+! ---- Spanning Tree: Rapid PVST+ ----
+ spanning-tree mode rapid-pvst
+! raiz primaria: VLAN de la zona y VLAN de administracion
+ spanning-tree vlan 24,99 priority 24576
+! raiz secundaria: aqui vive el gateway de todas las zonas
+ spanning-tree vlan 14,34,44,54 priority 28672
+!
+! ---- VTP: server del dominio 201905884 ----
+! transparent primero: deja la revision de configuracion en 0
+ vtp mode transparent
+ vtp domain 201905884
+ vtp password cayala2S2026
+ vtp version 2
+ vtp mode server
+!
+! ---- Po1: EtherChannel LACP 2x1G hacia SW-PASEO ----
+! El Port-channel se crea ANTES de sumar los miembros: si un miembro entra
+! con una configuracion distinta a la del canal, queda suspendido (s).
+ interface Port-channel1
+  description Po1 -> SW-PASEO (2x1G LACP)
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 14,34,44,99
+  switchport nonegotiate
+ exit
+ interface range GigabitEthernet0/1-2
+  description Miembro de Po1 -> SW-PASEO
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 14,34,44,99
+  switchport nonegotiate
+  channel-protocol lacp
+  channel-group 1 mode active
+  no shutdown
+ exit
+!
+! ---- Po2: EtherChannel LACP 2x100M hacia SW-MODA ----
+! El Port-channel se crea ANTES de sumar los miembros: si un miembro entra
+! con una configuracion distinta a la del canal, queda suspendido (s).
+ interface Port-channel2
+  description Po2 -> SW-MODA (2x100M LACP)
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 14,44,99
+  switchport nonegotiate
+ exit
+ interface range FastEthernet0/21-22
+  description Miembro de Po2 -> SW-MODA
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 14,44,99
+  switchport nonegotiate
+  channel-protocol lacp
+  channel-group 2 mode active
+  no shutdown
+ exit
+!
+! ---- Troncales 802.1Q: nativa 99 y solo las VLANs necesarias ----
+ interface FastEthernet0/1
+  description -> SW-EMP-A1 (acceso de la zona)
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 24,99
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface FastEthernet0/23
+  description -> SW-DECIMO (enlace 1 de 2 de la zona 3)
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 34,99
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface FastEthernet0/24
+  description -> SW-ENCINOS (enlace unico de la zona 5)
+  switchport trunk encapsulation dot1q
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 54,99
+  switchport nonegotiate
+  no shutdown
+ exit
+!
+! ---- VLANs que este servidor VTP aporta al dominio ----
+ vlan 24
+  name EMPRESARIAL
+ exit
+ vlan 99
+  name NATIVA-ADMIN
+ exit
+ vlan 999
+  name BLACKHOLE
+ exit
+!
+! ---- Puertos de acceso VLAN 24 (EMPRESARIAL) ----
+ interface range FastEthernet0/2-5
+  description Hosts de administracion central
+  switchport mode access
+  switchport access vlan 24
+  spanning-tree portfast
+  spanning-tree bpduguard enable
+  no shutdown
+ exit
+! ---- Puertos sin uso: VLAN Blackhole 999 y apagados ----
+ interface range FastEthernet0/6-20
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+!
+! ---- Administracion del switch sobre la VLAN 99 ----
+ interface Vlan99
+  ip address 192.168.4.193 255.255.255.240
+  no shutdown
+ exit
+!
+! ---- Enrutamiento inter-VLAN: un SVI (gateway) por zona ----
+ ip routing
+ interface Vlan14
+  description Gateway PASEO
+  ip address 192.168.4.1 255.255.255.192
+  no shutdown
+ exit
+ interface Vlan24
+  description Gateway EMPRESARIAL
+  ip address 192.168.4.129 255.255.255.224
+  no shutdown
+ exit
+ interface Vlan34
+  description Gateway DECIMO
+  ip address 192.168.4.161 255.255.255.240
+  no shutdown
+ exit
+ interface Vlan44
+  description Gateway MODA
+  ip address 192.168.4.65 255.255.255.192
+  no shutdown
+ exit
+ interface Vlan54
+  description Gateway ENCINOS
+  ip address 192.168.4.177 255.255.255.240
+  no shutdown
+ exit
+end
+write memory

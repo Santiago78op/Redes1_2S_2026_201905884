@@ -1,0 +1,70 @@
+! ==========================================================
+! SW-DECIMO  -  Principal Zona 3 (Decimo de Cayala) / Root VLAN 34   (carne 201905884)
+! Modelo: Cisco 2960-24TT
+! SCRIPT DE CONFIGURACION - listo para pegar en la CLI de Packet Tracer.
+! ==========================================================
+enable
+configure terminal
+ hostname SW-DECIMO
+ no ip domain-lookup
+!
+! ---- Spanning Tree: Rapid PVST+ ----
+ spanning-tree mode rapid-pvst
+! raiz primaria de la VLAN de su zona
+ spanning-tree vlan 34 priority 24576
+!
+! ---- VTP: server del dominio 201905884 ----
+! transparent primero: deja la revision de configuracion en 0
+ vtp mode transparent
+ vtp domain 201905884
+ vtp password cayala2S2026
+ vtp version 2
+ vtp mode server
+!
+! ---- Troncales 802.1Q: nativa 99 y solo las VLANs necesarias ----
+ interface GigabitEthernet0/1
+  description -> SW-EMPRESARIAL (enlace 1 de 2)
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 34,99
+  switchport nonegotiate
+  no shutdown
+ exit
+ interface GigabitEthernet0/2
+  description -> SW-PASEO (enlace 2 de 2)
+  switchport mode trunk
+  switchport trunk native vlan 99
+  switchport trunk allowed vlan 34,99
+  switchport nonegotiate
+  no shutdown
+ exit
+!
+! ---- VLANs que este servidor VTP aporta al dominio ----
+ vlan 34
+  name DECIMO
+ exit
+!
+! ---- Puertos de acceso VLAN 34 (DECIMO) ----
+ interface range FastEthernet0/1-12
+  description Agencias bancarias y servicios
+  switchport mode access
+  switchport access vlan 34
+  spanning-tree portfast
+  spanning-tree bpduguard enable
+  no shutdown
+ exit
+! ---- Puertos sin uso: VLAN Blackhole 999 y apagados ----
+ interface range FastEthernet0/13-24
+  switchport mode access
+  switchport access vlan 999
+  shutdown
+ exit
+!
+! ---- Administracion del switch sobre la VLAN 99 ----
+ interface Vlan99
+  ip address 192.168.4.195 255.255.255.240
+  no shutdown
+ exit
+ ip default-gateway 192.168.4.193
+end
+write memory

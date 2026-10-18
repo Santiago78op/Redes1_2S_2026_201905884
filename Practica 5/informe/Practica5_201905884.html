@@ -28,16 +28,7 @@
 </head>
 <body>
 
-<div class="portada">
-  <h1>Actividad Práctica 5 — Enrutamiento Inter-VLAN</h1>
-  <p><b>Router-on-a-Stick (ROAS) vs. Switch de Capa 3 (SVI)</b></p>
-  <p>Universidad de San Carlos de Guatemala · Facultad de Ingeniería · Escuela de Ciencias y Sistemas</p>
-  <p>Redes de Computadoras 1 — Segundo Semestre 2026</p>
-  <p><b>Estudiante:</b> Santiago Barrera · <b>Carné:</b> 201905884</p>
-  <p><b>Fecha:</b> 17 de octubre de 2026 · <b>Archivo:</b> <code>Practica5_201905884.pkt</code></p>
-</div>
-
-<h2>1. Diseño de la red</h2>
+<h2 style="margin-top:0">1. Diseño de la red</h2>
 <p>La topología tiene dos escenarios independientes en el mismo archivo, uno por método de
 enrutamiento Inter-VLAN. Ambos usan las mismas VLANs (10 Marketing y 20 Engineering), pero con
 redes IP distintas para que las tablas de enrutamiento de cada gateway no se confundan entre sí.</p>
@@ -176,40 +167,6 @@ router son subinterfaces de un único puerto físico, y en el switch son interfa
 capa 3, que es el gateway. El <code>tracert</code> lo confirma, porque el primer salto es la IP
 del gateway de la VLAN de origen. El primer ping después de encender la red pierde paquetes
 mientras se resuelve ARP (PC → gateway y gateway → PC destino); los siguientes salen 4/4.</p>
-
-<h2 class="salto" style="margin-top:0">6. Análisis técnico</h2>
-
-<h3>6.1 Cómo viaja el tráfico en cada método</h3>
-<p><b>ROAS.</b> PC1 envía el paquete a su gateway, 192.168.10.1. SW1-L2 recibe la trama en Fa0/1
-(VLAN 10) y la reenvía por la troncal etiquetada con VLAN 10. R1 la recibe en G0/0.10, quita la
-etiqueta, consulta su tabla de rutas, ve que 192.168.20.0/24 sale por G0/0.20 y devuelve el
-paquete por el <b>mismo cable físico</b>, ahora etiquetado con VLAN 20. SW1-L2 quita la etiqueta y
-lo entrega por Fa0/2. Cada paquete entre VLANs cruza la troncal dos veces: una de ida al router y
-otra de vuelta.</p>
-<p><b>SVI.</b> PC3 envía el paquete a 172.16.10.1, que es la SVI Vlan10 dentro del propio
-SW2-L3. El switch enruta internamente de Vlan10 a Vlan20 y entrega la trama por G1/0/2. No hay
-troncal ni equipo externo, y el paquete nunca sale del chasis.</p>
-
-<h3>6.2 Diferencia de hardware de enrutamiento</h3>
-<table>
-  <tr><th>Aspecto</th><th>Router-on-a-Stick (2911)</th><th>Switch Capa 3 (3650)</th></tr>
-  <tr><td>Dónde se toma la decisión</td><td>En el router. La reenvía la CPU con CEF; el plano de datos es mucho más limitado que el de un switch.</td><td>En ASICs del switch (tablas CEF/TCAM en hardware), a velocidad de línea.</td></tr>
-  <tr><td>Ancho de banda entre VLANs</td><td>Un solo enlace (1 Gbps), compartido por todas las VLANs y recorrido dos veces por paquete. Es un cuello de botella.</td><td>La capacidad del backplane del switch, muy superior a un enlace.</td></tr>
-  <tr><td>Latencia</td><td>Mayor: dos pasos por la troncal y procesamiento en el router.</td><td>Menor: conmutación y enrutamiento en el mismo equipo.</td></tr>
-  <tr><td>Punto único de falla</td><td>El enlace troncal y el router.</td><td>El switch (se mitiga con redundancia de distribución).</td></tr>
-  <tr><td>Escalabilidad</td><td>Una subinterfaz por VLAN; el rendimiento total no crece al agregar VLANs.</td><td>Una SVI por VLAN; escala a muchas VLANs sin perder rendimiento.</td></tr>
-  <tr><td>Costo / equipo</td><td>Barato si ya existe un router; adecuado para redes pequeñas o sucursales.</td><td>Requiere switch multicapa, que es más caro, pero sustituye al router en el núcleo de la LAN.</td></tr>
-</table>
-
-<h3>6.3 ¿Qué método es más eficiente para una red empresarial de alto tráfico?</h3>
-<p><b>El Switch de Capa 3 con SVIs.</b> El tráfico entre VLANs se enruta en hardware, dentro del
-mismo equipo que conmuta las tramas, sin depender de un único enlace troncal ni de la CPU de un
-router. Eso da mayor rendimiento y menor latencia, y el desempeño se mantiene aunque crezcan las
-VLANs y el volumen de tráfico. En ROAS todo el tráfico entre VLANs comparte un solo cable y lo
-recorre dos veces, por lo que la capacidad efectiva cae a medida que aumenta la carga. ROAS sigue
-siendo útil en redes pequeñas o en laboratorio, donde el volumen es bajo y ya se dispone de un
-router. En la práctica se combinan: el Switch L3 enruta entre VLANs en la distribución o el núcleo,
-y el router queda en el borde para la salida WAN.</p>
 
 </body>
 </html>

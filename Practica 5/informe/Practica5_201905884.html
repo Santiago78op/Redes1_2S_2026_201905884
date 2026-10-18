@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Práctica 5 — Enrutamiento Inter-VLAN</title>
+<style>
+  @page { size: Letter; margin: 2cm 2cm 2cm 2cm; }
+  body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1a1a1a; }
+  h1 { font-size: 20pt; color: #0a0a8f; margin: 0 0 4pt; }
+  h2 { font-size: 13.5pt; color: #0a0a8f; border-bottom: 2px solid #1ea7e6; padding-bottom: 3pt; margin: 22pt 0 8pt; }
+  h3 { font-size: 11.5pt; color: #b8860b; margin: 14pt 0 6pt; }
+  .portada { border-left: 6px solid #1ea7e6; padding: 6pt 0 6pt 14pt; margin-bottom: 18pt; }
+  .portada p { margin: 2pt 0; }
+  table { border-collapse: collapse; width: 100%; margin: 6pt 0 10pt; font-size: 9.5pt; }
+  th, td { border: 1px solid #9aa3b5; padding: 3pt 6pt; text-align: left; vertical-align: top; }
+  th { background: #e8ecf7; }
+  code, pre { font-family: Menlo, Consolas, monospace; font-size: 8.8pt; }
+  pre { background: #f4f5f9; border: 1px solid #d5d9e4; padding: 7pt 9pt; white-space: pre-wrap; margin: 4pt 0 10pt; }
+  figure { margin: 8pt 0 14pt; text-align: center; page-break-inside: avoid; }
+  figure img { max-width: 100%; max-height: 13cm; border: 1px solid #c8ccd6; }
+  figcaption { font-size: 9pt; color: #555; margin-top: 4pt; }
+  .salto { page-break-before: always; }
+  .bloque { break-inside: avoid; page-break-inside: avoid; }
+  h2, h3 { break-after: avoid; page-break-after: avoid; }
+  .nota { background: #fff8e1; border-left: 4px solid #e0a800; padding: 6pt 10pt; margin: 8pt 0; }
+  ul { margin: 4pt 0 8pt; }
+</style>
+</head>
+<body>
+
+<div class="portada">
+  <h1>Actividad Práctica 5 — Enrutamiento Inter-VLAN</h1>
+  <p><b>Router-on-a-Stick (ROAS) vs. Switch de Capa 3 (SVI)</b></p>
+  <p>Universidad de San Carlos de Guatemala · Facultad de Ingeniería · Escuela de Ciencias y Sistemas</p>
+  <p>Redes de Computadoras 1 — Segundo Semestre 2026</p>
+  <p><b>Estudiante:</b> Santiago Barrera · <b>Carné:</b> 201905884</p>
+  <p><b>Fecha:</b> 17 de octubre de 2026 · <b>Archivo:</b> <code>Practica5_201905884.pkt</code></p>
+</div>
+
+<h2>1. Diseño de la red</h2>
+<p>La topología tiene dos escenarios independientes en el mismo archivo, uno por método de
+enrutamiento Inter-VLAN. Ambos usan las mismas VLANs (10 Marketing y 20 Engineering), pero con
+redes IP distintas para que las tablas de enrutamiento de cada gateway no se confundan entre sí.</p>
+
+<table>
+  <tr><th>Escenario</th><th>Dispositivos</th><th>Gateway VLAN 10</th><th>Gateway VLAN 20</th></tr>
+  <tr><td>1 — ROAS</td><td>Router 2911 (R1-ROAS), Switch 2960-24TT (SW1-L2), 2 PCs</td><td>G0/0.10 — 192.168.10.1/24</td><td>G0/0.20 — 192.168.20.1/24</td></tr>
+  <tr><td>2 — SVI</td><td>Switch multicapa 3650-24PS (SW2-L3), 2 PCs</td><td>Vlan10 — 172.16.10.1/24</td><td>Vlan20 — 172.16.20.1/24</td></tr>
+</table>
+
+<h3>Tabla de direccionamiento</h3>
+<table>
+  <tr><th>Equipo</th><th>Interfaz / puerto</th><th>VLAN</th><th>Dirección IP</th><th>Gateway</th></tr>
+  <tr><td>R1-ROAS</td><td>G0/0 (física, sin IP) → SW1-L2 G0/1</td><td>Troncal</td><td>—</td><td>—</td></tr>
+  <tr><td>R1-ROAS</td><td>G0/0.10</td><td>10</td><td>192.168.10.1/24</td><td>—</td></tr>
+  <tr><td>R1-ROAS</td><td>G0/0.20</td><td>20</td><td>192.168.20.1/24</td><td>—</td></tr>
+  <tr><td>PC1-MKT</td><td>Fa0 → SW1-L2 Fa0/1</td><td>10</td><td>192.168.10.10/24</td><td>192.168.10.1</td></tr>
+  <tr><td>PC2-ENG</td><td>Fa0 → SW1-L2 Fa0/2</td><td>20</td><td>192.168.20.10/24</td><td>192.168.20.1</td></tr>
+  <tr><td>SW2-L3</td><td>interface Vlan10</td><td>10</td><td>172.16.10.1/24</td><td>—</td></tr>
+  <tr><td>SW2-L3</td><td>interface Vlan20</td><td>20</td><td>172.16.20.1/24</td><td>—</td></tr>
+  <tr><td>PC3-MKT</td><td>Fa0 → SW2-L3 G1/0/1</td><td>10</td><td>172.16.10.10/24</td><td>172.16.10.1</td></tr>
+  <tr><td>PC4-ENG</td><td>Fa0 → SW2-L3 G1/0/2</td><td>20</td><td>172.16.20.10/24</td><td>172.16.20.1</td></tr>
+</table>
+
+<figure>
+  <img src="../capturas/01-topologia.png" alt="Topología completa">
+  <figcaption>Captura 1 — Topología completa: escenario ROAS (izquierda) y escenario SVI (derecha).</figcaption>
+</figure>
+
+<p>En el escenario 1 el único enlace troncal es el que une SW1-L2 (G0/1) con el router (G0/0): por
+ahí viajan las tramas de ambas VLANs etiquetadas con 802.1Q. En el escenario 2 no hace falta
+troncal, porque el enrutamiento ocurre dentro del mismo switch al que están conectadas las PCs.</p>
+
+<h2>2. Escenario 1 — Router-on-a-Stick</h2>
+
+<h3>2.1 Switch SW1-L2 (2960)</h3>
+<pre>vlan 10
+ name Marketing
+vlan 20
+ name Engineering
+interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 10
+interface FastEthernet0/2
+ switchport mode access
+ switchport access vlan 20
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20</pre>
+<p>El 2960 solo soporta 802.1Q, por lo que no lleva <code>switchport trunk encapsulation</code>.
+La troncal se limita a las VLANs 10 y 20.</p>
+
+<figure>
+  <img src="../capturas/02b-sw1-vlan-trunk.png" alt="show vlan brief y show interfaces trunk en SW1-L2">
+  <figcaption>SW1-L2: <code>show vlan brief</code> (Fa0/1 en VLAN 10, Fa0/2 en VLAN 20) y <code>show interfaces trunk</code> (G0/1 troncal 802.1q con VLANs 10,20).</figcaption>
+</figure>
+
+<h3>2.2 Router R1-ROAS (2911)</h3>
+<pre>interface GigabitEthernet0/0
+ no ip address
+ no shutdown
+interface GigabitEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+interface GigabitEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0</pre>
+<p>La interfaz física no lleva IP; solo se levanta con <code>no shutdown</code>, y las
+subinterfaces heredan ese estado. <code>encapsulation dot1Q N</code> le dice a cada subinterfaz
+qué etiqueta de VLAN acepta y con cuál marca las tramas que devuelve al switch.</p>
+
+<figure>
+  <img src="../capturas/02-roas-subinterfaces.png" alt="Configuración de subinterfaces en R1-ROAS">
+  <figcaption>Captura 2 — Subinterfaces G0/0.10 y G0/0.20 con <code>encapsulation dot1Q</code> y la física G0/0 sin IP.</figcaption>
+</figure>
+
+<h2 class="salto">3. Escenario 2 — Switch de Capa 3 (SVI)</h2>
+<pre>vlan 10
+ name Marketing
+vlan 20
+ name Engineering
+interface GigabitEthernet1/0/1
+ switchport mode access
+ switchport access vlan 10
+interface GigabitEthernet1/0/2
+ switchport mode access
+ switchport access vlan 20
+interface Vlan10
+ ip address 172.16.10.1 255.255.255.0
+ no shutdown
+interface Vlan20
+ ip address 172.16.20.1 255.255.255.0
+ no shutdown
+ip routing</pre>
+<p>Cada SVI es una interfaz lógica que representa a toda su VLAN dentro del switch, y sirve como
+gateway de los hosts de esa VLAN. Una SVI solo se pone <i>up/up</i> si la VLAN existe y tiene al
+menos un puerto activo asignado. Sin <code>ip routing</code> el 3650 tendría las dos IPs, pero no
+reenviaría paquetes de una VLAN a otra.</p>
+
+<figure>
+  <img src="../capturas/03-svi-ip-routing.png" alt="SVIs e ip routing en SW2-L3">
+  <figcaption>Captura 3 — SW2-L3: Vlan10 y Vlan20 <i>up/up</i> con sus IPs, <code>ip routing</code> activo y la configuración de las SVIs.</figcaption>
+</figure>
+
+<div class="bloque"><h2>4. Tablas de enrutamiento</h2>
+<figure>
+  <img src="../capturas/04a-r1-show-ip-route.png" alt="show ip route en R1-ROAS">
+  <figcaption>Captura 4a — <code>show ip route</code> en R1-ROAS: 192.168.10.0/24 y 192.168.20.0/24 conectadas por G0/0.10 y G0/0.20.</figcaption>
+</figure></div>
+<figure>
+  <img src="../capturas/04b-sw2-show-ip-route.png" alt="show ip route en SW2-L3">
+  <figcaption>Captura 4b — <code>show ip route</code> en SW2-L3: 172.16.10.0/24 y 172.16.20.0/24 conectadas por Vlan10 y Vlan20.</figcaption>
+</figure>
+<p>En los dos gateways las rutas aparecen como <b>C</b> (conectadas) y <b>L</b> (local, la /32 de
+la propia interfaz). No hacen falta rutas estáticas ni protocolos dinámicos, porque ambas redes
+están directamente conectadas al mismo dispositivo. La diferencia es la interfaz de salida: en el
+router son subinterfaces de un único puerto físico, y en el switch son interfaces virtuales.</p>
+
+<div class="bloque"><h2>5. Pruebas de conectividad</h2>
+<figure>
+  <img src="../capturas/05a-ping-tracert-roas.png" alt="Ping y tracert PC1 a PC2">
+  <figcaption>Captura 5a — Escenario ROAS: PC1-MKT (VLAN 10) → PC2-ENG (VLAN 20). Ping 4/4 y <code>tracert</code> con primer salto 192.168.10.1 (router).</figcaption>
+</figure></div>
+<figure>
+  <img src="../capturas/05b-ping-tracert-svi.png" alt="Ping y tracert PC3 a PC4">
+  <figcaption>Captura 5b — Escenario SVI: PC3-MKT (VLAN 10) → PC4-ENG (VLAN 20). Ping 4/4 y <code>tracert</code> con primer salto 172.16.10.1 (Switch L3).</figcaption>
+</figure>
+
+<table>
+  <tr><th>Origen → destino</th><th>Ping</th><th>Salto 1 (tracert)</th><th>Salto 2</th></tr>
+  <tr><td>PC1-MKT → PC2-ENG (ROAS)</td><td>4/4, 0 % pérdida</td><td>192.168.10.1</td><td>192.168.20.10</td></tr>
+  <tr><td>PC2-ENG → PC1-MKT (ROAS)</td><td>4/4, 0 % pérdida</td><td>—</td><td>—</td></tr>
+  <tr><td>PC3-MKT → PC4-ENG (SVI)</td><td>4/4, 0 % pérdida</td><td>172.16.10.1</td><td>172.16.20.10</td></tr>
+</table>
+<p>El TTL de las respuestas es 127, y no 128: el paquete atravesó exactamente un dispositivo de
+capa 3, que es el gateway. El <code>tracert</code> lo confirma, porque el primer salto es la IP
+del gateway de la VLAN de origen. El primer ping después de encender la red pierde paquetes
+mientras se resuelve ARP (PC → gateway y gateway → PC destino); los siguientes salen 4/4.</p>
+
+<h2 class="salto" style="margin-top:0">6. Análisis técnico</h2>
+
+<h3>6.1 Cómo viaja el tráfico en cada método</h3>
+<p><b>ROAS.</b> PC1 envía el paquete a su gateway, 192.168.10.1. SW1-L2 recibe la trama en Fa0/1
+(VLAN 10) y la reenvía por la troncal etiquetada con VLAN 10. R1 la recibe en G0/0.10, quita la
+etiqueta, consulta su tabla de rutas, ve que 192.168.20.0/24 sale por G0/0.20 y devuelve el
+paquete por el <b>mismo cable físico</b>, ahora etiquetado con VLAN 20. SW1-L2 quita la etiqueta y
+lo entrega por Fa0/2. Cada paquete entre VLANs cruza la troncal dos veces: una de ida al router y
+otra de vuelta.</p>
+<p><b>SVI.</b> PC3 envía el paquete a 172.16.10.1, que es la SVI Vlan10 dentro del propio
+SW2-L3. El switch enruta internamente de Vlan10 a Vlan20 y entrega la trama por G1/0/2. No hay
+troncal ni equipo externo, y el paquete nunca sale del chasis.</p>
+
+<h3>6.2 Diferencia de hardware de enrutamiento</h3>
+<table>
+  <tr><th>Aspecto</th><th>Router-on-a-Stick (2911)</th><th>Switch Capa 3 (3650)</th></tr>
+  <tr><td>Dónde se toma la decisión</td><td>En el router. La reenvía la CPU con CEF; el plano de datos es mucho más limitado que el de un switch.</td><td>En ASICs del switch (tablas CEF/TCAM en hardware), a velocidad de línea.</td></tr>
+  <tr><td>Ancho de banda entre VLANs</td><td>Un solo enlace (1 Gbps), compartido por todas las VLANs y recorrido dos veces por paquete. Es un cuello de botella.</td><td>La capacidad del backplane del switch, muy superior a un enlace.</td></tr>
+  <tr><td>Latencia</td><td>Mayor: dos pasos por la troncal y procesamiento en el router.</td><td>Menor: conmutación y enrutamiento en el mismo equipo.</td></tr>
+  <tr><td>Punto único de falla</td><td>El enlace troncal y el router.</td><td>El switch (se mitiga con redundancia de distribución).</td></tr>
+  <tr><td>Escalabilidad</td><td>Una subinterfaz por VLAN; el rendimiento total no crece al agregar VLANs.</td><td>Una SVI por VLAN; escala a muchas VLANs sin perder rendimiento.</td></tr>
+  <tr><td>Costo / equipo</td><td>Barato si ya existe un router; adecuado para redes pequeñas o sucursales.</td><td>Requiere switch multicapa, que es más caro, pero sustituye al router en el núcleo de la LAN.</td></tr>
+</table>
+
+<h3>6.3 ¿Qué método es más eficiente para una red empresarial de alto tráfico?</h3>
+<p><b>El Switch de Capa 3 con SVIs.</b> El tráfico entre VLANs se enruta en hardware, dentro del
+mismo equipo que conmuta las tramas, sin depender de un único enlace troncal ni de la CPU de un
+router. Eso da mayor rendimiento y menor latencia, y el desempeño se mantiene aunque crezcan las
+VLANs y el volumen de tráfico. En ROAS todo el tráfico entre VLANs comparte un solo cable y lo
+recorre dos veces, por lo que la capacidad efectiva cae a medida que aumenta la carga. ROAS sigue
+siendo útil en redes pequeñas o en laboratorio, donde el volumen es bajo y ya se dispone de un
+router. En la práctica se combinan: el Switch L3 enruta entre VLANs en la distribución o el núcleo,
+y el router queda en el borde para la salida WAN.</p>
+
+</body>
+</html>

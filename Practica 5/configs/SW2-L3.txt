@@ -1,0 +1,37 @@
+enable
+configure terminal
+hostname SW2-L3
+no ip domain-lookup
+!
+vlan 10
+ name Marketing
+ exit
+vlan 20
+ name Engineering
+ exit
+!
+interface GigabitEthernet1/0/1
+ description PC3-MKT
+ switchport mode access
+ switchport access vlan 10
+ exit
+interface GigabitEthernet1/0/2
+ description PC4-ENG
+ switchport mode access
+ switchport access vlan 20
+ exit
+!
+interface Vlan10
+ description Gateway VLAN 10 Marketing
+ ip address 172.16.10.1 255.255.255.0
+ no shutdown
+ exit
+interface Vlan20
+ description Gateway VLAN 20 Engineering
+ ip address 172.16.20.1 255.255.255.0
+ no shutdown
+ exit
+!
+ip routing
+end
+write memory

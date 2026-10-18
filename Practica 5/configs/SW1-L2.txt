@@ -1,0 +1,30 @@
+enable
+configure terminal
+hostname SW1-L2
+no ip domain-lookup
+!
+vlan 10
+ name Marketing
+ exit
+vlan 20
+ name Engineering
+ exit
+!
+interface FastEthernet0/1
+ description PC1-MKT
+ switchport mode access
+ switchport access vlan 10
+ exit
+interface FastEthernet0/2
+ description PC2-ENG
+ switchport mode access
+ switchport access vlan 20
+ exit
+!
+interface GigabitEthernet0/1
+ description Troncal hacia R1-ROAS
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20
+ exit
+end
+write memory

@@ -1,0 +1,42 @@
+enable
+configure terminal
+hostname R-Occidente
+interface g0/0
+ description Hacia CORE2 g1/0/11 (EIGRP)
+ ip address 10.5.0.22 255.255.255.252
+ no shutdown
+ exit
+interface g0/1
+ description Troncal hacia SW-OCC-A0
+ no shutdown
+ exit
+interface g0/1.12
+ description Cajas
+ encapsulation dot1Q 12
+ ip address 10.5.10.1 255.255.255.192
+ exit
+interface g0/1.22
+ description Asesores
+ encapsulation dot1Q 22
+ ip address 10.5.10.65 255.255.255.192
+ exit
+interface g0/1.32
+ description Gerencia
+ encapsulation dot1Q 32
+ ip address 10.5.10.145 255.255.255.240
+ exit
+interface g0/1.42
+ description Seguridad
+ encapsulation dot1Q 42
+ ip address 10.5.10.129 255.255.255.240
+ exit
+router eigrp 100
+ no auto-summary
+ network 10.5.0.20 0.0.0.3
+ network 10.5.10.0 0.0.0.255
+ passive-interface g0/1.12
+ passive-interface g0/1.22
+ passive-interface g0/1.32
+ passive-interface g0/1.42
+ end
+write memory

@@ -1,0 +1,21 @@
+enable
+configure terminal
+hostname SW-DC-A2
+vlan 13
+ name Core_BD
+vlan 23
+ name Web_Apps
+vlan 33
+ name NOC
+ exit
+interface range fa0/3-4
+ description Po2 hacia SW-DC-A0
+ switchport mode trunk
+ channel-group 2 mode active
+ exit
+interface range fa0/11-13
+ switchport mode access
+ switchport access vlan 33
+ spanning-tree portfast
+ end
+write memory

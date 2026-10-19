@@ -1,0 +1,21 @@
+enable
+configure terminal
+hostname SW-OCC-A1
+vtp domain bantech05
+vtp password cisco
+vtp mode client
+interface fa0/1
+ description Troncal hacia SW-OCC-A0
+ switchport mode trunk
+ exit
+interface range fa0/11-12
+ switchport mode access
+ switchport access vlan 12
+ spanning-tree portfast
+ exit
+interface range fa0/13-14
+ switchport mode access
+ switchport access vlan 32
+ spanning-tree portfast
+ end
+write memory

@@ -1,0 +1,47 @@
+enable
+configure terminal
+hostname SW-DC-A0
+ip routing
+vlan 13
+ name Core_BD
+vlan 23
+ name Web_Apps
+vlan 33
+ name NOC
+ exit
+interface g0/1
+ description Enlace ruteado hacia R-Central2
+ no switchport
+ ip address 10.5.0.46 255.255.255.252
+ no shutdown
+ exit
+interface range fa0/1-2
+ description Po1 hacia SW-DC-A1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+ exit
+interface range fa0/3-4
+ description Po2 hacia SW-DC-A2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode active
+ exit
+interface vlan 13
+ description Gateway Core_BD
+ ip address 10.5.40.33 255.255.255.224
+ no shutdown
+ exit
+interface vlan 23
+ description Gateway Web_Apps
+ ip address 10.5.40.1 255.255.255.224
+ no shutdown
+ exit
+interface vlan 33
+ description Gateway NOC
+ ip address 10.5.40.65 255.255.255.240
+ no shutdown
+ exit
+ip route 0.0.0.0 0.0.0.0 10.5.0.45
+ end
+write memory

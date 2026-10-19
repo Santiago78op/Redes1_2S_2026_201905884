@@ -1,0 +1,28 @@
+enable
+configure terminal
+hostname SW-OCC-A0
+vtp domain bantech05
+vtp password cisco
+vtp mode server
+vlan 12
+ name Cajas
+vlan 22
+ name Asesores
+vlan 32
+ name Gerencia
+vlan 42
+ name Seguridad
+ exit
+interface g0/1
+ description Troncal hacia R-Occidente
+ switchport mode trunk
+ exit
+interface fa0/1
+ description Troncal hacia SW-OCC-A1
+ switchport mode trunk
+ exit
+interface fa0/2
+ description Troncal hacia SW-OCC-A2
+ switchport mode trunk
+ end
+write memory

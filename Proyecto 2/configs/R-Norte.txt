@@ -1,0 +1,114 @@
+R-Norte#show running-config
+Building configuration...
+
+Current configuration : 1448 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R-Norte
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524BTE7-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ description Hacia CORE1 g1/0/10
+ ip address 10.5.0.14 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ description Hacia CORE2 g1/0/10
+ ip address 10.5.0.18 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ description Troncal hacia SW-NOR-A0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2.52
+ description Analisis
+ encapsulation dot1Q 52
+ ip address 10.5.20.1 255.255.255.192
+!
+interface GigabitEthernet0/2.62
+ description Auditoria
+ encapsulation dot1Q 62
+ ip address 10.5.20.65 255.255.255.224
+!
+interface GigabitEthernet0/2.72
+ description Legal
+ encapsulation dot1Q 72
+ ip address 10.5.20.97 255.255.255.224
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 4.4.4.4
+ log-adjacency-changes
+ passive-interface GigabitEthernet0/2.52
+ passive-interface GigabitEthernet0/2.62
+ passive-interface GigabitEthernet0/2.72
+ network 10.5.0.12 0.0.0.3 area 0
+ network 10.5.0.16 0.0.0.3 area 0
+ network 10.5.20.0 0.0.0.255 area 0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+
+
+R-Norte#

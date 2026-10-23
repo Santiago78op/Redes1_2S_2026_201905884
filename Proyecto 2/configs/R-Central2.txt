@@ -1,0 +1,18 @@
+en
+conf t
+hostname R-Central2
+int s0/0/0
+ desc WAN hacia R-Central1
+ ip add 10.5.0.42 255.255.255.252
+ no sh
+ exit
+int g0/0
+ desc Hacia SW-DC-A0 g0/1
+ ip add 10.5.0.45 255.255.255.252
+ no sh
+ exit
+ip route 10.5.40.0 255.255.255.224 10.5.0.46
+ip route 10.5.40.32 255.255.255.224 10.5.0.46
+ip route 10.5.40.64 255.255.255.240 10.5.0.46
+ip route 0.0.0.0 0.0.0.0 10.5.0.41
+ end

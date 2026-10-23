@@ -1,0 +1,44 @@
+en
+conf t
+hostname CORE2
+ip routing
+int range g1/1/1-2
+ no switchport
+ channel-group 1 mode active
+ exit
+int po1
+ desc Fibra hacia CORE1
+ ip add 10.5.0.2 255.255.255.252
+ exit
+int range g1/0/3-4
+ no switchport
+ channel-group 3 mode active
+ exit
+int po3
+ desc Hacia CORE3
+ ip add 10.5.0.9 255.255.255.252
+ exit
+int g1/0/10
+ desc Hacia R-Norte g0/1
+ no switchport
+ ip add 10.5.0.17 255.255.255.252
+ no sh
+ exit
+int g1/0/11
+ desc Hacia R-Occidente g0/0 (EIGRP)
+ no switchport
+ ip add 10.5.0.21 255.255.255.252
+ no sh
+ exit
+router ospf 1
+ router-id 2.2.2.2
+ network 10.5.0.0 0.0.0.3 area 0
+ network 10.5.0.8 0.0.0.3 area 0
+ network 10.5.0.16 0.0.0.3 area 0
+ redistribute eigrp 100 subnets
+ exit
+router eigrp 100
+ no auto-summary
+ network 10.5.0.20 0.0.0.3
+ redistribute ospf 1 metric 100000 100 255 1 1500
+ end

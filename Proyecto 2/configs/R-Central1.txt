@@ -1,0 +1,28 @@
+en
+conf t
+hostname R-Central1
+int g0/0
+ desc Hacia CORE1 g1/0/14
+ ip add 10.5.0.34 255.255.255.252
+ no sh
+ exit
+int g0/1
+ desc Hacia CORE3 g1/0/14
+ ip add 10.5.0.38 255.255.255.252
+ no sh
+ exit
+int s0/0/0
+ desc WAN hacia R-Central2
+ ip add 10.5.0.41 255.255.255.252
+ clock rate 64000
+ no sh
+ exit
+ip route 10.5.40.0 255.255.255.224 10.5.0.42
+ip route 10.5.40.32 255.255.255.224 10.5.0.42
+ip route 10.5.40.64 255.255.255.240 10.5.0.42
+router ospf 1
+ router-id 5.5.5.5
+ network 10.5.0.32 0.0.0.3 area 0
+ network 10.5.0.36 0.0.0.3 area 0
+ redistribute static subnets
+ end
